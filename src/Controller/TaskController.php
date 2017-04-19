@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: elnacabotparedes
- * Date: 13/4/17
- * Time: 19:22
- */
 
 namespace SilexApp\Controller;
 
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController{

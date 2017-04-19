@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     {% block head %}
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <link rel="stylesheet" type="text/css" href="{{ asset('/styles.css', 'css') }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <link href="{{ asset('/bootstrap.min.css', 'css') }}" rel="stylesheet">
-        <link href="{{ asset('/blog-home.css', 'css') }}" rel="stylesheet">
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
-        <title> {% block title %}{%  endblock %} - Dogygram </title>
-
-
-
-
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/styles.css', 'css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link href="{{ asset('/bootstrap.min.css', 'css') }}" rel="stylesheet">
+    <link href="{{ asset('/blog-home.css', 'css') }}" rel="stylesheet">
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <title> {% block title %}{% endblock %} - Dogygram </title>
+</head>
+{% endblock %}
 <body>
 
-{% block nav%}
+{% block nav %}
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -50,29 +45,26 @@
         <!-- /.container -->
     </nav>
 
-{% endblock%}
+{% endblock %}
 
 <div id="content">{% block content %}{% endblock %}</div>
 
-    {% block footer %}
+{% block footer %}
     <div id="footer">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Noa Durán - Elna Cabot - Jordi Conesa</p>
-                </div>
-                <!-- /.col-lg-12 -->
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Noa Durán - Elna Cabot - Jordi Conesa</p>
             </div>
+            <!-- /.col-lg-12 -->
+        </div>
     </div>
-    {% endblock %}
-
+{% endblock %}
 {% block scripts %}
 
     <script src="{{ asset('/app.js', 'js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('/jquery.js', 'js') }}"></script>
     <script src="{{ asset('/bootstrap.min.js', 'js') }}"></script>
 {% endblock %}
-
-
 </body>
 </html>
 

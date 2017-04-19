@@ -3,4 +3,4 @@
 
 
 
-$app->get('/', 'SilexApp\\Controller\\HelloController::indexAction');
+$app->get('/', 'SilexApp\\Controller\\TaskController::indexAction');

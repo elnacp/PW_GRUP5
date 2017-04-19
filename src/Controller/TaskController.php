@@ -12,7 +12,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class HelloController{
+class TaskController{
     public function indexAction(Application $app){
         $content = $app['twig']->render('hello.twig' );
         $response = new Response();

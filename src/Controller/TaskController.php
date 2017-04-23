@@ -3,6 +3,7 @@
 namespace SilexApp\Controller;
 
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController{
@@ -14,6 +15,14 @@ class TaskController{
         $response->setContent($content);
         return $response;
 
+    }
+    public function editProfile(Application $app){
+        $content = $app['twig']->render('editProfile.twig' );
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
     }
 
 }

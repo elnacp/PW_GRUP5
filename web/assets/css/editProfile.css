@@ -69,3 +69,23 @@
 body {
     background-color: #e8e8e8;
 }
+
+.navbar-brand{
+    margin-right:-8px;
+    margin-top:-5px;
+}
+
+.user-avatar{
+    margin-right:8px;
+    margin-top:-5px;
+}
+
+.panel-title pull-left{
+    font-size:30px;
+}
+
+.row {
+    padding-top: 50px;
+    padding-right: 175px;
+
+}

@@ -30,3 +30,5 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
    ),
 
 ));
+
+$app->register(new Silex\Provider\SessionServiceProvider());

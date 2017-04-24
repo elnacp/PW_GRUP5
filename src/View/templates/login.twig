@@ -1,0 +1,54 @@
+{% extends "base.twig" %}
+{% block title %} Hello page {% endblock %}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/editProfile.css', 'css') }}">
+{% endblock %}
+{% block content %}
+
+    <div class="mainbody container-fluid">
+        <div class="row">
+
+            <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h1 class="panel-title pull-left" > PERFIL </h1>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="panel-title pull-left"> Edición del perfil </h3>
+                        <br><br>
+                        <form class="form-horizontal">
+                            <label for="First_name"> Usuario</label>
+                            <input type="text" class="form-control" id="First_name" placeholder="John">
+
+                            <label for="First_name"> Fecha de nacimiento</label>
+                            <input type="date" class="form-control" id="birthdate" >
+
+                            <label for="First_name"> Contraseña</label>
+                            <input type="password" class="form-control" id="birthdate" >
+
+                            <div class="panel-body">
+                                <h3 class="panel-title pull-left">Foto de perfil</h3>
+                                <br><br>
+                                <div align="center">
+                                    <div class="col-lg-12 col-md-12">
+                                        <img class="img-thumbnail img-responsive" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="300px" height="300px">
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <button class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload a new profile photo!</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

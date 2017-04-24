@@ -10,7 +10,6 @@ function handleFileSelect(evt) {
         output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(event.target.files[i]), '>');
     }
     document.getElementById('registerImg').innerHTML =  output.join('');
-    document.getElementById('profilePic').innerHTML =  output.join('');
     //document.getElementById('profilePic').style.width = "50px";
 }
 document.getElementById('files').addEventListener('change', handleFileSelect, false);

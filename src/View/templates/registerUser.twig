@@ -12,12 +12,6 @@
 {% block content %}
     <div class="form">
 
-        <ul class="tab-group">
-            <li id="BReg" class="tab active"><a href="#signup">Regístrate</a></li>
-            <li  c><a href="index.php">Volver</a></li>
-
-        </ul>
-
         <div class="tab-content">
 
             <div id="signup">
@@ -55,8 +49,19 @@
                         <input type="email" id="New_email" name="email"required autocomplete="off"/>
                     </div>
 
-                    <div class="field-wrap" id="Edad">
+                    <div class="field-wrap">
+                        <label>
+                            Imagen de Perfil<span class="req"></span>
+                        </label>
+                        <br>
+                        <br>
+                        <input type="file" id="files" name="files[]" multiple />
+                        <output id="registerImg"></output>
 
+                    </div>
+
+                    <div class="field-wrap" id="Edad">
+                        <br>
                         <p class="titulo">Fecha de Nacimiento<span class="req">*</span><br></p>
 
                         <label>
@@ -95,8 +100,8 @@
     </div> <!-- /form -->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-    <script src="js/index.js"></script>
-    <script src="js/registration.js"></script>
+    <script src={{ asset('/indexRegistration.js', 'js') }}></script>
+    <script src={{ asset('/registration.js', 'js') }}></script>
 
 
 {% endblock %}

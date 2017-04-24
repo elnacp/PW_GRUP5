@@ -32,6 +32,22 @@ class TaskController{
         $response->setContent($content);
         return $response;
     }
+    public function LogIn(Application $app){
+        $content = $app['twig']->render('LogIn.twig' );
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+    }
+    public function newPost(Application $app){
+        $content = $app['twig']->render('newPost.twig');
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+    }
 
 }
 

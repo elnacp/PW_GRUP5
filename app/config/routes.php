@@ -26,3 +26,6 @@ $app->get('/test', 'SilexApp\\Controller\\BaseController::indexAction');
 $app->get('/admin', 'SilexApp\\Controller\\BaseController::adminAction')->before($before);
 
 $app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser');
+$app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn');
+$app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost');
+

@@ -20,7 +20,9 @@ $before = function (Request $request, Application $app){
 
 
 $app->get('/', 'SilexApp\\Controller\\TaskController::indexAction');
-//$app->get('/edit', 'SilexApp\\Controller\\TaskController::editProfile');
+$app->get('/edit', 'SilexApp\\Controller\\TaskController::editProfile');
+
 $app->get('/test', 'SilexApp\\Controller\\BaseController::indexAction');
 $app->get('/admin', 'SilexApp\\Controller\\BaseController::adminAction')->before($before);
 
+$app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser');

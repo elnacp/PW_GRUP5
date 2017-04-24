@@ -7,9 +7,10 @@ function handleFileSelect(evt) {
     // files is a FileList of File objects. List some properties.
     var output = [];
     for (var i = 0, f; f = files[i]; i++) {
-        output.push('<img src=', URL.createObjectURL(event.target.files[i]), '>');
+        output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(event.target.files[i]), '>');
     }
     document.getElementById('registerImg').innerHTML =  output.join('');
+    document.getElementById('profilePic').innerHTML =  output.join('');
     //document.getElementById('profilePic').style.width = "50px";
 }
 document.getElementById('files').addEventListener('change', handleFileSelect, false);

@@ -12,6 +12,15 @@
     margin-right: -15px;
 }
 
+.form {
+    margin-top: 20%;
+    background: rgba(19, 35, 47, 0.9);
+    padding: 40px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
 /* Flip around the padding for proper display in narrow viewports */
 .navbar-wrapper .container {
     padding-left: 0;

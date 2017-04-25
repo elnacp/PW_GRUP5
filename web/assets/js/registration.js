@@ -80,11 +80,28 @@ function valAge(age){
 function valPassword(password){
     var valid = false;
     if(password.length >= 6 && password.length< 13){
+       //alert("uncas");
         if( /[^a-zA-Z0-9]/.test( password ) ) {
-            valid = false;
-        }else{
             valid = true;
+            alert("eso");
+        }else{
+            valid = false;
+            alert("queso");
         }
+       /* alert("llega");
+       if(password.matches(".*[A-Z].*")){
+           alert("tiene mayus");
+       }
+
+        if(password.matches(".*[a-z].*")){
+            alert("tiene min!");
+        }
+
+        if(password.matches(".*\\d.*")){
+            alert("tiene numero");
+        }*/
+
+
     }
     return valid;
 }

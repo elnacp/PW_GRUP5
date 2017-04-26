@@ -49,5 +49,33 @@ class UserTasks implements UserModel
 
     }
 
+    public function checkUser($username)
+    {
+        $trobat = false;
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $user = $this->db->fetchAssoc($sql, array((string)$username));
+
+        if($user){
+            $trobat = true;
+        }else{
+            $trobat = false;
+        }
+        return $trobat;
+
+    }
+
+
+    public function RegisterUser($nickname, $email, $birthdate, $password){
+
+        $this->db->insert('usuari', [
+            'username' => $nickname,
+            'email' => $email,
+            'birthdate' => $birthdate,
+            'password' =>$password
+        ]);
+
+        return true;
+    }
+
 
 }

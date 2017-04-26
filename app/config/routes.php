@@ -32,4 +32,6 @@ $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost');
 
 //$app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile');
 $app->post('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
+$app->post('/DBRegister','SilexApp\\Controller\\DBController::DBRegister');
+
 

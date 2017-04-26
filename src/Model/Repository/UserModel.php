@@ -13,5 +13,7 @@ interface UserModel
 
     public function logejarUsuari($name);
 
+    public function validateEditProfile($name, $birth, $pass1, $pass2, $path);
+
 
 }

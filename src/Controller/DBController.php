@@ -39,4 +39,16 @@ class DBController
         $response->setContent($content);
         return $response;
     }
+
+    public function DBeditProfile(Application $app, Request $request){
+        $name = htmlspecialchars($_POST['nickname']);
+        $birth = htmlspecialchars($_POST['birthdate']);
+        $pass1 = htmlspecialchars($_POST['password1']);
+        $pass2 = htmlspecialchars($_POST['password2']);
+        $path = htmlspecialchars($_POST['files[]']);
+
+        $repo = new UserTasks($app['db']);
+        $ok = $repo->validateEditProfile($name, $birth, $pass1, $pass2, $path);
+        $response = new Response();
+    }
 }

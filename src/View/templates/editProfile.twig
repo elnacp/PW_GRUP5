@@ -16,7 +16,7 @@
         <div class="tab-content">
             <div id="signup">
                 <h1>Edición de Perfil</h1>
-                <form  method="POST">
+                <form action="/DBeditProfile" method="POST">
                     <div class="field-wrap">
                         <p class="titulo">Nombre de usuario<span class="req"></span><br></p>
                         <input type="text"  name="nickname" autocomplete="off" value="{{ username }}"/>
@@ -33,13 +33,13 @@
                         <label>
                             Contraseña<span class="req"></span>
                         </label>
-                        <input type="password"  name="password"  autocomplete="off"/>
+                        <input type="password"  name="password1"  autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>
                             Repite la contraseña<span class="req"></span>
                         </label>
-                        <input type="password"  name="password"  autocomplete="off"/>
+                        <input type="password"  name="password2"  autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>

@@ -47,13 +47,20 @@ class UserTasks implements UserModel
     }
 
     public function logejarUsuari($name){
-
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array((string)$name));
         $id = $stm['id'];
         $sql = "INSERT INTO logejat ( user_id) VALUE ($id)";
         $this->db->query($sql);
     }
+
+    public function validateEditProfile($name, $birth, $pass1, $pass2, $path){
+
+    }
+
+
+
+
 
 
 }

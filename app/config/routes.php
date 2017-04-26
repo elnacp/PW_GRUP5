@@ -24,3 +24,4 @@ $app->get('/', 'SilexApp\\Controller\\TaskController::indexAction');
 $app->get('/test', 'SilexApp\\Controller\\BaseController::indexAction');
 $app->get('/admin', 'SilexApp\\Controller\\BaseController::adminAction')->before($before);
 
+//

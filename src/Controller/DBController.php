@@ -12,8 +12,8 @@ class DBController
 {
     public function DBlogin(Application $app, Request $request)
     {
-        $name = $request->get('nickname');
-        $password = $request->get('password');
+        $name = htmlspecialchars($_POST['nickname']);
+        $password = htmlspecialchars($_POST['password']);
 
         $repo = new UserTasks($app['db']);
         $exists = $repo->validateUser($name, $password);
@@ -27,11 +27,14 @@ class DBController
             );
         } else {
             //echo("adios");
+            $repo->logejarUsuari($name);
             $response->setStatusCode(Response::HTTP_OK);
             $content = $app['twig']->render('error.twig', [
                     'message' => $name
                 ]
             );
+
+
         }
         $response->setContent($content);
         return $response;

@@ -26,13 +26,11 @@ class UserTasks implements UserModel
         $trobat = false;
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $user = $this->db->fetchAssoc($sql, array((string)$username));
-
         if($user){
             $sql = "SELECT * FROM usuari WHERE password = ?";
             $pass = $this->db->fetchAssoc($sql, array((string)$password));
             if($pass){
                 $trobat = true;
-                echo("suu");
             }
         }else{
             $sql = "SELECT * FROM usuari WHERE email = ?";
@@ -46,7 +44,15 @@ class UserTasks implements UserModel
             }
         }
         return $trobat;
+    }
 
+    public function logejarUsuari($name){
+
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$name));
+        $id = $stm['id'];
+        $sql = "INSERT INTO logejat ( user_id) VALUE ($id)";
+        $this->db->query($sql);
     }
 
 

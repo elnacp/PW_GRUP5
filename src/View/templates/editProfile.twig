@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% block title %} Edición de Perfil - Dogygram {% endblock %}
+{% block title %} Hello page {% endblock %}
 {% block head %}
     {{ parent() }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -8,29 +8,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href={{ asset('/register.css', 'css') }}>
     <link rel="stylesheet" type="text/css" href="{{ asset('/editProfile.css', 'css') }}">
+    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 {% endblock %}
 {% block content %}
-
     <div class="form" id="Ep">
         <div class="tab-content">
             <div id="signup">
                 <h1>Edición de Perfil</h1>
-                <form action="/DBeditProfile" method="post">
+                <form  method="POST">
                     <div class="field-wrap">
-                        <label>
-                            Nombre de Usuario<span class="req"></span>
-                        </label>
-                        <input type="text"  name="nickname" autocomplete="off"/>
+                        <p class="titulo">Nombre de usuario<span class="req"></span><br></p>
+                        <input type="text"  name="nickname" autocomplete="off" value="{{ username }}"/>
                     </div>
                     <div class="field-wrap" id="Edad">
                         <br>
                         <p class="titulo">Fecha de Nacimiento<span class="req"></span><br></p>
                         <label>
                         </label>
-                        <input type="date" id="New_edad" name="edad"  autocomplete="off"/>
+                        <input type="date" id="New_edad" name="edad"  autocomplete="off" value="{{ birthdate }}"/>
                     </div>
+
                     <div class="field-wrap">
                         <label>
                             Contraseña<span class="req"></span>
@@ -49,8 +47,8 @@
                         </label>
                         <br>
                         <br>
-                        <input type="file" id="files" name="files[]" multiple />
-                        <output id="registerImg"></output>
+                            <input type="file" id="files" name="files[]" multiple />
+                            <output id="registerImg"></output>
                     </div>
                     <button type="submit" class="button button-block" id="comenzar"/>Aplicar cambios</button>
                 </form>
@@ -62,5 +60,4 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src={{ asset('/indexRegistration.js', 'js') }}></script>
     <script src={{ asset('/registration.js', 'js') }}></script>
-
 {% endblock %}

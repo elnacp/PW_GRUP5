@@ -80,28 +80,12 @@ function valAge(age){
 function valPassword(password){
     var valid = false;
     if(password.length >= 6 && password.length< 13){
-       //alert("uncas");
-        if( /[^a-zA-Z0-9]/.test( password ) ) {
-            valid = true;
-            alert("eso");
+        var TCode = password.value;
+        if( /[^a-zA-Z0-9]/.test( TCode ) ) {
+            alert('Input is not alphanumeric');
         }else{
-            valid = false;
-            alert("queso");
+            valid = true;
         }
-       /* alert("llega");
-       if(password.matches(".*[A-Z].*")){
-           alert("tiene mayus");
-       }
-
-        if(password.matches(".*[a-z].*")){
-            alert("tiene min!");
-        }
-
-        if(password.matches(".*\\d.*")){
-            alert("tiene numero");
-        }*/
-
-
     }
     return valid;
 }
@@ -119,8 +103,6 @@ $('#registro').submit(function(event) {
 
 
     var isCorrect = true;
-
-    alert(age);
 
     if(valName(name)){
         alert("ERROR! Nombre no válido!");

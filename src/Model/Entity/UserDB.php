@@ -6,7 +6,7 @@ namespace ProjectesWeb\Model\Entity;
 /**
  *  Task
  */
-class Task
+class UserDB
 {
     private $id;
     private $username;
@@ -27,6 +27,7 @@ class Task
        $this->active = $active;
 
     }
+
 
 
 

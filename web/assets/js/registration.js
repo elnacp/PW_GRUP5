@@ -12,7 +12,8 @@ function handleFileSelect(evt) {
     document.getElementById('registerImg').innerHTML =  output.join('');
     //document.getElementById('profilePic').style.width = "50px";
 }
-//document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 function valName(name){
     return (name.length > 20)
@@ -80,8 +81,9 @@ function valAge(age){
 function valPassword(password){
     var valid = false;
     if(password.length >= 6 && password.length< 13){
-        if( /[^a-zA-Z0-9]/.test( password ) ) {
-            valid = false;
+        var TCode = password.value;
+        if( /[^a-zA-Z0-9]/.test( TCode ) ) {
+            alert('Input is not alphanumeric');
         }else{
             valid = true;
         }
@@ -102,8 +104,6 @@ $('#registro').submit(function(event) {
 
 
     var isCorrect = true;
-
-    alert(age);
 
     if(valName(name)){
         alert("ERROR! Nombre no válido!");

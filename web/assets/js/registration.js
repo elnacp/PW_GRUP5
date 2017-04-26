@@ -57,17 +57,17 @@ function valAge(age){
         return false;
     }
 
-    if(year.localeCompare(yyyy) <= 0 && (month.localeCompare(mm) <= 0) && (day.localeCompare(dd) == 1)){
+    if(year <= yyyy && (month.localeCompare(mm) <= 0) && (day.localeCompare(dd) == 1)){
         alert(day + "error, invalid date");
         return false;
     }
 
-    if(year.localeCompare(yyyy) <= 0 && (month.localeCompare(mm) == 1) && (day.localeCompare(dd) <= 0)){
+    if(year <= yyyy <= 0 && (month.localeCompare(mm) == 1) && (day.localeCompare(dd) <= 0)){
         alert(month + "error, invalid date");
         return false;
     }
 
-    if(year.localeCompare(yyyy) <= 0 && (month.localeCompare(mm) == 1) && (day.localeCompare(dd) == 1)){
+    if(year <= yyyy <= 0 && (month.localeCompare(mm) == 1) && (day.localeCompare(dd) == 1)){
         alert(month + "error, invalid date");
         return false;
     }
@@ -80,11 +80,20 @@ function valAge(age){
 
 function valPassword(password){
     var valid = false;
+    var num, min, may = false;
     if(password.length >= 6 && password.length< 13){
         var TCode = password.value;
-        if( /[^a-zA-Z0-9]/.test( TCode ) ) {
-            alert('Input is not alphanumeric');
-        }else{
+        if (/[a-z]/.test(password)){
+            min = true;
+        }
+        if (/[A-Z]/.test(password)){
+            may = true;
+        }
+        if (/[0-9]/.test(password)){
+            num = true;
+        }
+
+        if (num && min && may){
             valid = true;
         }
     }

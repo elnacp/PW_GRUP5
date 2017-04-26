@@ -56,6 +56,7 @@ class UserTasks implements UserModel
 
     public function validateEditProfile($name, $birth, $pass1, $pass2, $path){
 
+        
     }
 
 

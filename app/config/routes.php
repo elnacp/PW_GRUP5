@@ -25,11 +25,9 @@ $app->get('/edit', 'SilexApp\\Controller\\TaskController::editProfile');
 $app->get('/test', 'SilexApp\\Controller\\BaseController::indexAction');
 $app->get('/admin', 'SilexApp\\Controller\\BaseController::adminAction')->before($before);
 
-<<<<<<< HEAD
-//
-=======
+
 $app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser');
 $app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn');
 $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost');
 
->>>>>>> 6b413e6e821f82751fe1ddcb607b342d392f2401
+

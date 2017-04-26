@@ -30,4 +30,6 @@ $app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser');
 $app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn');
 $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost');
 
+//$app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile');
+$app->post('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
 

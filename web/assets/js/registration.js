@@ -12,7 +12,7 @@ function handleFileSelect(evt) {
     document.getElementById('registerImg').innerHTML =  output.join('');
     //document.getElementById('profilePic').style.width = "50px";
 }
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
+//document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 function valName(name){
     return (name.length > 20)

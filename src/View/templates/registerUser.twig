@@ -21,22 +21,6 @@
 
                 <form action="/DBRegister" method="post" id="registro">
 
-                    <div class="top-row">
-                        <div class="field-wrap">
-                            <label>
-                                Nombre<span class="req">*</span>
-                            </label>
-                            <input type="text" id ="New_nombre" name="nombre" required autocomplete="off" />
-                        </div>
-
-                        <div class="field-wrap">
-                            <label>
-                                Apellido<span class="req">*</span>
-                            </label>
-                            <input type="text" id ="New_apellido" name="apellido" required autocomplete="off"/>
-                        </div>
-                    </div>
-
                     <div class="field-wrap">
                         <label>
                             Nombre de Usuario<span class="req">*</span>
@@ -58,7 +42,7 @@
                         <br>
                         <br>
                         <input type="file" id="files" name="files[]" multiple />
-                        <output id="registerImg"></output>
+                        <output id="registerImg" name="image"></output>
 
                     </div>
 

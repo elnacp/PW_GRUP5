@@ -66,14 +66,16 @@ class UserTasks implements UserModel
     }
 
 
-    public function RegisterUser($nickname, $email, $birthdate, $password){
+    public function RegisterUser($nickname, $email, $birthdate, $password, $img){
         $pass = md5($password);
         $this->db->insert('usuari', [
             'username' => $nickname,
             'email' => $email,
             'birthdate' => $birthdate,
-            'password' =>$pass
+            'password' =>$pass,
+            'img_path' =>$img
         ]);
+
 
         return true;
     }

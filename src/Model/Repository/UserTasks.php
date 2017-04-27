@@ -28,6 +28,7 @@ class UserTasks implements UserModel
         $user = $this->db->fetchAssoc($sql, array((string)$username));
         if($user){
             $sql = "SELECT * FROM usuari WHERE password = ?";
+            $password = md5($password);
             $pass = $this->db->fetchAssoc($sql, array((string)$password));
             if($pass){
                 $trobat = true;
@@ -37,6 +38,7 @@ class UserTasks implements UserModel
             $user = $this->db->fetchAssoc($sql, array((string)$username));
             if($user){
                 $sql = "SELECT * FROM usuari WHERE password = ?";
+                $password = md5($password);
                 $pass = $this->db->fetchAssoc($sql, array((string)$password));
                 if($pass){
                     $trobat = true;
@@ -57,6 +59,34 @@ class UserTasks implements UserModel
     public function validateEditProfile($name, $birth, $pass1, $pass2, $path){
 
 
+    }
+
+    public function checkUser($username)
+    {
+        $trobat = false;
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $user = $this->db->fetchAssoc($sql, array((string)$username));
+
+        if($user){
+            $trobat = true;
+        }else{
+            $trobat = false;
+        }
+        return $trobat;
+
+    }
+
+
+    public function RegisterUser($nickname, $email, $birthdate, $password){
+        $pass = md5($password);
+        $this->db->insert('usuari', [
+            'username' => $nickname,
+            'email' => $email,
+            'birthdate' => $birthdate,
+            'password' =>$pass
+        ]);
+
+        return true;
     }
 
 

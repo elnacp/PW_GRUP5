@@ -26,19 +26,19 @@ class UserTasks implements UserModel
         $trobat = false;
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $user = $this->db->fetchAssoc($sql, array((string)$username));
-
         if($user){
             $sql = "SELECT * FROM usuari WHERE password = ?";
+            $password = md5($password);
             $pass = $this->db->fetchAssoc($sql, array((string)$password));
             if($pass){
                 $trobat = true;
-                echo("suu");
             }
         }else{
             $sql = "SELECT * FROM usuari WHERE email = ?";
             $user = $this->db->fetchAssoc($sql, array((string)$username));
             if($user){
                 $sql = "SELECT * FROM usuari WHERE password = ?";
+                $password = md5($password);
                 $pass = $this->db->fetchAssoc($sql, array((string)$password));
                 if($pass){
                     $trobat = true;
@@ -46,8 +46,57 @@ class UserTasks implements UserModel
             }
         }
         return $trobat;
+    }
+
+    public function logejarUsuari($name){
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$name));
+        $id = $stm['id'];
+        $sql = "INSERT INTO logejat ( user_id) VALUE ($id)";
+        $this->db->query($sql);
+    }
+
+    public function validateEditProfile($name, $birth, $pass1){
+        $sql = "SELECT user_id FROM logejat LIMIT 1";
+        $stm = $this->db->query($sql, 1);
+        $id = $stm['user_id'];
+        $password = md5($pass1);
+        $sql = "UPDATE usuari SET username = $name, birthdate  = $birth , password = $password  WHERE id = $id ";
+        $this->db->query($sql);
+
+
 
     }
+
+    public function checkUser($username)
+    {
+        $trobat = false;
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $user = $this->db->fetchAssoc($sql, array((string)$username));
+        if($user){
+            $trobat = true;
+        }else{
+            $trobat = false;
+        }
+        return $trobat;
+
+    }
+
+
+    public function RegisterUser($nickname, $email, $birthdate, $password){
+        $pass = md5($password);
+        $this->db->insert('usuari', [
+            'username' => $nickname,
+            'email' => $email,
+            'birthdate' => $birthdate,
+            'password' =>$pass
+        ]);
+        return true;
+    }
+
+
+
+
 
 
 }

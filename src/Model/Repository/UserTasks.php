@@ -56,7 +56,14 @@ class UserTasks implements UserModel
         $this->db->query($sql);
     }
 
-    public function validateEditProfile($name, $birth, $pass1, $pass2, $path){
+    public function validateEditProfile($name, $birth, $pass1){
+        $sql = "SELECT user_id FROM logejat LIMIT 1";
+        $stm = $this->db->query($sql, 1);
+        $id = $stm['user_id'];
+        $password = md5($pass1);
+        $sql = "UPDATE usuari SET username = $name, birthdate  = $birth , password = $password  WHERE id = $id ";
+        $this->db->query($sql);
+
 
 
     }
@@ -66,7 +73,6 @@ class UserTasks implements UserModel
         $trobat = false;
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $user = $this->db->fetchAssoc($sql, array((string)$username));
-
         if($user){
             $trobat = true;
         }else{
@@ -85,7 +91,6 @@ class UserTasks implements UserModel
             'birthdate' => $birthdate,
             'password' =>$pass
         ]);
-
         return true;
     }
 

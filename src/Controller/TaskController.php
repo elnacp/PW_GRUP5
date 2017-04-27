@@ -20,8 +20,8 @@ class TaskController{
         $sql = "SELECT * FROM logejat";
         $usuari = $app['db']->fetchAssoc($sql);
         $id = $usuari['id'];
-        $sql = "SELECT * FROM usuari WHERE id = $id";
-        $usuari = $app['db']->fetchAssoc($sql);
+        $sql = "SELECT * FROM usuari WHERE id = ?";
+        $usuari = $app['db']->fetchAssoc($sql, array((int)$id));
         $content = $app['twig']->render('editProfile.twig', [
             'username' => $usuari['username'],
             'birthdate' => $usuari['birthdate']

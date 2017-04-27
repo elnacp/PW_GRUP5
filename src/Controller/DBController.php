@@ -33,32 +33,36 @@ class DBController
                     'message' => $name
                 ]
             );
-
-
         }
         $response->setContent($content);
         return $response;
     }
 
-    public function DBeditProfile(Application $app, Request $request)
+    public function DBeditProfile(Application $app)
     {
         $name = htmlspecialchars($_POST['nickname']);
-        $birth = htmlspecialchars($_POST['birthdate']);
+        $birth = htmlspecialchars($_POST['edad']);
         $pass1 = htmlspecialchars($_POST['password1']);
-        $pass2 = htmlspecialchars($_POST['password2']);
-        $path = htmlspecialchars($_POST['files[]']);
+        //$pass2 = htmlspecialchars($_POST['password2']);
+        //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
-        $ok = $repo->validateEditProfile($name, $birth, $pass1, $pass2, $path);
+        $repo-> validateEditProfile($name, $birth, $pass1);
         $response = new Response();
+        $content = $app['twig']->render('error.twig', [
+                'message' => 'hola'
+            ]
+        );
+        $response->setContent($content);
+        return $response;
     }
 
     public function DBRegister(Application $app, Request $request)
     {
-        $nickname = $request->get('nickname');
-        $email = $request->get('email');
-        $birthdate = $request->get('edad');
-        $password = $request->get('password');
+        $nickname = htmlspecialchars($request->get('nickname'));
+        $email = htmlspecialchars($request->get('email'));
+        $birthdate = htmlspecialchars($request->get('edad'));
+        $password = htmlspecialchars($request->get('password'));
 
 
         $repo = new UserTasks($app['db']);

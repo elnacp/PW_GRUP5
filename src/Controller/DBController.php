@@ -47,13 +47,35 @@ class DBController
         $repo = new UserTasks($app['db']);
         $exists = $repo->checkUser($nickname);
         $response = new Response();
+
         if (!$exists) {
-            $repo->RegisterUser($nickname, $email, $birthdate, $password);
-            $response->setStatusCode(Response::HTTP_OK);
-            $content = $app['twig']->render('error.twig', [
-                    'message' => 'Registro finalizado correctamente'
-                ]
-            );
+
+            $aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
+
+            $mensaje = "Registro en tuweb.com\n\n";
+            $mensaje .= "Estos son tus datos de registro:\n";
+            $mensaje .= "Usuario: $nickname.\n";
+            $mensaje .= "Contraseña: $password.\n\n";
+            $mensaje .= "Debes activar tu cuenta pulsando este enlace: http://www.tuweb.com/activacion.php?id=$aleatorio";
+
+            $cabeceras = 'From: webmaster@example.com' . "\r\n" .
+                'Reply-To: webmaster@example.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+
+
+            if(mail('noaduran@hotmail.com','Activar cuenta',$mensaje, $cabeceras)){
+                $repo->RegisterUser($nickname, $email, $birthdate, $password);
+                $response->setStatusCode(Response::HTTP_OK);
+                $content = $app['twig']->render('error.twig', [
+                        'message' => 'Registro finalizado correctamente'
+                    ]
+                );
+            }else{
+                $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+                $content = $app['twig']->render('error.twig', [
+                        'message' => 'No se ha podido enviar el email'
+                    ]
+                );             }
 
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);

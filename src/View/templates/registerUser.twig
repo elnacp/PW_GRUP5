@@ -1,4 +1,5 @@
 {% extends "base.twig" %}
+{% block title %} Registration {% endblock %}
 {% block head %}
     {{ parent() }}
     <meta charset="UTF-8">
@@ -10,21 +11,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 {% endblock %}
 {% block content %}
+
     <div class="form" id="Rf">
+
 
         <div class="tab-content">
 
             <div id="signup">
                 <h1>Regístrate</h1>
 
-                <form action="NewUser.php" method="post" id="registro">
+                <form action="/DBRegister" method="post" id="registro">
 
                     <div class="top-row">
                         <div class="field-wrap">
                             <label>
                                 Nombre<span class="req">*</span>
                             </label>
-                            <input type="text" id ="New_nombre" name="nombre"required autocomplete="off" />
+                            <input type="text" id ="New_nombre" name="nombre" required autocomplete="off" />
                         </div>
 
                         <div class="field-wrap">
@@ -81,7 +84,7 @@
                         <label>
                             Repite la Contraseña<span class="req">*</span>
                         </label>
-                        <input type="password" id="sure" required autocomplete="off"/>
+                        <input type="password"  id="sure"name="repeat" required autocomplete="off"/>
                     </div>
 
                     <button type="submit" class="button button-block" id="comenzar"/>Comenzar</button>

@@ -15,22 +15,13 @@ function handleFileSelect(evt) {
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-function valName(name){
-    return (name.length > 20)
-}
 
-function valApellido(apellido){
-    return (apellido.length > 20)
-}
 
 function valNickname(nickname){
     return (nickname.length > 20)
 }
 
-function valEmail(email){
-    var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return pattern.test(email);
-}
+
 
 function valAge(age){
     var fields = age.split('-');
@@ -103,10 +94,8 @@ function valPassword(password){
 $('#registro').submit(function(event) {
 
 
-    var name = $('#New_nombre').val();
-    var f_name = $('#New_apellido').val();
+
     var nickname = $('#New_nickname').val();
-    var email = $('#New_email').val();
     var age = $('#New_edad').val();
     var pass = $('#New_pass').val();
     var repeat = $('#sure').val();
@@ -114,25 +103,12 @@ $('#registro').submit(function(event) {
 
     var isCorrect = true;
 
-    if(valName(name)){
-        alert("ERROR! Nombre no válido!");
-        isCorrect = false;
-    }
-
-    if(valApellido(f_name)) {
-        alert("ERROR! Apellido no válido!");
-        isCorrect = false;
-    }
 
     if(valNickname(nickname)){
         alert("ERROR! Nickname no válido!");
         isCorrect = false;
     }
 
-    if(!valEmail(email)){
-        alert("ERROR! Email no válido!");
-        isCorrect = false;
-    }
 
     if(!valAge(age)){
         alert("ERROR!  no válido!");
@@ -155,5 +131,6 @@ $('#registro').submit(function(event) {
 
     }
 
-});
-
+});/**
+ * Created by elnacabotparedes on 27/4/17.
+ */

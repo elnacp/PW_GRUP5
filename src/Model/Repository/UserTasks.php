@@ -59,11 +59,11 @@ class UserTasks implements UserModel
 
     public function validateEditProfile($name, $birth, $pass1){
         $sql = "SELECT user_id FROM logejat LIMIT 1";
-        $stm = $this->db->query($sql, 1);
+        $stm = $this->db->fetchAssoc($sql);
         $id = $stm['user_id'];
         $password = md5($pass1);
-        $sql = "UPDATE usuari SET username = $name, birthdate  = $birth , password = $password  WHERE id = $id ";
-        $this->db->query($sql);
+        $sql = "UPDATE usuari SET username = ?, birthdate  = ?, password = ? WHERE id = ?";
+        $this->db->executeUpdate($sql, array($name, $birth, $password, (int) $id));
 
 
 

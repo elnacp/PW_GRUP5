@@ -29,16 +29,17 @@ class UserTasks implements UserModel
 
         if($user){
             $sql = "SELECT * FROM usuari WHERE password = ?";
+            $password = md5($password);
             $pass = $this->db->fetchAssoc($sql, array((string)$password));
             if($pass){
                 $trobat = true;
-                echo("suu");
             }
         }else{
             $sql = "SELECT * FROM usuari WHERE email = ?";
             $user = $this->db->fetchAssoc($sql, array((string)$username));
             if($user){
                 $sql = "SELECT * FROM usuari WHERE password = ?";
+                $password = md5($password);
                 $pass = $this->db->fetchAssoc($sql, array((string)$password));
                 if($pass){
                     $trobat = true;

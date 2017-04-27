@@ -14,7 +14,6 @@ class DBController
     {
         $name = htmlspecialchars($_POST['nickname']);
         $password = htmlspecialchars($_POST['password']);
-
         $repo = new UserTasks($app['db']);
         $exists = $repo->validateUser($name, $password);
         $response = new Response();
@@ -38,6 +37,7 @@ class DBController
         return $response;
     }
 
+
     public function DBeditProfile(Application $app)
     {
         $name = htmlspecialchars($_POST['nickname']);
@@ -56,6 +56,7 @@ class DBController
         $response->setContent($content);
         return $response;
     }
+
 
     public function DBRegister(Application $app, Request $request)
     {

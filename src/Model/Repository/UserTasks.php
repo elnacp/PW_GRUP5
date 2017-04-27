@@ -56,6 +56,7 @@ class UserTasks implements UserModel
         $this->db->query($sql);
     }
 
+
     public function validateEditProfile($name, $birth, $pass1){
         $sql = "SELECT user_id FROM logejat LIMIT 1";
         $stm = $this->db->query($sql, 1);

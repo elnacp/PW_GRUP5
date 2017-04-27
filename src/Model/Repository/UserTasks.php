@@ -26,7 +26,6 @@ class UserTasks implements UserModel
         $trobat = false;
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $user = $this->db->fetchAssoc($sql, array((string)$username));
-
         if($user){
             $sql = "SELECT * FROM usuari WHERE password = ?";
             $password = md5($password);
@@ -47,6 +46,25 @@ class UserTasks implements UserModel
             }
         }
         return $trobat;
+    }
+
+    public function logejarUsuari($name){
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$name));
+        $id = $stm['id'];
+        $sql = "INSERT INTO logejat ( user_id) VALUE ($id)";
+        $this->db->query($sql);
+    }
+
+    public function validateEditProfile($name, $birth, $pass1){
+        $sql = "SELECT user_id FROM logejat LIMIT 1";
+        $stm = $this->db->fetchAssoc($sql);
+        $id = $stm['user_id'];
+        $password = md5($pass1);
+        $sql = "UPDATE usuari SET username = ?, birthdate  = ?, password = ? WHERE id = ?";
+        $this->db->executeUpdate($sql, array($name, $birth, $password, (int) $id));
+
+
 
     }
 
@@ -55,7 +73,6 @@ class UserTasks implements UserModel
         $trobat = false;
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $user = $this->db->fetchAssoc($sql, array((string)$username));
-
         if($user){
             $trobat = true;
         }else{
@@ -75,10 +92,12 @@ class UserTasks implements UserModel
             'password' =>$pass,
             'img_path' =>$img
         ]);
-
-
         return true;
     }
+
+
+
+
 
 
 }

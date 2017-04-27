@@ -12,8 +12,8 @@ class DBController
 {
     public function DBlogin(Application $app, Request $request)
     {
-        $name = $request->get('nickname');
-        $password = $request->get('password');
+        $name = htmlspecialchars($_POST['nickname']);
+        $password = htmlspecialchars($_POST['password']);
 
         $repo = new UserTasks($app['db']);
         $exists = $repo->validateUser($name, $password);
@@ -27,6 +27,7 @@ class DBController
             );
         } else {
             //echo("adios");
+            $repo->logejarUsuari($name);
             $response->setStatusCode(Response::HTTP_OK);
             $content = $app['twig']->render('error.twig', [
                     'message' => $name
@@ -36,6 +37,26 @@ class DBController
         $response->setContent($content);
         return $response;
     }
+
+    public function DBeditProfile(Application $app)
+    {
+        $name = htmlspecialchars($_POST['nickname']);
+        $birth = htmlspecialchars($_POST['edad']);
+        $pass1 = htmlspecialchars($_POST['password1']);
+        //$pass2 = htmlspecialchars($_POST['password2']);
+        //$path = htmlspecialchars($_POST['files[]']);
+
+        $repo = new UserTasks($app['db']);
+        $repo-> validateEditProfile($name, $birth, $pass1);
+        $response = new Response();
+        $content = $app['twig']->render('error.twig', [
+                'message' => 'hola'
+            ]
+        );
+        $response->setContent($content);
+        return $response;
+    }
+
     public function DBRegister(Application $app, Request $request)
     {
         $nickname = $request->get('nickname');
@@ -43,6 +64,8 @@ class DBController
         $birthdate = $request->get('edad');
         $password = $request->get('password');
         $img = $request->get('imgP');
+
+
 
         $repo = new UserTasks($app['db']);
         $exists = $repo->checkUser($nickname);
@@ -87,5 +110,6 @@ class DBController
         }
         $response->setContent($content);
         return $response;
+
     }
 }

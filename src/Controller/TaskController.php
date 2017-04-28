@@ -19,7 +19,7 @@ class TaskController{
     public function editProfile(Application $app){
         $sql = "SELECT * FROM logejat";
         $usuari = $app['db']->fetchAssoc($sql);
-        $id = $usuari['id'];
+        $id = $usuari['user_id'];
         $sql = "SELECT * FROM usuari WHERE id = ?";
         $usuari = $app['db']->fetchAssoc($sql, array((int)$id));
         $content = $app['twig']->render('editProfile.twig', [

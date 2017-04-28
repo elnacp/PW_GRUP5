@@ -6,14 +6,22 @@ function handleFileSelect(evt) {
 
     // files is a FileList of File objects. List some properties.
     var output = [];
+    var x = document.createElement("IMG");
+    x.setAttribute('id','profile');
     for (var i = 0, f; f = files[i]; i++) {
-        output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(event.target.files[i]), '>');
+        //output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(evt.target.files[i]), '>');
+        x.setAttribute('src', URL.createObjectURL(event.target.files[i]));
+        x.setAttribute('name', 'image');
+        x.setAttribute('class','img-thumbnail img-responsive');
+        var aux = document.createElement("INPUT");
+        aux.setAttribute('name', "imgP");
+        aux.setAttribute('value',URL.createObjectURL(event.target.files[i]));
     }
-    document.getElementById('registerImg').innerHTML =  output.join('');
-    //document.getElementById('profilePic').style.width = "50px";
+    document.getElementById('registerImg').appendChild(x);
+    document.getElementById('registerImg').appendChild(aux);
 }
-
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
 
 function valName(name){
     return (name.length > 20)
@@ -103,8 +111,8 @@ function valPassword(password){
 $('#registro').submit(function(event) {
 
 
-    var name = $('#New_nombre').val();
-    var f_name = $('#New_apellido').val();
+   // var name = $('#New_nombre').val();
+    //var f_name = $('#New_apellido').val();
     var nickname = $('#New_nickname').val();
     var email = $('#New_email').val();
     var age = $('#New_edad').val();
@@ -114,7 +122,7 @@ $('#registro').submit(function(event) {
 
     var isCorrect = true;
 
-    if(valName(name)){
+   /* if(valName(name)){
         alert("ERROR! Nombre no válido!");
         isCorrect = false;
     }
@@ -122,7 +130,7 @@ $('#registro').submit(function(event) {
     if(valApellido(f_name)) {
         alert("ERROR! Apellido no válido!");
         isCorrect = false;
-    }
+    }*/
 
     if(valNickname(nickname)){
         alert("ERROR! Nickname no válido!");

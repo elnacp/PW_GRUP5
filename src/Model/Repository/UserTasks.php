@@ -56,13 +56,14 @@ class UserTasks implements UserModel
         $this->db->query($sql);
     }
 
+
     public function validateEditProfile($name, $birth, $pass1){
         $sql = "SELECT user_id FROM logejat LIMIT 1";
-        $stm = $this->db->query($sql, 1);
+        $stm = $this->db->fetchAssoc($sql);
         $id = $stm['user_id'];
         $password = md5($pass1);
-        $sql = "UPDATE usuari SET username = $name, birthdate  = $birth , password = $password  WHERE id = $id ";
-        $this->db->query($sql);
+        $sql = "UPDATE usuari SET username = ?, birthdate  = ?, password = ? WHERE id = ?";
+        $this->db->executeUpdate($sql, array($name, $birth, $password, (int) $id));
 
 
 
@@ -83,22 +84,26 @@ class UserTasks implements UserModel
     }
 
 
-    public function RegisterUser($nickname, $email, $birthdate, $password){
+    public function RegisterUser($nickname, $email, $birthdate, $password, $img){
         $pass = md5($password);
         $this->db->insert('usuari', [
             'username' => $nickname,
             'email' => $email,
             'birthdate' => $birthdate,
-            'password' =>$pass
+            'password' =>$pass,
+            'img_path' =>$img
         ]);
         return true;
     }
 
     public function DBnewPost($title, $path_name){
-        $sql = "SELECT user_id FROM 'logejat' LIMIT 1";
-        $user_id = $this->db->fetchAssoc($sql, 1);
+        $sql = "SELECT * FROM logejat LIMIT 1";
+        $user_id = $this->db->fetchAssoc($sql);
+        $id = $user_id['user_id'];
+
         $this->db->insert('imatge', [
-            'user_id' => $user_id,
+            'user_id' => $id,
+            'title' => $title,
             'img_path' => $path_name,
             'visits' => 0
         ]);

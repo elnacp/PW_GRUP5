@@ -115,21 +115,24 @@ class DBController
     }
     public function DBnewPost(Application $app, Request $request){
         $title = htmlspecialchars($request->get('title'));
-        $imgName = htmlspecialchars($request->get('files[]'));
-        $folder = "/assets/img/";
-        $path_name = $folder . $imgName;
 
+        $imgName = htmlspecialchars($request->files->get('imagen'));
+
+        var_dump($request->files->get('imagen'));
+        var_dump($request->files);
+        $folder = "/assets/img/";
+        $path_name = $imgName;
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $path_name);
-        if($ok){
+        if($ok) {
             $response = new Response();
             $content = $app['twig']->render('error.twig', [
                     'message' => 'New Post Ok'
                 ]
             );
         }
-
         $response->setContent($content);
+        return new Response();
         return $response;
     }
 

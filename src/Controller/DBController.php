@@ -115,9 +115,8 @@ class DBController
     }
     public function DBnewPost(Application $app, Request $request){
         $title = htmlspecialchars($request->get('title'));
-
         $imgName = htmlspecialchars($request->files->get('imagen'));
-
+        $privada = htmlspecialchars($request->get('privada'));
         var_dump($request->files->get('imagen'));
         var_dump($request->files);
         $folder = "/assets/img/";

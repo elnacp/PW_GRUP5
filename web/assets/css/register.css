@@ -221,6 +221,13 @@ textarea {
     margin-top: -20px;
     text-align: right;
 }
-input.cbox{
-   float: left;
+span.checkbox{
+    width: 20px;
+    height: 20px;
+    position: relative;
+   float: right;
+}
+
+.checkbox .label{
+    align-content: center;
 }

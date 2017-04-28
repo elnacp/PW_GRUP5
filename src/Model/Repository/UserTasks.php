@@ -98,7 +98,13 @@ class UserTasks implements UserModel
         $response = new Response();
         $sql = "SELECT * FROM 'logejat' LIMIT 1";
         $user_id = $this->db->fetchAssoc($sql, 1);
-        
+        $this->db->insert('imatge', [
+            'user_id' => $user_id,
+            'img_path' => $path_name,
+            'visits' => 0,
+            'private' => null
+        ]);
+        return true;
 
     }
 

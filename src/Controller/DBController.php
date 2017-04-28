@@ -87,4 +87,19 @@ class DBController
         return $response;
 
     }
+    public function DBnewPost(Application $app, Request $request){
+        $title = htmlspecialchars($request->get('title'));
+        $path_name = htmlspecialchars($request->get('files[]'));
+
+        $repo = new UserTasks($app['db']);
+        $repo->DBnewPost($title, $path_name);
+        $response = new Response();
+        $content = $app['twig']->render('error.twig', [
+                'message' => 'New Post Ok'
+            ]
+        );
+        $response->setContent($content);
+        return $response;
+    }
+
 }

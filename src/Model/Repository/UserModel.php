@@ -19,5 +19,6 @@ interface UserModel
 
     public function validateEditProfile($name, $birth, $pass1);
 
+    public function DBnewPost($title, $path_name);
 
 }

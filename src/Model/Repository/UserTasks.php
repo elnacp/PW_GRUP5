@@ -94,7 +94,13 @@ class UserTasks implements UserModel
         return true;
     }
 
+    public function DBnewPost($title, $path_name){
+        $response = new Response();
+        $sql = "SELECT * FROM 'logejat' LIMIT 1";
+        $user_id = $this->db->fetchAssoc($sql, 1);
+        
 
+    }
 
 
 

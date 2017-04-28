@@ -92,12 +92,15 @@ class DBController
         $path_name = htmlspecialchars($request->get('files[]'));
 
         $repo = new UserTasks($app['db']);
-        $repo->DBnewPost($title, $path_name);
-        $response = new Response();
-        $content = $app['twig']->render('error.twig', [
-                'message' => 'New Post Ok'
-            ]
-        );
+        $ok = $repo->DBnewPost($title, $path_name);
+        if($ok){
+            $response = new Response();
+            $content = $app['twig']->render('error.twig', [
+                    'message' => 'New Post Ok'
+                ]
+            );
+        }
+
         $response->setContent($content);
         return $response;
     }

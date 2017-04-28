@@ -115,7 +115,9 @@ class DBController
     }
     public function DBnewPost(Application $app, Request $request){
         $title = htmlspecialchars($request->get('title'));
-        $path_name = htmlspecialchars($request->get('files[]'));
+        $imgName = htmlspecialchars($request->get('files[]'));
+        $folder = "/assets/img/";
+        $path_name = $folder . $imgName;
 
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $path_name);

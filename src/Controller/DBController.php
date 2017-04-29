@@ -117,12 +117,18 @@ class DBController
         $title = htmlspecialchars($request->get('title'));
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
-        var_dump($request->files->get('imagen'));
-        var_dump($request->files);
+        //var_dump($privada);
+        //var_dump($request->files->get('imagen'));
+        //var_dump($request->files);
+        if ($privada ==="privada"){
+            $private = 1;
+        }else{
+            $private = 0;
+        }
         $folder = "/assets/img/";
         $path_name = $imgName;
         $repo = new UserTasks($app['db']);
-        $ok = $repo->DBnewPost($title, $path_name);
+        $ok = $repo->DBnewPost($title, $path_name, $private);
         if($ok) {
             $response = new Response();
             $content = $app['twig']->render('error.twig', [

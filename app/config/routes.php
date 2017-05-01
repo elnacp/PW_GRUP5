@@ -11,7 +11,7 @@ $before = function (Request $request, Application $app){
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
             'message' => 'You must be logged',
-            'logejat' => true
+            'logejat' => false
         ]);
         $response->setContent($content);
         $response->setStatusCode(Response::HTTP_FORBIDDEN);
@@ -21,7 +21,7 @@ $before = function (Request $request, Application $app){
 
 
 $app->get('/', 'SilexApp\\Controller\\TaskController::indexAction');
-$app->get('/edit', 'SilexApp\\Controller\\TaskController::editProfile');
+$app->get('/edit', 'SilexApp\\Controller\\TaskController::editProfile')->before($before);
 
 
 $app->get('/test', 'SilexApp\\Controller\\BaseController::indexAction');

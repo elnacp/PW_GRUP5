@@ -112,7 +112,31 @@ class UserTasks implements UserModel
 
     }
 
+    public function dadesImatges()
+    {
+        $sql = "SELECT user_id FROM logejat";
+        $stm = $this->db->fetchAssoc($sql);
+        $id = $stm['user_id'];
+        echo($id);
+        $sql = "SELECT title FROM imatge WHERE user_id = ?";
+        $stm = $this->db->fetchAssoc($sql, array((int)$id));
 
+        /*$dades = "";
+
+        foreach( $stm as $s){
+            echo
+            //echo($s['title']);
+            /*$dades += "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
+                            <h1>". $s['title'] ."</h1>
+                            <!--<img src=\"http://fakeimg.pl/365x365/\" class=\"img-responsive\">-->
+                            <h3> ". $s['img_path'] ."</h3>
+                            <button type=\"submit\" class=\"button button-block\" id=\"comenzar\"/>Editar</button>
+                            <button type=\"submit\" class=\"button button-block\" id=\"comenzar\"/>Eliminar</button>
+                        </div>";
+            echo ($dades);
+        }
+        return $dades;*/
+    }
 
 
 }

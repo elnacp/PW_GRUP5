@@ -5,6 +5,7 @@ namespace SilexApp\Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use SilexApp\Model\Repository\UserTasks;
 
 class TaskController{
     public function indexAction(Application $app){
@@ -72,8 +73,11 @@ class TaskController{
         return $response;
     }
     public function galeria(Application $app){
+        $repo = new UserTasks($app['db']);
+        $dades = $repo->dadesImatges();
         $content = $app['twig']->render('galeria.twig', [
-            'logejat' => true
+            'logejat' => true,
+
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

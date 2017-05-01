@@ -102,7 +102,6 @@ class DBController
                         'logejat' => false
                     ]
                 );
-
             }else{
                 $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                 $content = $app['twig']->render('error.twig', [
@@ -111,7 +110,6 @@ class DBController
 
                 ]);
             }
-
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
@@ -142,15 +140,15 @@ class DBController
         //var_dump($path_name);
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $path_name, $private);
+        $response = new Response();
         if($ok) {
-            $response = new Response();
             $content = $app['twig']->render('hello.twig', [
                     'logejat'=> true
                 ]
             );
         }
         $response->setContent($content);
-        return new Response();
+
         return $response;
     }
 

@@ -72,7 +72,7 @@ class TaskController{
         return $response;
     }
     public function galeria(Application $app){
-        $content = $app['twig']->render('newPost.twig', [
+        $content = $app['twig']->render('galeria.twig', [
             'logejat' => true
         ]);
         $response = new Response();

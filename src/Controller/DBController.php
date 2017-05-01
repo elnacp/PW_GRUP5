@@ -117,9 +117,12 @@ class DBController
         $title = htmlspecialchars($request->get('title'));
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
-        //var_dump($privada);
-        var_dump($request->files->get('imagen'));
-        //var_dump($request->files);
+        $output = htmlspecialchars($request->get('registerImg'));
+        var_dump($output);
+        //var_dump($request->files->get('imagen'));
+        //$path = $request->files->get('imagen');
+
+        var_dump($path);
         if ($privada ==="privada"){
             $private = 1;
         }else{

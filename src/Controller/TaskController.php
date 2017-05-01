@@ -32,7 +32,8 @@ class TaskController{
         $usuari = $app['db']->fetchAssoc($sql, array((int)$id));
         $content = $app['twig']->render('editProfile.twig', [
             'username' => $usuari['username'],
-            'birthdate' => $usuari['birthdate']
+            'birthdate' => $usuari['birthdate'],
+            'logejat' => true,
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -41,7 +42,9 @@ class TaskController{
         return $response;
     }
     public function registerUser(Application $app){
-        $content = $app['twig']->render('registerUser.twig' );
+        $content = $app['twig']->render('registerUser.twig',[
+            'logejat' => false,
+        ] );
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
@@ -59,7 +62,9 @@ class TaskController{
         return $response;
     }
     public function newPost(Application $app){
-        $content = $app['twig']->render('newPost.twig');
+        $content = $app['twig']->render('newPost.twig', [
+            'logejat' => true
+        ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');

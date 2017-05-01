@@ -24,7 +24,8 @@ class DBController
             //echo("hello");
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'User not found'
+                    'message' => 'User not found',
+                    'logejat' => false
                 ]
             );
             $response->setContent($content);
@@ -39,7 +40,7 @@ class DBController
 
     }
 
-    
+
 
 
     public function DBeditProfile(Application $app)
@@ -54,6 +55,7 @@ class DBController
         $repo-> validateEditProfile($name, $birth, $pass1);
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
+                'logejat' => true,
                 'message' => 'hola'
             ]
         );
@@ -96,14 +98,16 @@ class DBController
                 $response->setStatusCode(Response::HTTP_OK);
 
                 $content = $app['twig']->render('error.twig', [
-                        'message' => 'Registro finalizado correctamente'. $img
+                        'message' => 'Registro finalizado correctamente'. $img,
+                        'logejat' => false
                     ]
                 );
 
             }else{
                 $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                 $content = $app['twig']->render('error.twig', [
-                        'message' => 'No se ha podido enviar el email'
+                        'message' => 'No se ha podido enviar el email',
+                        'logejat' => false
 
                 ]);
             }
@@ -111,7 +115,8 @@ class DBController
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'El usuario ya existe'
+                    'message' => 'El usuario ya existe',
+                    'logejat' => false
                 ]
             );
         }
@@ -128,8 +133,8 @@ class DBController
         $ok = $repo->DBnewPost($title, $path_name);
         if($ok){
             $response = new Response();
-            $content = $app['twig']->render('error.twig', [
-                    'message' => 'New Post Ok'
+            $content = $app['twig']->render('hello.twig', [
+                    'logejat'=> true
                 ]
             );
         }

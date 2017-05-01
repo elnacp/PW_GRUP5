@@ -96,16 +96,17 @@ class UserTasks implements UserModel
         return true;
     }
 
-    public function DBnewPost($title, $path_name){
+    public function DBnewPost($title, $path_name, $private){
         $sql = "SELECT * FROM logejat LIMIT 1";
         $user_id = $this->db->fetchAssoc($sql);
         $id = $user_id['user_id'];
+        var_dump($private);
         $this->db->insert('imatge', [
             'user_id' => $id,
             'title' => $title,
             'img_path' => $path_name,
             'visits' => 0,
-            'private' => null
+            'private'=> $private
         ]);
         return true;
 

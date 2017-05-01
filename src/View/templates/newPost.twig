@@ -15,7 +15,7 @@
         <div class="tab-content">
             <div id="signup">
                 <h1>Nuevo Post</h1>
-                <form action="/DBnewPost" method="post" id="registro">
+                <form action="/DBnewPost" method="post" enctype="multipart/form-data" id="registro">
                     <div class="field-wrap">
                         <label>
                             Título<span class="req">*</span>
@@ -28,8 +28,17 @@
                         </label>
                         <br>
                         <br>
-                        <input type="file" id="files" name="files[]" multiple />
+                        <input type="file" id="files" name="imagen" />
                         <output id="registerImg"></output>
+                        <br>
+                        <label>
+                            Privada
+                        </label>
+                        <span class="checkbox">
+                            <input  type="checkbox" name="privada" value="privada">
+                        </span>
+                        <br>
+                        <br>
                     </div>
                     <button type="submit" class="button button-block" />Publicar</button>
                 </form>

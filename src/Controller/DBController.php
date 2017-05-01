@@ -118,7 +118,7 @@ class DBController
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
         //var_dump($privada);
-        //var_dump($request->files->get('imagen'));
+        var_dump($request->files->get('imagen'));
         //var_dump($request->files);
         if ($privada ==="privada"){
             $private = 1;
@@ -127,6 +127,7 @@ class DBController
         }
         $folder = "/assets/img/";
         $path_name = $imgName;
+        //var_dump($path_name);
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $path_name, $private);
         if($ok) {

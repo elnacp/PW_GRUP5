@@ -106,7 +106,7 @@ class UserTasks implements UserModel
             'title' => $title,
             'img_path' => $path_name,
             'visits' => 0,
-            'private'=> $private     
+            'private'=> $private
         ]);
         return true;
 

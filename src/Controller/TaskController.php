@@ -8,7 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaskController{
     public function indexAction(Application $app){
-        $content = $app['twig']->render('hello.twig' );
+        if(!$app['session']->has('name')) {
+            $content = $app['twig']->render('hello.twig', [
+                'logejat' => false
+            ]);
+        }else{
+            $content = $app['twig']->render('hello.twig', [
+                'logejat' => true
+            ]);
+        }
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
@@ -41,7 +49,9 @@ class TaskController{
         return $response;
     }
     public function LogIn(Application $app){
-        $content = $app['twig']->render('LogIn.twig' );
+        $content = $app['twig']->render('LogIn.twig',[
+            'logejat' => false
+        ] );
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');

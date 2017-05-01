@@ -6,17 +6,20 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 class DBController
 {
     public function DBlogin(Application $app, Request $request)
     {
+        $response = new Response();
         $name = htmlspecialchars($_POST['nickname']);
         $password = htmlspecialchars($_POST['password']);
         $repo = new UserTasks($app['db']);
         $exists = $repo->validateUser($name, $password);
-        $response = new Response();
+
+        // Si no troba el usuari error en el propi formulari
         if (!$exists) {
             //echo("hello");
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
@@ -24,18 +27,19 @@ class DBController
                     'message' => 'User not found'
                 ]
             );
-        } else {
+            $response->setContent($content);
+            return $response;
+        } else { // si troba usuari el redirigeix cap a home logejat
+
             //echo("adios");
             $repo->logejarUsuari($name);
-            $response->setStatusCode(Response::HTTP_OK);
-            $content = $app['twig']->render('error.twig', [
-                    'message' => $name
-                ]
-            );
+            $url = '/iniciarSession/' . $name;
+            return new RedirectResponse($url);
         }
-        $response->setContent($content);
-        return $response;
+
     }
+
+    
 
 
     public function DBeditProfile(Application $app)

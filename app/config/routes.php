@@ -10,7 +10,8 @@ $before = function (Request $request, Application $app){
     if(!$app['session']->has('name')){
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
-            'message' => 'You must be logged'
+            'message' => 'You must be logged',
+            'logejat' => true
         ]);
         $response->setContent($content);
         $response->setStatusCode(Response::HTTP_FORBIDDEN);
@@ -25,16 +26,19 @@ $app->get('/edit', 'SilexApp\\Controller\\TaskController::editProfile');
 
 $app->get('/test', 'SilexApp\\Controller\\BaseController::indexAction');
 $app->get('/admin', 'SilexApp\\Controller\\BaseController::adminAction')->before($before);
-
+$app->get('/iniciarSession/{name}', 'SilexApp\\Controller\\BaseController::iniciarSession');
+$app->get('/cerrarSession', 'SilexApp\\Controller\\BaseController::cerrarSession');
 
 $app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser');
 $app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn');
 $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost');
 
 
+
 $app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile');
-$app->post('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
+$app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
 $app->post('/DBRegister','SilexApp\\Controller\\DBController::DBRegister');
 $app->post('/DBnewPost','SilexApp\\Controller\\DBController::DBnewPost');
+
 
 

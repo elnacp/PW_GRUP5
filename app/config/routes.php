@@ -32,7 +32,8 @@ $app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser');
 $app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn');
 $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost')->before($before);
 $app->get('/galeria', 'SilexApp\\Controller\\TaskController::galeria')->before($before);
-
+$app->get('/eliminar/{id}','SilexApp\\Controller\\TaskController::eliminarImatge');
+$app->get('/editar/{id}','SilexApp\\Controller\\TaskController::editarImatge');
 
 
 $app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile');

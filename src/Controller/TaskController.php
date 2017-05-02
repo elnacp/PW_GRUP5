@@ -87,7 +87,32 @@ class TaskController{
         return $response;
     }
 
+    public function editarImatge(Application $app, $id){
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
+        $content = $app['twig']->render('error.twig', [
+                'message' => $id,
+                'logejat' => true
+            ]
+        );
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+    }
 
+    public function eliminarImatge(Application $app, $id)
+    {
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
+        $content = $app['twig']->render('error.twig', [
+                'message' => $id,
+                'logejat' => true
+            ]
+        );
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+    }
 
 }
 

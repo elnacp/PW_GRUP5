@@ -123,13 +123,14 @@ class UserTasks implements UserModel
         $dades = "";
 
         foreach( $stm as $s){
-
+            $eliminar = "/eliminar/".$s['id'];
+            $editar = "/editar/".$s['id'];
             $dades = $dades."<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <h1>". $s['title'] ."</h1>
                             <!--<img src=\"http://fakeimg.pl/365x365/\" class=\"img-responsive\">-->
                             <h3> ". $s['img_path'] ."</h3>
-                            <button type=\"submit\" class=\"button button-block\" id=\"comenzar\"/>Editar</button>
-                            <button type=\"submit\" class=\"button button-block\" id=\"comenzar\"/>Eliminar</button>
+                            <li> <a href=".$eliminar."> Eliminar </a> </li>
+                            <li><a href=".$editar."> Editar </a> </li>
                         </div>";
 
         }

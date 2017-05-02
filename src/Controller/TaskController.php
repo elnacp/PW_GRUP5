@@ -75,9 +75,11 @@ class TaskController{
     public function galeria(Application $app){
         $repo = new UserTasks($app['db']);
         $dades = $repo->dadesImatges();
+
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
-            'dades' => $dades
+            'dades' => $dades,
+            'message' => NULL
 
         ]);
         $response = new Response();
@@ -102,13 +104,17 @@ class TaskController{
 
     public function eliminarImatge(Application $app, $id)
     {
+        $repo = new UserTasks($app['db']);
+        $repo->deleteImage($id);
+        $dades = $repo->dadesImatges();
+        $content = $app['twig']->render('galeria.twig', [
+            'logejat' => true,
+            'dades' => $dades,
+            'message' => 'Se ha eliminado correctamente!'
+
+        ]);
         $response = new Response();
-        $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
-        $content = $app['twig']->render('error.twig', [
-                'message' => $id,
-                'logejat' => true
-            ]
-        );
+        $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
         $response->setContent($content);
         return $response;

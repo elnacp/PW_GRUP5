@@ -130,11 +130,18 @@ class UserTasks implements UserModel
                             <!--<img src=\"http://fakeimg.pl/365x365/\" class=\"img-responsive\">-->
                             <h3> ". $s['img_path'] ."</h3>
                             <li> <a href=".$eliminar."> Eliminar </a> </li>
-                            <li><a href=".$editar."> Editar </a> </li>
+                            <li><a href=".$editar."> Editar </a> </li>F
                         </div>";
 
         }
         return $dades;
+    }
+
+
+    public function deleteImage($id)
+    {
+        $sql = "DELETE  FROM imatge WHERE id = $id";
+        $this->db->exec($sql);
     }
 
 

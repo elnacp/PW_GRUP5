@@ -84,7 +84,9 @@ class DBController
         $email = $request->get('email');
         $birthdate = $request->get('edad');
         $password = $request->get('password');
-        $img = $request->get('image');
+        $img = $request->get('ProfileImg');
+
+        //copy($img, '/../web/assets/img'.$img);
 
         //save_image($img,$img.'.jpg');
 
@@ -95,7 +97,7 @@ class DBController
 
         if (!$exists) {
 
-            $aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
+            /*$aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
 
             $mensaje = "Registro en tuweb.com\n\n";
             $mensaje .= "Estos son tus datos de registro:\n";
@@ -108,23 +110,24 @@ class DBController
                 'X-Mailer: PHP/' . phpversion();
 
             $sendMail = mail($email,'Activar cuenta',$mensaje, $cabeceras);
-            if($sendMail){
+            if($sendMail){*/
                 $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
                 $response->setStatusCode(Response::HTTP_OK);
 
-                $content = $app['twig']->render('error.twig', [
-                        'message' => 'Registro finalizado correctamente'. $img,
-                        'logejat' => false
+                $content = $app['twig']->render('validate.twig', [
+                        'message' => 'Activa tu usuario mediante el siguiente link:',
+                        'logejat' => false,
+                        'name' => $nickname
                     ]
                 );
-            }else{
+            /*}else{
                 $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                 $content = $app['twig']->render('error.twig', [
                         'message' => 'No se ha podido enviar el email',
                         'logejat' => false
 
                 ]);
-            }
+            }*/
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
@@ -134,7 +137,9 @@ class DBController
             );
         }
         $response->setContent($content);
+
         return $response;
+
 
     }
 
@@ -164,6 +169,36 @@ class DBController
         }
         $response->setContent($content);
 
+        return $response;
+    }
+
+
+    public function validateUser(Application $app, Request $request)
+    { //Download images from remote server
+        $nickname = $request->get('toVal');
+        $repo = new UserTasks($app['db']);
+        $ok = $repo->ActivateUser($nickname);
+        $response = new Response();
+
+        if($ok){
+            $response->setStatusCode(Response::HTTP_OK);
+
+            $content = $app['twig']->render('error.twig', [
+                    'message' => 'usuario activado correctamente',
+                    'logejat' => false
+                ]
+            );
+
+        }else{
+            $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
+            $content = $app['twig']->render('error.twig', [
+                    'message' => 'No se ha podido validar el usuario',
+                    'logejat' => false
+                ]
+            );
+
+        }
+        $response->setContent($content);
         return $response;
     }
 

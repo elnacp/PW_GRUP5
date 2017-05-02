@@ -1,0 +1,9 @@
+{% extends "base.twig" %}
+{% block title %}Error page{% endblock %}
+{% block content %}
+    <br>
+    <h2>{{ message }}</h2>
+
+    <input type="text"  name="toVal" value="{{ name }}"></input >
+    <p><a href="/ValidateUser">Validar Usuario</a></p>
+{% endblock %}

@@ -137,5 +137,23 @@ class UserTasks implements UserModel
         return $dades;
     }
 
+    public function ActivateUser($nickname)
+    {
+        $active=1;
+
+        $trobat = false;
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $user = $this->db->fetchAssoc($sql, array((string)$nickname));
+        if($user){
+            $trobat = true;
+        }else{
+            $trobat = false;
+        }
+        return $trobat;
+
+
+
+    }
+
 
 }

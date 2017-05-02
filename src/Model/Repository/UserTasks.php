@@ -117,12 +117,11 @@ class UserTasks implements UserModel
         $sql = "SELECT user_id FROM logejat";
         $stm = $this->db->fetchAssoc($sql);
         $id = $stm['user_id'];
-        echo($id);
         $sql = "SELECT * FROM imatge WHERE user_id = ?";
         $stm = $this->db->fetchAssoc($sql, array((int)$id));
 
         $dades = "";
-
+        echo ($stm['title']);
         foreach( $stm as $s){
 
             echo($s['title']);

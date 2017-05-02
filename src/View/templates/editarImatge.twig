@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% block title %} New post {% endblock %}
+{% block title %} Edit Imatge {% endblock %}
 {% block head %}
     {{ parent() }}
     <meta charset="UTF-8">
@@ -16,13 +16,10 @@
     <div class="form" id="Rp">
         <div class="tab-content">
             <div id="signup">
-                <h1>Nuevo Post</h1>
+                <h1>Editar Imagen</h1>
                 <form action="/DBnewPost" method="post" enctype="multipart/form-data" id="registro">
                     <div class="field-wrap">
-                        <label>
-                            Título<span class="req">*</span>
-                        </label>
-                        <input type="text" name="title" required autocomplete="off"/>
+                        <input type="text" name="title"  value="{{ titol }}" required autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>
@@ -37,7 +34,7 @@
                             Privada
                         </label>
                         <span class="checkbox">
-                            <input  type="checkbox" name="privada" >
+                            <input  type="checkbox" name="privada"  value="{{ privada }}">
                         </span>
                         <br>
                         <br>

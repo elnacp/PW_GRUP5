@@ -90,13 +90,16 @@ class TaskController{
     }
 
     public function editarImatge(Application $app, $id){
+        $sql = "SELECT * FROM imatge WHERE id=$id";
+        $imatge = $app['db']->fetchAssoc($sql);
+        $content = $app['twig']->render('editarImatge.twig', [
+            'logejat' => true,
+            'titol' => $imatge['title'],
+            'privada' => $imatge['private']
+
+        ]);
         $response = new Response();
-        $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
-        $content = $app['twig']->render('error.twig', [
-                'message' => $id,
-                'logejat' => true
-            ]
-        );
+        $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
         $response->setContent($content);
         return $response;

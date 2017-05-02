@@ -127,10 +127,11 @@ class DBController
         $title = htmlspecialchars($request->get('title'));
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
+
         //var_dump($privada);
-        var_dump($request->files->get('imagen'));
+        //var_dump($request->files->get('imagen'));
         //var_dump($request->files);
-        if ($privada ==="privada"){
+        if ($privada ==="on"){
             $private = 1;
         }else{
             $private = 0;

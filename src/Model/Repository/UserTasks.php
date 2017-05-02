@@ -100,7 +100,7 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM logejat LIMIT 1";
         $user_id = $this->db->fetchAssoc($sql);
         $id = $user_id['user_id'];
-        var_dump($private);
+        //var_dump($private);
         $this->db->insert('imatge', [
             'user_id' => $id,
             'title' => $title,

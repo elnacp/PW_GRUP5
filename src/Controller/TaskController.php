@@ -92,10 +92,15 @@ class TaskController{
     public function editarImatge(Application $app, $id){
         $sql = "SELECT * FROM imatge WHERE id=$id";
         $imatge = $app['db']->fetchAssoc($sql);
+
+        $estat = "";
+        if($imatge['private'] == 1){
+            $estat = "checked";
+        }
         $content = $app['twig']->render('editarImatge.twig', [
             'logejat' => true,
             'titol' => $imatge['title'],
-            'privada' => $imatge['private']
+            'privada' => $estat
 
         ]);
         $response = new Response();

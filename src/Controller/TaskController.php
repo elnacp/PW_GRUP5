@@ -113,6 +113,7 @@ class TaskController{
 
     public function eliminarImatge(Application $app, $id)
     {
+        //echo('alert("Desea eliminar la foto?"');
         $repo = new UserTasks($app['db']);
         $repo->deleteImage($id);
         $dades = $repo->dadesImatges();

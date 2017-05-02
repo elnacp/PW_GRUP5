@@ -77,13 +77,14 @@ class TaskController{
         $dades = $repo->dadesImatges();
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
+            'dades' => $dades
 
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
         $response->setContent($content);
-        //return $response;
+        return $response;
     }
 
 

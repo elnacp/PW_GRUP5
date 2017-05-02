@@ -24,7 +24,8 @@ class TaskController{
         $usuari = $app['db']->fetchAssoc($sql, array((int)$id));
         $content = $app['twig']->render('editProfile.twig', [
             'username' => $usuari['username'],
-            'birthdate' => $usuari['birthdate']
+            'birthdate' => $usuari['birthdate'],
+            'imagen' => $usuari['img_path']
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

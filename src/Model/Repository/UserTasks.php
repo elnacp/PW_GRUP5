@@ -57,13 +57,13 @@ class UserTasks implements UserModel
     }
 
 
-    public function validateEditProfile($name, $birth, $pass1){
+    public function validateEditProfile($name, $birth, $pass1, $img1){
         $sql = "SELECT user_id FROM logejat LIMIT 1";
         $stm = $this->db->fetchAssoc($sql);
         $id = $stm['user_id'];
         $password = md5($pass1);
-        $sql = "UPDATE usuari SET username = ?, birthdate  = ?, password = ? WHERE id = ?";
-        $this->db->executeUpdate($sql, array($name, $birth, $password, (int) $id));
+        $sql = "UPDATE usuari SET username = ?, birthdate  = ?, password = ?, img_path = ?  WHERE id = ?";
+        $this->db->executeUpdate($sql, array($name, $birth, $password, $img1, (int) $id));
 
 
 

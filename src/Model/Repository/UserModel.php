@@ -18,7 +18,7 @@ interface UserModel
 
     public function logejarUsuari($name);
 
-    public function validateEditProfile($name, $birth, $pass1);
+    public function validateEditProfile($name, $birth, $pass1, $img1);
 
 
 }

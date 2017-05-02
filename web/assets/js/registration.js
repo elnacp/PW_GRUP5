@@ -1,26 +1,58 @@
 // JavaScript Document
 "use strict";
+function saveBlobAsFile(blob, fileName) {
 
-function handleFileSelect(evt) {
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+        var base64 = reader.result ;
+        var link = document.createElement("a");
+
+        link.setAttribute("href", base64);
+        link.setAttribute("download", fileName);
+        link.click();
+    };
+
+    reader.readAsDataURL(blob);
+}
+
+$("#files").change(function(){
+    if(this.files && this.files[0]){
+        var reader = new FileReader();
+
+        reader.readAsDataURL(this.files[0]);
+        reader.onload = function(e){
+            $("#profilePic").attr('src', e.target.result);
+            $("#files").attr('value', e.target.result);
+        }
+    }
+
+
+});
+
+/*function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
 
     // files is a FileList of File objects. List some properties.
     var output = [];
     var x = document.createElement("IMG");
     x.setAttribute('id','profile');
-    for (var i = 0, f; f = files[i]; i++) {
+    /*for (var i = 0, f; f = files[i]; i++) {
         //output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(evt.target.files[i]), '>');
-        x.setAttribute('src', URL.createObjectURL(event.target.files[i]));
+        var reader =  new FileReader();
+        x.setAttribute('src',reader.readAsDataURL(evt.target.files[i]));
         x.setAttribute('name', 'image');
+        x.setAttribute('download');
         x.setAttribute('class','img-thumbnail img-responsive');
         var aux = document.createElement("INPUT");
         aux.setAttribute('name', "imgP");
-        aux.setAttribute('value',URL.createObjectURL(event.target.files[i]));
+        aux.setAttribute('value',reader.readAsDataURL(event.target.files[i]));
+
     }
     document.getElementById('registerImg').appendChild(x);
     document.getElementById('registerImg').appendChild(aux);
 }
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
+document.getElementById('files').addEventListener('change', handleFileSelect, false);*/
 
 
 function valName(name){

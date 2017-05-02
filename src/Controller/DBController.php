@@ -37,17 +37,31 @@ class DBController
         return $response;
     }
 
+    public function save_image($inPath,$outPath)
+    { //Download images from remote server
+        $in=    fopen($inPath, "rb");
+        $out=   fopen($outPath, "wb");
+        while ($chunk = fread($in,8192))
+        {
+            fwrite($out, $chunk, 8192);
+        }
+        fclose($in);
+        fclose($out);
+    }
+
 
     public function DBeditProfile(Application $app)
     {
         $name = htmlspecialchars($_POST['nickname']);
         $birth = htmlspecialchars($_POST['edad']);
         $pass1 = htmlspecialchars($_POST['password1']);
+        $img1 = $_POST['imgP'];
+
         //$pass2 = htmlspecialchars($_POST['password2']);
         //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
-        $repo-> validateEditProfile($name, $birth, $pass1);
+        $repo-> validateEditProfile($name, $birth, $pass1, $img1);
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
                 'message' => 'hola'
@@ -64,8 +78,9 @@ class DBController
         $email = $request->get('email');
         $birthdate = $request->get('edad');
         $password = $request->get('password');
-        $img = $request->get('imgP');
+        $img = $request->get('image');
 
+        //save_image($img,$img.'.jpg');
 
 
         $repo = new UserTasks($app['db']);
@@ -80,7 +95,7 @@ class DBController
             $mensaje .= "Estos son tus datos de registro:\n";
             $mensaje .= "Usuario: $nickname.\n";
             $mensaje .= "Contraseña: $password.\n\n";
-            $mensaje .= "Debes activar tu cuenta pulsando este enlace: http://www.tuweb.com/activacion.php?id=$aleatorio";
+            $mensaje .= "Debes activar tu cuenta pulsando este enlace: http://www.tuweb.com/activacion.php?id=".$aleatorio;
 
             $cabeceras = 'From: webmaster@example.com' . "\r\n" .
                 'Reply-To: webmaster@example.com' . "\r\n" .

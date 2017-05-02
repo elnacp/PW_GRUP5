@@ -6,15 +6,29 @@ function handleFileSelect(evt) {
 
     // files is a FileList of File objects. List some properties.
     var output = [];
+    var x = document.createElement("IMG");
+    var url;
+    x.setAttribute('id','profile');
+    var string = "web/assets/img/";
+
     for (var i = 0, f; f = files[i]; i++) {
-        output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(event.target.files[i]), '>');
+
+        //output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(evt.target.files[i]), '>');
+        x.setAttribute('src', URL.createObjectURL(event.target.files[i]), 0, 0);
+        x.setAttribute('name', 'image');
+        x.setAttribute('class','img-thumbnail img-responsive');
+        var aux = document.createElement("INPUT");
+        aux.setAttribute('name', "imgP");
+        aux.setAttribute('value',URL.createObjectURL(event.target.files[i]));
+        string.concat(URL.createObjectURL(event.target.files[i]))
+
     }
-    document.getElementById('registerImg').innerHTML =  output.join('');
-    //document.getElementById('profilePic').style.width = "50px";
+    document.getElementById('registerImg').appendChild(x);
+    document.getElementById('registerImg').appendChild(aux);
+    var string = "web/assets/img/";
+    imagejpeg($image, "web/assets/img/");
 }
-
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
 
 
 function valNickname(nickname){

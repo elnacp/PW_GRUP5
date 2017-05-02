@@ -118,14 +118,14 @@ class UserTasks implements UserModel
         $stm = $this->db->fetchAssoc($sql);
         $id = $stm['user_id'];
         echo($id);
-        $sql = "SELECT title FROM imatge WHERE user_id = ?";
+        $sql = "SELECT * FROM imatge WHERE user_id = ?";
         $stm = $this->db->fetchAssoc($sql, array((int)$id));
 
-        /*$dades = "";
+        $dades = "";
 
         foreach( $stm as $s){
-            echo
-            //echo($s['title']);
+
+            echo($s['title']);
             /*$dades += "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <h1>". $s['title'] ."</h1>
                             <!--<img src=\"http://fakeimg.pl/365x365/\" class=\"img-responsive\">-->
@@ -133,9 +133,9 @@ class UserTasks implements UserModel
                             <button type=\"submit\" class=\"button button-block\" id=\"comenzar\"/>Editar</button>
                             <button type=\"submit\" class=\"button button-block\" id=\"comenzar\"/>Eliminar</button>
                         </div>";
-            echo ($dades);
+            echo ($dades);*/
         }
-        return $dades;*/
+        return $dades;
     }
 
 

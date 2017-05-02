@@ -83,7 +83,7 @@ class TaskController{
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
         $response->setContent($content);
-        return $response;
+        //return $response;
     }
 
 

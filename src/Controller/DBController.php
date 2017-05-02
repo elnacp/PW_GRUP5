@@ -175,7 +175,7 @@ class DBController
 
     public function validateUser(Application $app, Request $request)
     { //Download images from remote server
-        $nickname = $request->get('toVal');
+        $nickname = $request->get('nickname');
         $repo = new UserTasks($app['db']);
         $ok = $repo->ActivateUser($nickname);
         $response = new Response();
@@ -184,7 +184,7 @@ class DBController
             $response->setStatusCode(Response::HTTP_OK);
 
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'usuario activado correctamente',
+                    'message' => 'usuario activado correctamente'.$nickname,
                     'logejat' => false
                 ]
             );
@@ -192,7 +192,7 @@ class DBController
         }else{
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'No se ha podido validar el usuario',
+                    'message' => 'No se ha podido validar el usuario'.$nickname,
                     'logejat' => false
                 ]
             );

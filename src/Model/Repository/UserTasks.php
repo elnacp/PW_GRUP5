@@ -145,6 +145,8 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $user = $this->db->fetchAssoc($sql, array((string)$nickname));
         if($user){
+            $sql = "UPDATE usuari SET active = ?  WHERE username = ?";
+            $this->db->executeUpdate($sql, array($active, (string) $nickname));
             $trobat = true;
         }else{
             $trobat = false;

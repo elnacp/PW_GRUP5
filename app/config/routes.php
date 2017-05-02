@@ -40,6 +40,6 @@ $app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
 $app->post('/DBRegister','SilexApp\\Controller\\DBController::DBRegister');
 $app->post('/DBnewPost','SilexApp\\Controller\\DBController::DBnewPost');
 
-$app->match('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
+$app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
 
 

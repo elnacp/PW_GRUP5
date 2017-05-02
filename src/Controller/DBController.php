@@ -171,7 +171,7 @@ class DBController
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
-            'message' => 'Se ha eliminado correctamente!'
+            'message' => 'Se ha editado correctamente!'
 
         ]);
         $response = new Response();

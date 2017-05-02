@@ -17,7 +17,7 @@
         <div class="tab-content">
             <div id="signup">
                 <h1>Editar Imagen</h1>
-                <form action="/DBnewPost" method="post" enctype="multipart/form-data" id="registro">
+                <form action="/DBeditImage/{{ id }}" method="post" enctype="multipart/form-data" id="registro">
                     <div class="field-wrap">
                         <input type="text" name="title"  value="{{ titol }}" required autocomplete="off"/>
                     </div>

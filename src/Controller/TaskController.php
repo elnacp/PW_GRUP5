@@ -100,7 +100,8 @@ class TaskController{
         $content = $app['twig']->render('editarImatge.twig', [
             'logejat' => true,
             'titol' => $imatge['title'],
-            'privada' => $estat
+            'privada' => $estat,
+            'id' => $id
 
         ]);
         $response = new Response();

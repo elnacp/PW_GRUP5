@@ -25,4 +25,6 @@ interface UserModel
     public function dadesImatges();
 
     public function deleteImage($id);
+
+    public function editInformation($title, $path_name, $private, $id);
 }

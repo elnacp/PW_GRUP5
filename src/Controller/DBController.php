@@ -153,4 +153,34 @@ class DBController
         return $response;
     }
 
+    public function DBeditImage(Application $app, Request $request, $id){
+        $title = htmlspecialchars($request->get('title'));
+        $imgName = htmlspecialchars($request->files->get('imagen'));
+        $privada = htmlspecialchars($request->get('privada'));
+        if ($privada ==="on"){
+            $private = 1;
+        }else{
+            $private = 0;
+        }
+        $folder = "/assets/img/";
+        $path_name = $imgName;
+        //var_dump($path_name);
+        $repo = new UserTasks($app['db']);
+        $repo->editInformation($title, $path_name, $private, $id);
+        $dades = $repo->dadesImatges();
+        $content = $app['twig']->render('galeria.twig', [
+            'logejat' => true,
+            'dades' => $dades,
+            'message' => 'Se ha eliminado correctamente!'
+
+        ]);
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+
+
+    }
+
 }

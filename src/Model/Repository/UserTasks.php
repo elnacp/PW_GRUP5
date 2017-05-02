@@ -96,9 +96,46 @@ class UserTasks implements UserModel
         return true;
     }
 
+    public function DBnewPost($title, $path_name, $private){
+        $sql = "SELECT * FROM logejat LIMIT 1";
+        $user_id = $this->db->fetchAssoc($sql);
+        $id = $user_id['user_id'];
+        var_dump($private);
+        $this->db->insert('imatge', [
+            'user_id' => $id,
+            'title' => $title,
+            'img_path' => $path_name,
+            'visits' => 0,
+            'private'=> $private
+        ]);
+        return true;
 
+    }
 
+    public function dadesImatges()
+    {
+        $sql = "SELECT user_id FROM logejat";
+        $stm = $this->db->fetchAssoc($sql);
+        $id = $stm['user_id'];
+        $sql = "SELECT * FROM imatge WHERE user_id = ?";
+        $stm = $this->db->fetchAssoc($sql, array((int)$id));
 
+        $dades = "";
+        echo ($stm['title']);
+        foreach( $stm as $s){
+
+            echo($s['title']);
+            /*$dades += "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
+                            <h1>". $s['title'] ."</h1>
+                            <!--<img src=\"http://fakeimg.pl/365x365/\" class=\"img-responsive\">-->
+                            <h3> ". $s['img_path'] ."</h3>
+                            <button type=\"submit\" class=\"button button-block\" id=\"comenzar\"/>Editar</button>
+                            <button type=\"submit\" class=\"button button-block\" id=\"comenzar\"/>Eliminar</button>
+                        </div>";
+            echo ($dades);*/
+        }
+        return $dades;
+    }
 
 
 }

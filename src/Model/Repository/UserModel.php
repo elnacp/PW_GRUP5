@@ -20,5 +20,7 @@ interface UserModel
 
     public function validateEditProfile($name, $birth, $pass1, $img1);
 
+    public function DBnewPost($title, $path_name, $private);
 
+    public function dadesImatges();
 }

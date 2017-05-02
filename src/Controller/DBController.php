@@ -6,35 +6,38 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 class DBController
 {
     public function DBlogin(Application $app, Request $request)
     {
+        $response = new Response();
         $name = htmlspecialchars($_POST['nickname']);
         $password = htmlspecialchars($_POST['password']);
         $repo = new UserTasks($app['db']);
         $exists = $repo->validateUser($name, $password);
-        $response = new Response();
+
+        // Si no troba el usuari error en el propi formulari
         if (!$exists) {
             //echo("hello");
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'User not found'
+                    'message' => 'User not found',
+                    'logejat' => false
                 ]
             );
-        } else {
+            $response->setContent($content);
+            return $response;
+        } else { // si troba usuari el redirigeix cap a home logejat
+
             //echo("adios");
             $repo->logejarUsuari($name);
-            $response->setStatusCode(Response::HTTP_OK);
-            $content = $app['twig']->render('error.twig', [
-                    'message' => $name
-                ]
-            );
+            $url = '/iniciarSession/' . $name;
+            return new RedirectResponse($url);
         }
-        $response->setContent($content);
-        return $response;
+
     }
 
     public function save_image($inPath,$outPath)
@@ -48,6 +51,8 @@ class DBController
         fclose($in);
         fclose($out);
     }
+
+
 
 
     public function DBeditProfile(Application $app)
@@ -64,6 +69,7 @@ class DBController
         $repo-> validateEditProfile($name, $birth, $pass1, $img1);
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
+                'logejat' => true,
                 'message' => 'hola'
             ]
         );
@@ -89,7 +95,7 @@ class DBController
 
         if (!$exists) {
 
-            /*$aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
+            $aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
 
             $mensaje = "Registro en tuweb.com\n\n";
             $mensaje .= "Estos son tus datos de registro:\n";
@@ -101,26 +107,29 @@ class DBController
                 'Reply-To: webmaster@example.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
-            $sendMail = mail('noaduran@hotmail.com','Activar cuenta',$mensaje, $cabeceras);
-            if($sendMail){*/
+            $sendMail = mail($email,'Activar cuenta',$mensaje, $cabeceras);
+            if($sendMail){
                 $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
                 $response->setStatusCode(Response::HTTP_OK);
 
                 $content = $app['twig']->render('error.twig', [
-                        'message' => 'Registro finalizado correctamente'. $img
+                        'message' => 'Registro finalizado correctamente'. $img,
+                        'logejat' => false
                     ]
                 );
-           /* }else{
+            }else{
                 $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                 $content = $app['twig']->render('error.twig', [
-                        'message' => 'No se ha podido enviar el email'
-                    ]
-                );             }*/
+                        'message' => 'No se ha podido enviar el email',
+                        'logejat' => false
 
+                ]);
+            }
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'El usuario ya existe'
+                    'message' => 'El usuario ya existe',
+                    'logejat' => false
                 ]
             );
         }
@@ -128,4 +137,34 @@ class DBController
         return $response;
 
     }
+
+    public function DBnewPost(Application $app, Request $request){
+        $title = htmlspecialchars($request->get('title'));
+        $imgName = htmlspecialchars($request->files->get('imagen'));
+        $privada = htmlspecialchars($request->get('privada'));
+        //var_dump($privada);
+        var_dump($request->files->get('imagen'));
+        //var_dump($request->files);
+        if ($privada ==="privada"){
+            $private = 1;
+        }else{
+            $private = 0;
+        }
+        $folder = "/assets/img/";
+        $path_name = $imgName;
+        //var_dump($path_name);
+        $repo = new UserTasks($app['db']);
+        $ok = $repo->DBnewPost($title, $path_name, $private);
+        $response = new Response();
+        if($ok) {
+            $content = $app['twig']->render('hello.twig', [
+                    'logejat'=> true
+                ]
+            );
+        }
+        $response->setContent($content);
+
+        return $response;
+    }
+
 }

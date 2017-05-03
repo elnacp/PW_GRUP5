@@ -3,8 +3,9 @@
 
 namespace SilexApp\Model\Repository;
 
-use Silex\Application;
 use Doctrine\DBAL\Connection;
+use Silex\Application;
+use Doctrine\DBAL\Configuration;
 
 interface UserModel
 {
@@ -28,6 +29,6 @@ interface UserModel
 
     public function editInformation($title, $path_name, $private, $id);
 
-    public function home1();
+    public function home1($log);
 
 }

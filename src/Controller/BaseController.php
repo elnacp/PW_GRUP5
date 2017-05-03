@@ -29,7 +29,11 @@ class BaseController{
     public function iniciarSession(Application $app, $name){
         $app['session']->set('name', $name);
         $repo = new UserTasks($app['db']);
-        $imgMesVistes = $repo->home1();
+        $log = false;
+        if($app['session']->has('name')){
+            $log = true;
+        }
+        $imgMesVistes = $repo->home1($log);
         $content = $app['twig']->render('hello.twig',[
             'logejat' => true,
             'dades' => $imgMesVistes
@@ -42,9 +46,13 @@ class BaseController{
         $app['db']->query($sql);
         $app['session']->remove('name');
         $repo = new UserTasks($app['db']);
-        $imgMesVistes = $repo->home1();
+        $log = false;
+        if($app['session']->has('name')){
+            $log = true;
+        }
+        $imgMesVistes = $repo->home1($log);
         $content = $app['twig']->render('hello.twig',[
-            'logejat' => true,
+            'logejat' => false,
             'dades' => $imgMesVistes
         ]);
         return new Response($content);

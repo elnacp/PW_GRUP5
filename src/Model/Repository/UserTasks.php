@@ -3,6 +3,7 @@
 
 namespace SilexApp\Model\Repository;
 
+
 use Doctrine\DBAL\Connection;
 use Silex\Application;
 use Doctrine\DBAL\Configuration;
@@ -150,7 +151,7 @@ class UserTasks implements UserModel
         $this->db->executeUpdate($sql, array($title, $path_name, $private, (int) $id));
     }
 
-    public function home1(){
+    public function home1($log){
 
         $sql = "SELECT * FROM imatge  ORDER  BY visits DESC ";
         $stm = $this->db->fetchAll($sql);
@@ -169,6 +170,7 @@ class UserTasks implements UserModel
             $likes = $s['likes'];
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/".$s['id'];
+
             $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
                                             <div class=\"panel-heading\">                                         
                                                 <h2>
@@ -185,16 +187,19 @@ class UserTasks implements UserModel
                                                      Visitas: +". $visites."</span>
                                                 </button>
                                                 <div class=\"input-placeholder\">Escribe un comentario...</div>
-                                            </div>
-                                            <div class=\"panel-google-plus-comment\">
+                                            </div>";
+            if($log) {
+                $imgMesVistes = $imgMesVistes."<div class=\"panel-google-plus-comment\">
                                                 <div class=\"panel-google-plus-textarea\">
                                                     <textarea rows=\"4\"></textarea>
                                                     <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>
                                                     <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
                                                 </div>x
                                                 <div class=\"clearfix\"></div>
-                                            </div>
-                                        </div>";
+                                                </div>";
+            }
+
+            $imgMesVistes = $imgMesVistes."</div>";
 
             $c1--;
             //img - titol - autor - dia publicación - numero likes - número de visualizaciones

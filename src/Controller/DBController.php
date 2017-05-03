@@ -122,7 +122,7 @@ class DBController
         //var_dump($request->files->get('imagen'));
         $path = $request->files->get('imagen');
         $path = (String)$request->files->get('imagen');
-        var_dump($path);
+        //var_dump($path);
         if ($privada ==="privada"){
             $private = 1;
         }else{

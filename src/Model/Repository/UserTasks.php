@@ -176,6 +176,7 @@ class UserTasks implements UserModel
                                                 </h2>
                                                 <h3>".$autor."</h3>
                                                 <h5><span>Publicat - </span> - <span>".$dia."</span> </h5>
+                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
                                             </div>
                                             <!-- IMATGE -->
                                             <div class=\"panel-footer\">
@@ -186,7 +187,6 @@ class UserTasks implements UserModel
                                                 <div class=\"input-placeholder\">Escribe un comentario...</div>
                                             </div>
                                             <div class=\"panel-google-plus-comment\">
-                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
                                                 <div class=\"panel-google-plus-textarea\">
                                                     <textarea rows=\"4\"></textarea>
                                                     <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>

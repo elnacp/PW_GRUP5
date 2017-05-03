@@ -9,13 +9,19 @@ use SilexApp\Model\Repository\UserTasks;
 
 class TaskController{
     public function indexAction(Application $app){
+        $ultimesImg = "";
+
+        $repo = new UserTasks($app['db']);
+        $imgMesVistes = $repo->home1();
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
-                'logejat' => false
+                'logejat' => false,
+                'dades' => $imgMesVistes
             ]);
         }else{
             $content = $app['twig']->render('hello.twig', [
-                'logejat' => true
+                'logejat' => true,
+                'dades' => $imgMesVistes
             ]);
         }
         $response = new Response();

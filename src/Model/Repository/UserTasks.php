@@ -130,7 +130,7 @@ class UserTasks implements UserModel
                             <!--<img src=\"http://fakeimg.pl/365x365/\" class=\"img-responsive\">-->
                             <h3> ". $s['img_path'] ."</h3>
                             <li> <a href=".$eliminar."> Eliminar </a> </li>
-                            <li><a href=".$editar."> Editar </a> </li>F
+                            <li><a href=".$editar."> Editar </a> </li>
                         </div>";
 
         }
@@ -148,6 +148,60 @@ class UserTasks implements UserModel
     {
         $sql = "UPDATE imatge SET title = ?, img_path  = ?, private = ? WHERE id = ?";
         $this->db->executeUpdate($sql, array($title, $path_name, $private, (int) $id));
+    }
+
+    public function home1(){
+
+        $sql = "SELECT * FROM imatge  ORDER  BY visits DESC ";
+        $stm = $this->db->fetchAll($sql);
+        $c1 = 5;
+        $c2 = 5;
+        $imgMesVistes ="<div class=\"[ panel panel-default ] panel-google-plus\">
+                             <h2> Imagenes más vistas: </h2>
+                        </div>";
+        foreach ( $stm as $s){
+            $id = $s['user_id'];
+            $sql1 = "SELECT * FROM usuari WHERE id = ?";
+            $stm1 = $this->db->fetchAssoc($sql1, array((int)$id));
+            $autor = $stm1['username'];
+            $title = $s['title'];
+            $dia = $s['created_at'];
+            $likes = $s['likes'];
+            $visites = $s['visits'];
+            $href = "/visualitzacioImatge/".$s['id'];
+            $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
+                                            <div class=\"panel-heading\">                                         
+                                                <h2>
+                                                    <a href=".$href.">".$title." </a>
+                                                </h2>
+                                                <h3>".$autor."</h3>
+                                                <h5><span>Publicat - </span> - <span>".$dia."</span> </h5>
+                                            </div>
+                                            <!-- IMATGE -->
+                                            <div class=\"panel-footer\">
+                                                <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +". $likes."</button>
+                                                <button type=\"button\" class=\"[ btn btn-default ]\">
+                                                     Visitas: +". $visites."</span>
+                                                </button>
+                                                <div class=\"input-placeholder\">Escribe un comentario...</div>
+                                            </div>
+                                            <div class=\"panel-google-plus-comment\">
+                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
+                                                <div class=\"panel-google-plus-textarea\">
+                                                    <textarea rows=\"4\"></textarea>
+                                                    <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>
+                                                    <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
+                                                </div>x
+                                                <div class=\"clearfix\"></div>
+                                            </div>
+                                        </div>";
+
+            $c1--;
+            //img - titol - autor - dia publicación - numero likes - número de visualizaciones
+        }
+
+        return $imgMesVistes;
+
     }
 
 

@@ -6,6 +6,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\DBAL\Configuration;
+use SilexApp\Model\Repository\UserTasks;
 
 class BaseController{
     public function indexAction(Application $app){
@@ -27,8 +28,11 @@ class BaseController{
 
     public function iniciarSession(Application $app, $name){
         $app['session']->set('name', $name);
+        $repo = new UserTasks($app['db']);
+        $imgMesVistes = $repo->home1();
         $content = $app['twig']->render('hello.twig',[
-            'logejat' => true
+            'logejat' => true,
+            'dades' => $imgMesVistes
         ]);
         return new Response($content);
     }
@@ -37,8 +41,11 @@ class BaseController{
         $sql = "DELETE  FROM logejat";
         $app['db']->query($sql);
         $app['session']->remove('name');
+        $repo = new UserTasks($app['db']);
+        $imgMesVistes = $repo->home1();
         $content = $app['twig']->render('hello.twig',[
-            'logejat' => false
+            'logejat' => true,
+            'dades' => $imgMesVistes
         ]);
         return new Response($content);
     }

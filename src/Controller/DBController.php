@@ -142,9 +142,12 @@ class DBController
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $path_name, $private);
         $response = new Response();
+        $repo = new UserTasks($app['db']);
+        $imgMesVistes = $repo->home1();
         if($ok) {
             $content = $app['twig']->render('hello.twig', [
-                    'logejat'=> true
+                    'logejat'=> true,
+                    'dades' => $imgMesVistes
                 ]
             );
         }

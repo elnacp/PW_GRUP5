@@ -27,4 +27,7 @@ interface UserModel
     public function deleteImage($id);
 
     public function editInformation($title, $path_name, $private, $id);
+
+    public function home1();
+
 }

@@ -120,15 +120,15 @@ class DBController
         $output = htmlspecialchars($request->get('registerImg'));
         var_dump($output);
         //var_dump($request->files->get('imagen'));
-        //$path = $request->files->get('imagen');
-
+        $path = $request->files->get('imagen');
+        $path = (String)$request->files->get('imagen');
         var_dump($path);
         if ($privada ==="privada"){
             $private = 1;
         }else{
             $private = 0;
         }
-        $folder = "/assets/img/";
+        $folder = "./assets/img/";
         $path_name = $imgName;
         //var_dump($path_name);
         $repo = new UserTasks($app['db']);
@@ -144,5 +144,32 @@ class DBController
         return new Response();
         return $response;
     }
+/*
+    public function resizeImage(){
+        //Ruta de la imagen original
+        $rutaImagenOriginal="./imagen/aprilia classic.jpg";
 
+        //Creamos una variable imagen a partir de la imagen original
+        $img_original = imagecreatefromjpeg($rutaImagenOriginal);
+
+        //Se define el maximo ancho y alto que tendra la imagen final
+        $max_ancho = 400;
+        $max_alto = 300;
+
+        //$max_ancho = 100;
+        //$max_alto = 200;
+
+        //Ancho y alto de la imagen original
+        list($ancho,$alto)=getimagesize($rutaImagenOriginal);
+
+        //Creamos una imagen en blanco de tamaño $ancho_final  por $alto_final .
+        $tmp=imagecreatetruecolor($ancho_final,$alto_final);
+
+         //Copiamos $img_original sobre la imagen que acabamos de crear en blanco ($tmp)
+        imagecopyresampled($tmp,$img_original,0,0,0,0,$max_ancho,$max_alto,$ancho,$alto);
+
+        //Se destruye variable $img_original para liberar memoria
+        imagedestroy($img_original);
+    }
+*/
 }

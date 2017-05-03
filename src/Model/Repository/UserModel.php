@@ -22,4 +22,5 @@ interface UserModel
 
     public function DBnewPost($title, $path_name, $private);
 
+    public function resizeImage();
 }

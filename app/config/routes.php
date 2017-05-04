@@ -34,13 +34,14 @@ $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost')->before($
 $app->get('/galeria', 'SilexApp\\Controller\\TaskController::galeria')->before($before);
 $app->get('/eliminar/{id}','SilexApp\\Controller\\TaskController::eliminarImatge');
 $app->get('/editar/{id}','SilexApp\\Controller\\TaskController::editarImatge');
-
+$app->get('/visualitzacioImatge/{id}','SilexApp\\Controller\\TaskController::visualitzacioImatge');
 
 $app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile');
 $app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
 $app->post('/DBRegister','SilexApp\\Controller\\DBController::DBRegister');
 $app->post('/DBnewPost','SilexApp\\Controller\\DBController::DBnewPost');
 $app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\DBController::DBeditImage');
+
 
 
 

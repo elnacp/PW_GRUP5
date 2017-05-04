@@ -210,4 +210,18 @@ class UserTasks implements UserModel
     }
 
 
+    public function incrementarVisites($id)
+    {
+        $sql = "SELECT * FROM imatge WHERE id = ?";
+        $s = $this->db->fetchAssoc($sql, array((int)$id));
+        $visits = $s['visits'];
+        $privada = $s['private'];
+        $visits = $visits + 1;
+        $sql = "UPDATE imatge SET visits = ?  WHERE id = ?";
+        $this->db->executeUpdate($sql, array((int)$visits, (int)$id));
+
+        return $privada;
+    }
+
+
 }

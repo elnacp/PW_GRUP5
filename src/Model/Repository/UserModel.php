@@ -31,4 +31,8 @@ interface UserModel
 
     public function home1($log);
 
+    public function incrementarVisites($id);
+
+
+
 }

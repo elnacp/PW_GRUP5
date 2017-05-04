@@ -1,0 +1,50 @@
+{% extends "base.twig" %}
+{% block title %} Home {% endblock %}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ asset('/hello.css', 'css') }}>
+    <link rel="stylesheet" href={{ asset('/imatgePublica.css', 'css') }}>
+{% endblock %}
+{% block content %}
+    <br>
+    <br>
+    <!--<h1> Hello Elna!</h1>-->
+
+
+    <div class="[ panel panel-default ] panel-google-plus">
+        <div class="panel-heading">
+            <h1>{{ title }}</h1>
+            <h2>"{{ autor }}"</h2>
+            <h3><span>Publicat - </span> - <span>"{{ dia}}"</span> </h3>
+            <!--<img src="http://fakeimg.pl/400x300/" class="img-responsive">-->
+        </div>
+        <!-- IMATGE -->
+        <div class="/panel-footer\">
+            <button type="button" class="[ btn btn-default ]">Likes: +{{ likes }}</button>
+            <button type="button" class="[ btn btn-default ]">
+            Visitas: +{{ visites }}</span>
+            </button>
+        </div>
+    </div>
+    <!-- COMENTARIS -->
+    <div class="[ panel panel-default ] panel-google-plus">
+        <div class="panel-heading">
+
+            <h2> COMENTARISTA </h2>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+                ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only
+                five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+                of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <script src={{ asset('/hello.js', 'js') }}></script>
+
+{% endblock %}

@@ -37,4 +37,7 @@ interface UserModel
 
     public function like($id, $usuari_log);
 
+    public function deleteActualPic($nickname);
+
+
 }

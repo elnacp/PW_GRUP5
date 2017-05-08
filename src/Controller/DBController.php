@@ -53,18 +53,25 @@ class DBController
     }
 
 
-    public function DBeditProfile(Application $app)
+    public function DBeditProfile(Application $app, Request $request)
     {
         $name = htmlspecialchars($_POST['nickname']);
         $birth = htmlspecialchars($_POST['edad']);
         $pass1 = htmlspecialchars($_POST['password1']);
-        $img1 = $_POST['imgP'];
+        //$img1 = $_POST['imgP'];
+        /** @var UploadedFile $img */
+        $img = $request->files->get('newProfileImg');
+
 
         //$pass2 = htmlspecialchars($_POST['password2']);
         //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
-        $repo->validateEditProfile($name, $birth, $pass1, $img1);
+        $repo->deleteActualPic($name);
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y") . ".jpg");
+        $img = './assets/uploads/' . $name . date("m-d-y") . ".jpg";
+
+        $repo->validateEditProfile($name, $birth, $pass1, $img);
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
                 'logejat' => true,

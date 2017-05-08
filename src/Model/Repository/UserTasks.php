@@ -299,5 +299,12 @@ class UserTasks implements UserModel
 
     }
 
+    public function deleteActualPic($nickname){
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $info = $this->db->fetchAssoc($sql, array($nickname));
+        $image = $info['img_path'];
+        unlink($image);
+    }
+
 
 }

@@ -209,7 +209,7 @@ class TaskController{
             ]
         );
         $response->setContent($content);
-        //return $response;
+        return $response;
 
     }
 

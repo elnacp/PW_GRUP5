@@ -269,11 +269,11 @@ class UserTasks implements UserModel
             $sql = "UPDATE imatge SET likes = ? WHERE id = ?";
             $this->db->executeUpdate($sql, array($likes-1, (int)$id));
             //DELETE  FROM logejat
-            $sql = "DELETE FROM likes WHERE image_id = ? ";
+            $sql = "DELETE FROM likes WHERE image_id = '$id' AND user_id =  '$id_usuari'";
             //echo($id);
             //echo($id_usuari);
-            $s = $this->db->query($sql, array((int)$id));
-            echo($s);
+            $this->db->query($sql);
+
 
         }
 

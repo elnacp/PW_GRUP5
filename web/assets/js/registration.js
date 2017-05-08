@@ -1,6 +1,6 @@
 // JavaScript Document
 "use strict";
-function saveBlobAsFile(blob, fileName) {
+/*function saveBlobAsFile(blob, fileName) {
 
     var reader = new FileReader();
 
@@ -14,22 +14,20 @@ function saveBlobAsFile(blob, fileName) {
     };
 
     reader.readAsDataURL(blob);
-}
+}*/
 
 $("#files").change(function(){
     if(this.files && this.files[0]){
         var reader = new FileReader();
 
         reader.readAsDataURL(this.files[0]);
-        reader.toDataURL("image/jpg", 1.0);
+        //reader.toDataURL("image/jpeg", 1.0);
         reader.onload = function(e){
             $("#profilePic").attr('src', e.target.result);
             $("#files").attr('value', e.target.result);
 
         }
     }
-
-
 });
 
 

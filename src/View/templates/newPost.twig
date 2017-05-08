@@ -28,8 +28,9 @@
                         </label>
                         <br>
                         <br>
-                        <input type="file" id="files" name="imagen" />
+                        <input type="file" id="files" name="files[]" />
                         <br>
+                        <output id="list"></output>
                         <label>
                             Privada
                         </label>
@@ -48,5 +49,6 @@
     </div> <!-- /form -->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src={{ asset('/indexRegistration.js', 'js') }}></script>
-    <script src={{ asset('/registration.js', 'js') }}></script>
+    <script src={{ asset('/newPost.js', 'js') }}></script>
+
 {% endblock %}

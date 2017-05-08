@@ -1,26 +1,30 @@
 // JavaScript Document
 "use strict";
 
-function handleFileSelect(evt) {
+function archivo(evt) {
     var files = evt.target.files; // FileList object
 
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    var x = document.createElement("IMG");
-    x.setAttribute('id','profile');
+    // Obtenemos la imagen del campo "file".
     for (var i = 0, f; f = files[i]; i++) {
-        //output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(evt.target.files[i]), '>');
-        x.setAttribute('src', URL.createObjectURL(event.target.files[i]));
-        x.setAttribute('name', 'image');
-        x.setAttribute('class','img-thumbnail img-responsive');
-        var aux = document.createElement("INPUT");
-        aux.setAttribute('name', "imgP");
-        aux.setAttribute('value',URL.createObjectURL(event.target.files[i]));
+        //Solo admitimos imágenes.
+        if (!f.type.match('image.*')) {
+            continue;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = (function(theFile) {
+            return function(e) {
+                // Insertamos la imagen
+                document.getElementById("list").innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+            };
+        })(f);
+
+        reader.readAsDataURL(f);
     }
-    document.getElementById('registerImg').appendChild(x);
-    document.getElementById('registerImg').appendChild(aux);
 }
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+document.getElementById('files').addEventListener('change', archivo, false);
 /**
  * Created by noa on 24/4/17.
  */

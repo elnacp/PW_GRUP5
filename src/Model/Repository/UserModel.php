@@ -33,6 +33,6 @@ interface UserModel
 
     public function incrementarVisites($id);
 
-
+    public function like($id, $usuari_log);
 
 }

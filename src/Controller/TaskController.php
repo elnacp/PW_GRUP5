@@ -163,7 +163,10 @@ class TaskController{
             $autor = $s['user_id'];
             $sql1 = "SELECT username FROM usuari WHERE id = ?";
             $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
+            $usuari =  $app['session']->get('name');
             $content = $app['twig']->render('imatgePublica.twig', [
+                    'id' => $id,
+                    'usuari_log' => $usuari,
                     'logejat' => $logejat,
                     'autor' => $s2['username'],
                     'title' => $s['title'],
@@ -179,6 +182,34 @@ class TaskController{
 
 
 
+
+    }
+
+    public function likeImage(Application $app, $id, $usuari_log){
+        $response = new Response();
+        $repo = new UserTasks($app['db']);
+        $repo->like($id, $usuari_log);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $sql = "SELECT * FROM imatge WHERE id = ?";
+        $s = $app['db']->fetchAssoc($sql, array((int)$id));
+        $autor = $s['user_id'];
+        $sql1 = "SELECT username FROM usuari WHERE id = ?";
+        $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
+        $usuari =  $app['session']->get('name');
+        $content = $app['twig']->render('imatgePublica.twig', [
+                'id' => $id,
+                'usuari_log' => $usuari,
+                'logejat' => true,
+                'autor' => $s2['username'],
+                'title' => $s['title'],
+                'dia' => date("Y-m-d H:i:s"),
+                'visites' => $s['visits'],
+                'likes' => $s['likes']
+
+            ]
+        );
+        $response->setContent($content);
+        //return $response;
 
     }
 

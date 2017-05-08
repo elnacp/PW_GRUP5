@@ -194,7 +194,7 @@ class UserTasks implements UserModel
                                                     <textarea rows=\"4\"></textarea>
                                                     <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>
                                                     <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
-                                                </div>x
+                                                </div>
                                                 <div class=\"clearfix\"></div>
                                                 </div>";
             }
@@ -221,6 +221,62 @@ class UserTasks implements UserModel
         $this->db->executeUpdate($sql, array((int)$visits, (int)$id));
 
         return $privada;
+    }
+
+    public function like($id, $usuari_log){
+        $trobat = false;
+        $id_usuari = "";
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+        if(!$trobat){
+            $sql = "SELECT * FROM usuari WHERE email = ?";
+            $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+
+            if($trobat){
+                $sql = "SELECT id FROM usuari WHERE email = ?";
+                $i = $this->db->fetchAssoc($sql, array($usuari_log));
+                $id_usuari = $i['id'];
+                //echo("email" . $id_usuari);
+            }
+        }else{
+            $sql = "SELECT id FROM usuari WHERE username = ?";
+            $i = $this->db->fetchAssoc($sql, array($usuari_log));
+            $id_usuari = $i['id'];
+            //echo("usuari" . $id_usuari);
+        }
+
+
+        $sql = "SELECT * FROM likes WHERE image_id = ? and user_id = ?";
+        $exist = $this->db->fetchAll($sql, array($id, (int)$id_usuari));
+        if( !$exist){
+            //echo("no existeix");
+            $sql = "SELECT * FROM imatge WHERE id = ?";
+            $s = $this->db->fetchAssoc($sql, array((int)$id));
+            $likes = $s['likes'];
+            $l = $likes +1;
+            $sql = "UPDATE imatge SET likes = ? WHERE id = ?";
+            $this->db->executeUpdate($sql, array($l, (int)$id));
+            $sql = "INSERT INTO likes (user_id, image_id) VALUES (?,?)";
+            $this->db->executeUpdate($sql, array($id_usuari, $id));
+        }else{
+            //echo("existeix");
+            $sql = "SELECT * FROM imatge WHERE id = ?";
+            $s = $this->db->fetchAssoc($sql, array((int)$id));
+            $likes = $s['likes'];
+            //echo($likes);
+
+            //echo($l);
+            $sql = "UPDATE imatge SET likes = ? WHERE id = ?";
+            $this->db->executeUpdate($sql, array($likes-1, (int)$id));
+            //DELETE  FROM logejat
+            $sql = "DELETE FROM likes WHERE image_id = ? ";
+            //echo($id);
+            //echo($id_usuari);
+            $s = $this->db->query($sql, array((int)$id));
+            echo($s);
+
+        }
+
     }
 
 

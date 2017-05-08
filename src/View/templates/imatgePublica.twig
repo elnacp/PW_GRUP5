@@ -8,24 +8,39 @@
 {% block content %}
     <br>
     <br>
-    <!--<h1> Hello Elna!</h1>-->
 
 
     <div class="[ panel panel-default ] panel-google-plus">
+
         <div class="panel-heading">
-            <h1>{{ title }}</h1>
-            <h2>"{{ autor }}"</h2>
-            <h3><span>Publicat - </span> - <span>"{{ dia}}"</span> </h3>
-            <!--<img src="http://fakeimg.pl/400x300/" class="img-responsive">-->
+            <img class="[ img-circle pull-left ]" src="https://lh3.googleusercontent.com/-CxXg7_7ylq4/AAAAAAAAAAI/AAAAAAAAAQ8/LhCIKQC5Aq4/s46-c-k-no/photo.jpg" alt="Mouse0270" />
+            <h3>{{ autor }}</h3>
+            <h2>{{ title }}</h2>
+            <h5><span>Publicat</span> - <span>{{ dia }}</span> </h5>
         </div>
-        <!-- IMATGE -->
-        <div class="/panel-footer\">
-            <button type="button" class="[ btn btn-default ]">Likes: +{{ likes }}</button>
-            <button type="button" class="[ btn btn-default ]">
-            Visitas: +{{ visites }}</span>
-            </button>
+
+        <div class="panel-footer">
+            {% if logejat %}
+                <a  href="/like/{{ id }}/{{ usuari_log }}" class="[ btn btn-default ]">Likes: +{{ likes }}</a>
+            {% else %}
+            <a  class="[ btn btn-default ]">Likes: +{{ likes }}</a>
+            {% endif %}
+            <a  class="[ btn btn-default ]">Visitas: +{{ visites }}</a>
+            <div class="input-placeholder">Add a comment...</div>
         </div>
+        {% if logejat %}
+        <div class="panel-google-plus-comment">
+            <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
+            <div class="panel-google-plus-textarea">
+                <textarea rows="4"></textarea>
+                <button type="submit" class="[ btn btn-success disabled ]">Aceptar</button>
+                <button type="reset" class="[ btn btn-default ]">Cancel</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
     </div>
+
     <!-- COMENTARIS -->
     <div class="[ panel panel-default ] panel-google-plus">
         <div class="panel-heading">

@@ -2,11 +2,16 @@
 {% block title %} Home {% endblock %}
 {% block head %}
     {{ parent() }}
-
+    <link rel="stylesheet" href={{ asset('/hello.css', 'css') }}>
 {% endblock %}
 {% block content %}
     <br>
     <br>
-    <h1> Hello Elna!</h1>
+
+    <!--<h1> Hello Elna!</h1>-->
+    {{ dades|raw}}
+
+    <script src={{ asset('/hello.js', 'js') }}></script>
+
 
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% block title %} New post {% endblock %}
+{% block title %} Edit Imatge {% endblock %}
 {% block head %}
     {{ parent() }}
     <meta charset="UTF-8">
@@ -16,13 +16,10 @@
     <div class="form" id="Rp">
         <div class="tab-content">
             <div id="signup">
-                <h1>Nuevo Post</h1>
-                <form action="/DBnewPost" method="post" enctype="multipart/form-data" id="registro">
+                <h1>Editar Imagen</h1>
+                <form action="/DBeditImage/{{ id }}" method="post" enctype="multipart/form-data" id="registro">
                     <div class="field-wrap">
-                        <label>
-                            Título<span class="req">*</span>
-                        </label>
-                        <input title="Se necesita un titulo " type="text" name="title" required autocomplete="off"/>
+                        <input type="text" name="title"  value="{{ titol }}" required autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>
@@ -30,14 +27,14 @@
                         </label>
                         <br>
                         <br>
-                        <input type="file" id="files" name="files[]" />
+                        <input type="file" id="files" name="imagen" />
+                        <output id="registerImg"></output>
                         <br>
-                        <output id="list"></output>
                         <label>
                             Privada
                         </label>
                         <span class="checkbox">
-                            <input  type="checkbox" name="privada" >
+                            <input  type="checkbox" name="privada"  {{ privada }}>
                         </span>
                         <br>
                         <br>
@@ -51,6 +48,5 @@
     </div> <!-- /form -->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src={{ asset('/indexRegistration.js', 'js') }}></script>
-    <script src={{ asset('/newPost.js', 'js') }}></script>
-
+    <script src={{ asset('/registration.js', 'js') }}></script>
 {% endblock %}

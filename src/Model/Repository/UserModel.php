@@ -3,8 +3,9 @@
 
 namespace SilexApp\Model\Repository;
 
-use Silex\Application;
 use Doctrine\DBAL\Connection;
+use Silex\Application;
+use Doctrine\DBAL\Configuration;
 
 interface UserModel
 {
@@ -22,5 +23,17 @@ interface UserModel
 
     public function DBnewPost($title, $path_name, $private);
 
-    public function resizeImage();
+    public function dadesImatges();
+
+    public function deleteImage($id);
+
+    public function editInformation($title, $path_name, $private, $id);
+
+    public function home1($log);
+
+    public function incrementarVisites($id);
+
+    public function like($id, $usuari_log);
+
+
 }

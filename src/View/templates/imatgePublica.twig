@@ -1,0 +1,65 @@
+{% extends "base.twig" %}
+{% block title %} Home {% endblock %}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ asset('/hello.css', 'css') }}>
+    <link rel="stylesheet" href={{ asset('/imatgePublica.css', 'css') }}>
+{% endblock %}
+{% block content %}
+    <br>
+    <br>
+
+
+    <div class="[ panel panel-default ] panel-google-plus">
+
+        <div class="panel-heading">
+            <img class="[ img-circle pull-left ]" src="https://lh3.googleusercontent.com/-CxXg7_7ylq4/AAAAAAAAAAI/AAAAAAAAAQ8/LhCIKQC5Aq4/s46-c-k-no/photo.jpg" alt="Mouse0270" />
+            <h3>{{ autor }}</h3>
+            <h2>{{ title }}</h2>
+            <h5><span>Publicat</span> - <span>{{ dia }}</span> </h5>
+        </div>
+
+        <div class="panel-footer">
+            {% if logejat %}
+                <a  href="/like/{{ id }}/{{ usuari_log }}" class="[ btn btn-default ]">Likes: +{{ likes }}</a>
+            {% else %}
+            <a  class="[ btn btn-default ]">Likes: +{{ likes }}</a>
+            {% endif %}
+            <a  class="[ btn btn-default ]">Visitas: +{{ visites }}</a>
+            <div class="input-placeholder">Add a comment...</div>
+        </div>
+        {% if logejat %}
+        <div class="panel-google-plus-comment">
+            <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
+            <div class="panel-google-plus-textarea">
+                <textarea rows="4"></textarea>
+                <button type="submit" class="[ btn btn-success disabled ]">Aceptar</button>
+                <button type="reset" class="[ btn btn-default ]">Cancel</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- COMENTARIS -->
+    <div class="[ panel panel-default ] panel-google-plus">
+        <div class="panel-heading">
+
+            <h2> COMENTARISTA </h2>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+                ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only
+                five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+                of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <script src={{ asset('/hello.js', 'js') }}></script>
+
+{% endblock %}

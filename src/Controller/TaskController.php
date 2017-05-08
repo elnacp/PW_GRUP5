@@ -44,7 +44,7 @@ class TaskController{
             'username' => $usuari['username'],
             'birthdate' => $usuari['birthdate'],
 
-            'imagen' => $usuari['img_path'],
+            'imagen' => '/assets/uploads/Noa05-08-17.jpg',
 
             'logejat' => true
 

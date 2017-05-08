@@ -84,17 +84,12 @@ class DBController
         $password = $request->get('password');
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
-        var_dump(get_current_user());
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . date("m-d-y") . ".jpg");
-        unlink('./assets/uploads/' . date("m-d-y") . ".jpg");
-        die();
-        $img->move(
-            'assets/uploads/',
-            $nickname . date("m-d-y") . ".jpg"
-        );
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y") . ".jpg");
+        $img = './assets/uploads/' . $nickname . date("m-d-y") . ".jpg";
         $repo = new UserTasks($app['db']);
         $exists = $repo->checkUser($nickname);
         $response = new Response();
+
 
         if (!$exists) {
 

@@ -16,7 +16,7 @@
         <div class="tab-content">
             <div id="signup">
                 <h1>Edición de Perfil</h1>
-                <form action="/DBeditProfile" method="POST">
+                <form action="/DBeditProfile" method="POST" enctype="multipart/form-data">
                     <div class="field-wrap">
                         <p class="titulo">Nombre de usuario<span class="req"></span><br></p>
                         <input type="text" id="New_nickname" name="nickname" autocomplete="off" value="{{ username }}"/>
@@ -45,17 +45,18 @@
                         <label>
                             Imagen Actual<span class="req"></span>
                         </label>
-                        <img src="{{ imagen }}" name="img_actual">
+                        <img src="{{ imagen }}" name="img_actual" class="img-thumbnail img-responsive">
                     </div>
                     <div class="field-wrap">
                         <label>
-                            Cambiar Imagen de Perfil<span class="req"></span>
+                            Imagen de Perfil<span class="req"></span>
                         </label>
+                        <br>
+                        <br>
+                        <img id="newProfilePic" name="image" src="" class="img-thumbnail img-responsive">
+                        <input type="file" id="files" name="newProfileImg">
+                        <output id="registerImg" name="images"></output>
 
-                        <br>
-                        <br>
-                            <input type="file" id="files" name="files[]" multiple />
-                            <output id="registerImg"></output>
                     </div>
                     <button type="submit" class="button button-block" id="comenzar"/>Aplicar cambios</button>
                 </form>

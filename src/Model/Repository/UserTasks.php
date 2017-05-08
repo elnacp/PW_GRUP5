@@ -113,6 +113,8 @@ class UserTasks implements UserModel
     }
 
 
-
-
+    public function resizeImage()
+    {
+        // TODO: Implement resizeImage() method.
+    }
 }

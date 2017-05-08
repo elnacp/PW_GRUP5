@@ -8,4 +8,59 @@
     <br>
     <br>
     <h1> Hello Elna!</h1>
+
+    <button type="button" onclick="imageGran()">400*300</button>
+    <button type="button" onclick="imagePetita()">100*100</button>
+
+    <div id="gran">
+        <img id ="imgGran"src="~/imagenes/libro.jpg" width="400" height="300">
+    </div>
+    <div id="petita"></div>
+
+
+    <script>
+        function imageGran() {
+            if (document.getElementById("imgPetita")) {
+                eliminarElemento("imgPetita");
+            }
+            if (document.getElementById("imgGran")) {
+                
+            }else{
+                var imagen = document.createElement("img");
+                imagen.setAttribute("src", "~/imagenes/libro.jpg");
+                imagen.setAttribute("width", "400");
+                imagen.setAttribute("height", "300");
+                imagen.setAttribute("id", "imgGran");
+                var div = document.getElementById("gran");
+                div.appendChild(imagen);
+            }
+        }
+
+        function imagePetita() {
+            if (document.getElementById("imgGran")) {
+                eliminarElemento("imgGran");
+            }
+            if (document.getElementById("imgPetita")) {
+            }else{
+                var imagen = document.createElement("img");
+                imagen.setAttribute("src", "~/imagenes/libro.jpg");
+                imagen.setAttribute("width", "100");
+                imagen.setAttribute("height", "100");
+                imagen.setAttribute("id", "imgPetita");
+                var div = document.getElementById("petita");
+                div.appendChild(imagen);
+           }
+        }
+
+        function eliminarElemento(id){
+            imagen = document.getElementById(id);
+            if (!imagen){
+                alert("El elemento selecionado no existe");
+            } else {
+                padre = imagen.parentNode;
+                padre.removeChild(imagen);
+            }
+        }
+
+    </script>
 {% endblock %}

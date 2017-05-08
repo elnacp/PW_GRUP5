@@ -48,5 +48,6 @@ $app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\DBController::DBeditImage
 
 
 
+$app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
 
 

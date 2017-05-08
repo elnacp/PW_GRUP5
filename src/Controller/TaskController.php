@@ -43,7 +43,11 @@ class TaskController{
         $content = $app['twig']->render('editProfile.twig', [
             'username' => $usuari['username'],
             'birthdate' => $usuari['birthdate'],
-            'logejat' => true,
+
+            'imagen' => $usuari['img_path'],
+
+            'logejat' => true
+
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

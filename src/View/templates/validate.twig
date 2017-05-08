@@ -1,0 +1,12 @@
+{% extends "base.twig" %}
+{% block title %}Error page{% endblock %}
+{% block content %}
+    <br>
+    <h2>{{ message }}</h2>
+
+    <form action="/ValidateUser" method="post" >
+        <input type="text" id="New_nickname" name="nickname" required  value="{{ name }}">
+        <button type="submit" class="button button-block" id="comenzar"/>Activar cuenta</button>
+
+    </form>
+{% endblock %}

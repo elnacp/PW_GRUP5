@@ -19,11 +19,13 @@ interface UserModel
 
     public function logejarUsuari($name);
 
-    public function validateEditProfile($name, $birth, $pass1);
+    public function validateEditProfile($name, $birth, $pass1, $img1);
 
     public function DBnewPost($title, $path_name, $private);
 
     public function dadesImatges();
+
+    public function ActivateUser($nickname);
 
     public function deleteImage($id);
 

@@ -20,20 +20,20 @@
             <div id="signup">
                 <h1>Regístrate</h1>
 
-                <form action="/DBRegister" method="post" id="registro">
+                <form action="/DBRegister" method="post" id="registro" enctype="multipart/form-data">
 
                     <div class="field-wrap">
                         <label>
                             Nombre de Usuario<span class="req">*</span>
                         </label>
-                        <input type="text" id="New_nickname" name="nickname"required autocomplete="off"/>
+                        <input type="text" id="New_nickname" name="nickname" required autocomplete="off"/>
                     </div>
 
                     <div class="field-wrap">
                         <label>
                             Email<span class="req">*</span>
                         </label>
-                        <input type="email" id="New_email" name="email"required autocomplete="off"/>
+                        <input type="email" id="New_email" name="email" required autocomplete="off"/>
                     </div>
 
                     <div class="field-wrap">
@@ -42,8 +42,9 @@
                         </label>
                         <br>
                         <br>
-                        <input type="file" id="files" name="files[]" multiple />
-                        <output id="registerImg" name="image"></output>
+                        <img id="profilePic" name="image" src="" class="img-thumbnail img-responsive">
+                        <input type="file" id="files" name="ProfileImg">
+                        <output id="registerImg" name="images"></output>
 
                     </div>
 
@@ -68,10 +69,11 @@
                         <label>
                             Repite la Contraseña<span class="req">*</span>
                         </label>
-                        <input type="password"  id="sure"name="repeat" required autocomplete="off"/>
+                        <input type="password" id="sure" name="repeat" required autocomplete="off"/>
                     </div>
 
-                    <button type="submit" class="button button-block" id="comenzar"/>Comenzar</button>
+                    <button type="submit" class="button button-block" id="comenzar"/>
+                    Comenzar</button>
 
                 </form>
 

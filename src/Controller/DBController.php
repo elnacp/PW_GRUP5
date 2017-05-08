@@ -3,6 +3,7 @@
 namespace SilexApp\Controller;
 
 use Silex\Application;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
@@ -40,19 +41,16 @@ class DBController
 
     }
 
-    public function save_image($inPath,$outPath)
+    public function save_image($inPath, $outPath)
     { //Download images from remote server
-        $in=    fopen($inPath, "rb");
-        $out=   fopen($outPath, "wb");
-        while ($chunk = fread($in,8192))
-        {
+        $in = fopen($inPath, "rb");
+        $out = fopen($outPath, "wb");
+        while ($chunk = fread($in, 8192)) {
             fwrite($out, $chunk, 8192);
         }
         fclose($in);
         fclose($out);
     }
-
-
 
 
     public function DBeditProfile(Application $app)
@@ -66,7 +64,7 @@ class DBController
         //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
-        $repo-> validateEditProfile($name, $birth, $pass1, $img1);
+        $repo->validateEditProfile($name, $birth, $pass1, $img1);
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
                 'logejat' => true,
@@ -84,13 +82,16 @@ class DBController
         $email = $request->get('email');
         $birthdate = $request->get('edad');
         $password = $request->get('password');
-        $img = $request->get('ProfileImg');
-
-        //copy($img, '/../web/assets/img'.$img);
-
-        //save_image($img,$img.'.jpg');
-
-
+        /** @var UploadedFile $img */
+        $img = $request->files->get('ProfileImg');
+        var_dump(get_current_user());
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . date("m-d-y") . ".jpg");
+        unlink('./assets/uploads/' . date("m-d-y") . ".jpg");
+        die();
+        $img->move(
+            'assets/uploads/',
+            $nickname . date("m-d-y") . ".jpg"
+        );
         $repo = new UserTasks($app['db']);
         $exists = $repo->checkUser($nickname);
         $response = new Response();
@@ -101,7 +102,7 @@ class DBController
 
             $mensaje = "Registro en tuweb.com\n\n";
             $mensaje .= "Estos son tus datos de registro:\n";
-            $mensaje .= "Usuario: $nickname.\n";
+            $mensaje .= "Unsuario: $nickname.\n";
             $mensaje .= "Contraseña: $password.\n\n";
             $mensaje .= "Debes activar tu cuenta pulsando este enlace: http://www.tuweb.com/activacion.php?id=".$aleatorio;
 
@@ -111,15 +112,15 @@ class DBController
 
             $sendMail = mail($email,'Activar cuenta',$mensaje, $cabeceras);
             if($sendMail){*/
-                $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
-                $response->setStatusCode(Response::HTTP_OK);
+            $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+            $response->setStatusCode(Response::HTTP_OK);
 
-                $content = $app['twig']->render('validate.twig', [
-                        'message' => 'Activa tu usuario mediante el siguiente link:',
-                        'logejat' => false,
-                        'name' => $nickname
-                    ]
-                );
+            $content = $app['twig']->render('validate.twig', [
+                    'message' => 'Activa tu usuario mediante el siguiente link:',
+                    'logejat' => false,
+                    'name' => $nickname
+                ]
+            );
             /*}else{
                 $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                 $content = $app['twig']->render('error.twig', [
@@ -143,7 +144,8 @@ class DBController
 
     }
 
-    public function DBnewPost(Application $app, Request $request){
+    public function DBnewPost(Application $app, Request $request)
+    {
         $title = htmlspecialchars($request->get('title'));
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
@@ -151,9 +153,9 @@ class DBController
         //var_dump($privada);
         //var_dump($request->files->get('imagen'));
         //var_dump($request->files);
-        if ($privada ==="on"){
+        if ($privada === "on") {
             $private = 1;
-        }else{
+        } else {
             $private = 0;
         }
         $folder = "/assets/img/";
@@ -164,9 +166,9 @@ class DBController
         $response = new Response();
         $repo = new UserTasks($app['db']);
         $imgMesVistes = $repo->home1();
-        if($ok) {
+        if ($ok) {
             $content = $app['twig']->render('hello.twig', [
-                    'logejat'=> true,
+                    'logejat' => true,
                     'dades' => $imgMesVistes
                 ]
             );
@@ -177,9 +179,8 @@ class DBController
     }
 
 
-
     public function validateUser(Application $app, Request $request)
-    { //Download images from remote server
+    {
         $nickname = $request->get('nickname');
         $repo = new UserTasks($app['db']);
         $ok = $repo->ActivateUser($nickname);
@@ -206,14 +207,15 @@ class DBController
         $response->setContent($content);
         return $response;
     }
-    
-    public function DBeditImage(Application $app, Request $request, $id){
+
+    public function DBeditImage(Application $app, Request $request, $id)
+    {
         $title = htmlspecialchars($request->get('title'));
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
-        if ($privada ==="on"){
+        if ($privada === "on") {
             $private = 1;
-        }else{
+        } else {
             $private = 0;
         }
         $folder = "/assets/img/";

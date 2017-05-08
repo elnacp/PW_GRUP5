@@ -1,20 +1,6 @@
 // JavaScript Document
 "use strict";
-/*function saveBlobAsFile(blob, fileName) {
 
-    var reader = new FileReader();
-
-    reader.onloadend = function () {
-        var base64 = reader.result ;
-        var link = document.createElement("a");
-
-        link.setAttribute("href", base64);
-        link.setAttribute("download", fileName);
-        link.click();
-    };
-
-    reader.readAsDataURL(blob);
-}*/
 
 $("#files").change(function(){
     if(this.files && this.files[0]){

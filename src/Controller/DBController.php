@@ -258,6 +258,13 @@ class DBController
         $title = htmlspecialchars($request->get('title'));
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
+        $size = htmlspecialchars($request->get('size'));
+
+        if ($size === "gran"){
+            $sizeImage = 400;
+        }else{
+            $sizeImage = 100;
+        }
         if ($privada === "on") {
             $private = 1;
         } else {
@@ -267,13 +274,12 @@ class DBController
         $path_name = $imgName;
         //var_dump($path_name);
         $repo = new UserTasks($app['db']);
-        $repo->editInformation($title, $path_name, $private, $id);
+        $repo->editInformation($title, $path_name, $private, $id, $sizeImage);
         $dades = $repo->dadesImatges();
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
             'message' => 'Se ha editado correctamente!'
-
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

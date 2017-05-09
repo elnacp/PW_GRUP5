@@ -164,10 +164,10 @@ class UserTasks implements UserModel
         $this->db->exec($sql);
     }
 
-    public function editInformation($title, $path_name, $private, $id)
+    public function editInformation($title, $path_name, $private, $id, $sizeImage)
     {
         $sql = "UPDATE imatge SET title = ?, img_path  = ?, private = ? WHERE id = ?";
-        $this->db->executeUpdate($sql, array($title, $path_name, $private, (int) $id));
+        $this->db->executeUpdate($sql, array($title, $path_name, $private, (int) $id,$sizeImage));
     }
 
 

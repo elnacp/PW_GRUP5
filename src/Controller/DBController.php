@@ -69,7 +69,7 @@ class DBController
         $repo = new UserTasks($app['db']);
         $repo->deleteActualPic($name);
         move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y") . ".jpg");
-        $img = './assets/uploads/' . $name . date("m-d-y") . ".jpg";
+        $img = './assets/uploads/' . $name . date("m-d-y-u") . ".jpg";
 
         $repo->validateEditProfile($name, $birth, $pass1, $img);
         $response = new Response();
@@ -175,7 +175,11 @@ class DBController
         $ok = $repo->DBnewPost($title, $img, $private);
         $response = new Response();
         $repo = new UserTasks($app['db']);
-        $imgMesVistes = $repo->home1();
+        if($app['session']->has('name')){
+            $log = true;
+        }
+        $usuari = $app['session']->get('name');
+        $imgMesVistes = $repo->home1($log, $usuari);
         if ($ok) {
             $content = $app['twig']->render('hello.twig', [
                     'logejat' => true,

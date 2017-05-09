@@ -200,7 +200,7 @@ class UserTasks implements UserModel
             $href1 = "/likeHome/".$s['id']."/".$usuari;
             $hrefComentari = "/comentari/".$s['id']."/".$usuari;
 
-            
+
             ////////////
             $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
                                             <div class=\"panel-heading\">                                         

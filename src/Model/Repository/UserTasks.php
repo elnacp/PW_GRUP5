@@ -212,16 +212,15 @@ class UserTasks implements UserModel
                                             </div>
                                             <!-- IMATGE -->
                                             <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=".$image." alt=\"User Image\" />
-                                            <div class=\"panel-footer\">
-                                                <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +". $likes."</button>
-                                                <button type=\"button\" class=\"[ btn btn-default ]\">
                                             <div class=\"panel-footer\">";
             if($log){
 
-                $imgMesVistes = $imgMesVistes."<a  href=".$href1." class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
+                $imgMesVistes = $imgMesVistes."<a  href=\".$href1.\" class=\\"[btn btn -default ]\\">Likes: +\".$likes.\"</a>\";
             }else{
-                $imgMesVistes = $imgMesVistes."<a class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
-            }
+                $imgMesVistes = $imgMesVistes.\"<a class=\\"[btn btn -default ]\\">Likes: +\".$likes.\"</a>\";
+            }                                  
+                                               
+            
                 $imgMesVistes = $imgMesVistes." <button type=\"button\" class=\"[ btn btn-default ]\">
                                                      Visitas: +". $visites."</span>
                                                 </button>

@@ -200,8 +200,9 @@ class UserTasks implements UserModel
             $href1 = "/likeHome/".$s['id']."/".$usuari;
             $hrefComentari = "/comentari/".$s['id']."/".$usuari;
 
+            
+            ////////////
             $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
-
                                             <div class=\"panel-heading\">                                         
                                                 <h2>
                                                     <a href=".$href.">".$title." </a>
@@ -211,16 +212,14 @@ class UserTasks implements UserModel
                                                 <img class=\"img-circle\" id=\"ProfileImg\" src=".$profilePic." alt=\"User Image\" />
                                             </div>
                                             <!-- IMATGE -->
-                                            <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=".$image." alt=\"User Image\" />
+                                             <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=".$image." alt=\"User Image\" />
                                             <div class=\"panel-footer\">";
             if($log){
 
-                $imgMesVistes = $imgMesVistes."<a  href=\".$href1.\" class=\\"[btn btn -default ]\\">Likes: +\".$likes.\"</a>\";
+                $imgMesVistes = $imgMesVistes."<a  href=".$href1." class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
             }else{
-                $imgMesVistes = $imgMesVistes.\"<a class=\\"[btn btn -default ]\\">Likes: +\".$likes.\"</a>\";
-            }                                  
-                                               
-            
+                $imgMesVistes = $imgMesVistes."<a class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
+            }
                 $imgMesVistes = $imgMesVistes." <button type=\"button\" class=\"[ btn btn-default ]\">
                                                      Visitas: +". $visites."</span>
                                                 </button>
@@ -241,6 +240,9 @@ class UserTasks implements UserModel
             }
 
             $imgMesVistes = $imgMesVistes."</div>";
+
+
+
 
             $c1--;
             //img - titol - autor - dia publicación - numero likes - número de visualizaciones

@@ -128,8 +128,7 @@ class UserTasks implements UserModel
             $editar = "/editar/".$s['id'];
             $dades = $dades."<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <h1>". $s['title'] ."</h1>
-                            <!--<img src=\"http://fakeimg.pl/365x365/\" class=\"img-responsive\">-->
-                            <h3> ". $s['img_path'] ."</h3>
+                            <img src=".$s['img_path']." class=\"img-responsive\">
                             <li> <a href=".$eliminar."> Eliminar </a> </li>
                             <li><a href=".$editar."> Editar </a> </li>
                         </div>";
@@ -202,10 +201,10 @@ class UserTasks implements UserModel
                                                 </h2>
                                                 <h3>".$autor."</h3>
                                                 <h5><span>Publicat - </span> - <span>".$dia."</span> </h5>
-                                                <img class=\"img-circle img-responsive\" id=\"ProfileImg\" src=".$profilePic." alt=\"User Image\" />
+                                                <img class=\"img-circle\" id=\"ProfileImg\" src=".$profilePic." alt=\"User Image\" />
                                             </div>
                                             <!-- IMATGE -->
-                                            <img class=\"img-thumbnail img-responsive\"  src=".$image." alt=\"User Image\" />
+                                            <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=".$image." alt=\"User Image\" />
                                             <div class=\"panel-footer\">
                                                 <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +". $likes."</button>
                                                 <button type=\"button\" class=\"[ btn btn-default ]\">

@@ -193,7 +193,7 @@ class UserTasks implements UserModel
             $href = "/visualitzacioImatge/".$s['id'];
 
             $href1 = "/likeHome/".$s['id']."/".$usuari;
-            $hrefComentari = "/commentHome/".$s['id']."/".$usuari;
+            $hrefComentari = "/comentari/".$s['id']."/".$usuari;
 
             $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
                                             <div class=\"panel-heading\">                                         
@@ -310,6 +310,43 @@ class UserTasks implements UserModel
 
 
         }
+
+    }
+
+
+    public function comentari($id, $usuari_log){
+        $comentari = htmlspecialchars($_POST['comentari']);
+        $id_usuari = "";
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+        if(!$trobat){
+            $sql = "SELECT * FROM usuari WHERE email = ?";
+            $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+
+            if($trobat){
+                $sql = "SELECT id FROM usuari WHERE email = ?";
+                $i = $this->db->fetchAssoc($sql, array($usuari_log));
+                $id_usuari = $i['id'];
+                //echo("email" . $id_usuari);
+            }
+        }else{
+            $sql = "SELECT id FROM usuari WHERE username = ?";
+            $i = $this->db->fetchAssoc($sql, array($usuari_log));
+            $id_usuari = $i['id'];
+
+        }
+
+        $message = "";
+        $sql = "SELECT * FROM comentari WHERE image_id = ? and user_id = ?";
+        $exist = $this->db->fetchAll($sql, array($id, (int)$id_usuari));
+        if( !$exist){
+            $sql = "INSERT INTO comentari (user_id, image_id, comentari) VALUES (?,?,?)";
+            $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari));
+        }else{
+            $message = "Ya has comentado 1 vez en esta imagen, elimina el comentario existente.";
+        }
+
+        return $message;
 
     }
 

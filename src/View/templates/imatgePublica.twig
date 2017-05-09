@@ -43,6 +43,20 @@
         {% endif %}
     </div>
 
+    {% if  message %}
+        <div class="[ panel panel-default ] panel-google-plus">
+            <div class="panel-heading">
+
+                <h3>ERROR! </h3>
+                <p>
+                    Message: {{ message }}
+                </p>
+
+            </div>
+
+        </div>
+    {% endif %}
+
     <!-- COMENTARIS -->
     <div class="[ panel panel-default ] panel-google-plus">
         <div class="panel-heading">

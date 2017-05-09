@@ -209,7 +209,8 @@ class TaskController{
                 'title' => $s['title'],
                 'dia' => date("Y-m-d H:i:s"),
                 'visites' => $s['visits'],
-                'likes' => $s['likes']
+                'likes' => $s['likes'],
+                'message' => null
 
             ]
         );

@@ -168,7 +168,7 @@ class UserTasks implements UserModel
             $autor = $stm1['username'];
             $title = $s['title'];
             $dia = $s['created_at'];
-            $likes = $s['likes'];
+            //$likes = $s['likes'];
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/" . $s['id'];
 
@@ -183,7 +183,7 @@ class UserTasks implements UserModel
                                             </div>
                                             <!-- IMATGE -->
                                             <div class=\"panel-footer\">
-                                                <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +" . $likes . "</button>
+                                             <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +" . 0/*$likes */. "</button>
                                                 <button type=\"button\" class=\"[ btn btn-default ]\">
                                                      Visitas: +" . $visites . "</span>
                                                 </button>

@@ -92,8 +92,8 @@ class DBController
                 'Reply-To: webmaster@example.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
-            $sendMail = mail($email,'Activar cuenta',$mensaje, $cabeceras);
-            if($sendMail){
+            //$sendMail = mail($email,'Activar cuenta',$mensaje, $cabeceras);
+            /*if($sendMail){*/
                 $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
                 $response->setStatusCode(Response::HTTP_OK);
 
@@ -102,14 +102,14 @@ class DBController
                         'logejat' => false
                     ]
                 );
-            }else{
-                $response->setStatusCode(Response::HTTP_BAD_REQUEST);
-                $content = $app['twig']->render('error.twig', [
-                        'message' => 'No se ha podido enviar el email',
-                        'logejat' => false
+            /*}else{*/
+               // $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+                //$content = $app['twig']->render('error.twig', [
+                  //      'message' => 'No se ha podido enviar el email',
+                    //    'logejat' => false
 
-                ]);
-            }
+                //]);
+            /*}*/
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
@@ -162,35 +162,6 @@ class DBController
 
         return $response;
     }
-
-    public function resizeImage(){
-        //Ruta de la imagen original
-        $rutaImagenOriginal="./imagen/aprilia classic.jpg";
-
-
-        //Creamos una variable imagen a partir de la imagen original
-        $img_original = imagecreatefromjpeg($rutaImagenOriginal);
-
-        //Se define el maximo ancho y alto que tendra la imagen final
-        $max_ancho = 400;
-        $max_alto = 300;
-
-        //$max_ancho = 100;
-        //$max_alto = 200;
-
-        //Ancho y alto de la imagen original
-        list($ancho,$alto)=getimagesize($rutaImagenOriginal);
-
-        //Creamos una imagen en blanco de tamaño $ancho_final  por $alto_final .
-        $tmp=imagecreatetruecolor($ancho_final,$alto_final);
-
-         //Copiamos $img_original sobre la imagen que acabamos de crear en blanco ($tmp)
-        imagecopyresampled($tmp,$img_original,0,0,0,0,$max_ancho,$max_alto,$ancho,$alto);
-
-        //Se destruye variable $img_original para liberar memoria
-        imagedestroy($img_original);
-    }
-
 
     public function DBeditImage(Application $app, Request $request, $id){
         $title = htmlspecialchars($request->get('title'));

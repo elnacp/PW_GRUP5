@@ -193,6 +193,7 @@ class UserTasks implements UserModel
             $href = "/visualitzacioImatge/".$s['id'];
 
             $href1 = "/likeHome/".$s['id']."/".$usuari;
+            $hrefComentari = "/commentHome/".$s['id']."/".$usuari;
 
             $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
                                             <div class=\"panel-heading\">                                         
@@ -219,9 +220,12 @@ class UserTasks implements UserModel
             if($log) {
                 $imgMesVistes = $imgMesVistes."<div class=\"panel-google-plus-comment\">
                                                 <div class=\"panel-google-plus-textarea\">
-                                                    <textarea rows=\"4\"></textarea>
+                                                   <form action=".$hrefComentari." method=\"POST\">
+                                                    <textarea rows=\"4\" name=\"comentari\"></textarea>
                                                     <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>
-                                                    <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
+                                                   </form>
+                                                   <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
+                                                    
                                                 </div>
                                                 <div class=\"clearfix\"></div>
                                                 </div>";
@@ -244,9 +248,11 @@ class UserTasks implements UserModel
         $s = $this->db->fetchAssoc($sql, array((int)$id));
         $visits = $s['visits'];
         $privada = $s['private'];
-        $visits = $visits + 1;
-        $sql = "UPDATE imatge SET visits = ?  WHERE id = ?";
-        $this->db->executeUpdate($sql, array((int)$visits, (int)$id));
+        if($privada == 0){
+            $visits = $visits + 1;
+            $sql = "UPDATE imatge SET visits = ?  WHERE id = ?";
+            $this->db->executeUpdate($sql, array((int)$visits, (int)$id));
+        }
 
         return $privada;
     }

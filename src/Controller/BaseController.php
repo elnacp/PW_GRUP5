@@ -33,7 +33,8 @@ class BaseController{
         if($app['session']->has('name')){
             $log = true;
         }
-        $imgMesVistes = $repo->home1($log);
+        $usuari = $app['session']->get('name');
+        $imgMesVistes = $repo->home1($log, $usuari);
         $content = $app['twig']->render('hello.twig',[
             'logejat' => true,
             'dades' => $imgMesVistes
@@ -50,7 +51,7 @@ class BaseController{
         if($app['session']->has('name')){
             $log = true;
         }
-        $imgMesVistes = $repo->home1($log);
+        $imgMesVistes = $repo->home1($log, NULL);
         $content = $app['twig']->render('hello.twig',[
             'logejat' => false,
             'dades' => $imgMesVistes

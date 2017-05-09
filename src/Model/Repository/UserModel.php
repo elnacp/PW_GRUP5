@@ -31,7 +31,7 @@ interface UserModel
 
     public function editInformation($title, $path_name, $private, $id);
 
-    public function home1($log);
+    public function home1($log, $usuari);
 
     public function incrementarVisites($id);
 

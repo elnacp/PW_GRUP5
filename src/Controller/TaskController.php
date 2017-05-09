@@ -15,7 +15,8 @@ class TaskController{
         if($app['session']->has('name')){
             $log = true;
         }
-        $imgMesVistes = $repo->home1($log);
+        $usuari =  $app['session']->get('name');
+        $imgMesVistes = $repo->home1($log,$usuari);
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,

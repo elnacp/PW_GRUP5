@@ -171,7 +171,7 @@ class UserTasks implements UserModel
         $this->db->executeUpdate($sql, array($title, $path_name, $private, (int) $id));
     }
 
-    public function home1($log){
+    public function home1($log, $usuari){
 
         $sql = "SELECT * FROM imatge  ORDER  BY visits DESC ";
         $stm = $this->db->fetchAll($sql);
@@ -180,6 +180,7 @@ class UserTasks implements UserModel
         $imgMesVistes ="<div class=\"[ panel panel-default ] panel-google-plus\">
                              <h2> Imagenes más vistas: </h2>
                         </div>";
+
         foreach ( $stm as $s){
             $id = $s['user_id'];
             $sql1 = "SELECT * FROM usuari WHERE id = ?";
@@ -191,6 +192,8 @@ class UserTasks implements UserModel
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/".$s['id'];
 
+            $href1 = "/likeHome/".$s['id']."/".$usuari;
+
             $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
                                             <div class=\"panel-heading\">                                         
                                                 <h2>
@@ -201,9 +204,14 @@ class UserTasks implements UserModel
                                                 <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
                                             </div>
                                             <!-- IMATGE -->
-                                            <div class=\"panel-footer\">
-                                                <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +". $likes."</button>
-                                                <button type=\"button\" class=\"[ btn btn-default ]\">
+                                            <div class=\"panel-footer\">";
+            if($log){
+
+                $imgMesVistes = $imgMesVistes."<a  href=".$href1." class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
+            }else{
+                $imgMesVistes = $imgMesVistes."<a class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
+            }
+                $imgMesVistes = $imgMesVistes." <button type=\"button\" class=\"[ btn btn-default ]\">
                                                      Visitas: +". $visites."</span>
                                                 </button>
                                                 <div class=\"input-placeholder\">Escribe un comentario...</div>

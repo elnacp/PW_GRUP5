@@ -185,7 +185,11 @@ class UserTasks implements UserModel
             $sql1 = "SELECT * FROM usuari WHERE id = ?";
             $stm1 = $this->db->fetchAssoc($sql1, array((int)$id));
             $autor = $stm1['username'];
+            $profilePic = $stm1['img_path'];
             $title = $s['title'];
+            $image = $s['img_path'];
+            $image = str_replace(" ", "_", $image);
+
             $dia = $s['created_at'];
             $likes = $s['likes'];
             $visites = $s['visits'];
@@ -198,9 +202,10 @@ class UserTasks implements UserModel
                                                 </h2>
                                                 <h3>".$autor."</h3>
                                                 <h5><span>Publicat - </span> - <span>".$dia."</span> </h5>
-                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
+                                                <img class=\"img-circle img-responsive\" id=\"ProfileImg\" src=".$profilePic." alt=\"User Image\" />
                                             </div>
                                             <!-- IMATGE -->
+                                            <img class=\"img-thumbnail img-responsive\"  src=".$image." alt=\"User Image\" />
                                             <div class=\"panel-footer\">
                                                 <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +". $likes."</button>
                                                 <button type=\"button\" class=\"[ btn btn-default ]\">

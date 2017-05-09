@@ -210,15 +210,7 @@ class UserTasks implements UserModel
                                                 <h5><span>Publicat - </span> - <span>" . $dia . "</span> </h5>
                                                 <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
                                             </div>
-                                            <!-- IMATGE -->
-                                            <div class=\"panel-footer\">
-                                             <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +" . 0/*$likes */. "</button>
-                                                <button type=\"button\" class=\"[ btn btn-default ]\">
-                                                     Visitas: +" . $visites . "</span>
-                                                <h3>".$autor."</h3>
-                                                <h5><span>Publicat - </span> - <span>".$dia."</span> </h5>
-                                                <img class=\"img-circle\" id=\"ProfileImg\" src=".$profilePic." alt=\"User Image\" />
-                                            </div>
+                                         
                                             <!-- IMATGE -->
                                              <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=".$image." alt=\"User Image\" />
                                             <div class=\"panel-footer\">";
@@ -251,9 +243,7 @@ class UserTasks implements UserModel
 
             $imgMesVistes = $imgMesVistes . "</div>";
 
-
-
-
+           
             $c1--;
             //img - titol - autor - dia publicación - numero likes - número de visualizaciones
         }

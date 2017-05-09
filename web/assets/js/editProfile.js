@@ -1,21 +1,19 @@
 // JavaScript Document
 "use strict";
 
-function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
+$("#files").change(function(){
+    if(this.files && this.files[0]){
+        var reader = new FileReader();
 
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-        output.push('<img class ="img-thumbnail img-responsive" src=', URL.createObjectURL(event.target.files[i]), '>');
+        reader.readAsDataURL(this.files[0]);
+        //reader.toDataURL("image/jpeg", 1.0);
+        reader.onload = function(e){
+            $("#newProfilePic").attr('src', e.target.result);
+            $("#files").attr('value', e.target.result);
+
+        }
     }
-    document.getElementById('registerImg').innerHTML =  output.join('');
-    //document.getElementById('profilePic').style.width = "50px";
-}
-
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
-
+});
 
 function valNickname(nickname){
     return (nickname.length > 20)

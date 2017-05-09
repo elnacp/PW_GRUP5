@@ -186,3 +186,16 @@ body {
     background-color: rgb(255, 255, 255);
     border-color: rgb(0, 0, 0);
 }
+
+#ProfileImg{
+    width: 100px;
+}
+
+#imgPost{
+    width:30%;
+
+}
+
+#post{
+    width:100%;
+}

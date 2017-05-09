@@ -170,7 +170,7 @@ class UserTasks implements UserModel
         $this->db->executeUpdate($sql, array($title, $path_name, $private, (int) $id));
     }
 
-    public function home1($log){
+    public function home1($log, $usuari){
 
         $sql = "SELECT * FROM imatge  ORDER  BY visits DESC ";
         $stm = $this->db->fetchAll($sql);
@@ -179,6 +179,7 @@ class UserTasks implements UserModel
         $imgMesVistes ="<div class=\"[ panel panel-default ] panel-google-plus\">
                              <h2> Imagenes más vistas: </h2>
                         </div>";
+
         foreach ( $stm as $s){
             $id = $s['user_id'];
             $sql1 = "SELECT * FROM usuari WHERE id = ?";
@@ -194,7 +195,13 @@ class UserTasks implements UserModel
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/".$s['id'];
 
-            $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus center-block\" id=\"post\">
+
+
+            $href1 = "/likeHome/".$s['id']."/".$usuari;
+            $hrefComentari = "/comentari/".$s['id']."/".$usuari;
+
+            $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
+
                                             <div class=\"panel-heading\">                                         
                                                 <h2>
                                                     <a href=".$href.">".$title." </a>
@@ -208,6 +215,14 @@ class UserTasks implements UserModel
                                             <div class=\"panel-footer\">
                                                 <button type=\"button\" class=\"[ btn btn-default ]\">Likes: +". $likes."</button>
                                                 <button type=\"button\" class=\"[ btn btn-default ]\">
+                                            <div class=\"panel-footer\">";
+            if($log){
+
+                $imgMesVistes = $imgMesVistes."<a  href=".$href1." class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
+            }else{
+                $imgMesVistes = $imgMesVistes."<a class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
+            }
+                $imgMesVistes = $imgMesVistes." <button type=\"button\" class=\"[ btn btn-default ]\">
                                                      Visitas: +". $visites."</span>
                                                 </button>
                                                 <div class=\"input-placeholder\">Escribe un comentario...</div>
@@ -215,9 +230,12 @@ class UserTasks implements UserModel
             if($log) {
                 $imgMesVistes = $imgMesVistes."<div class=\"panel-google-plus-comment\">
                                                 <div class=\"panel-google-plus-textarea\">
-                                                    <textarea rows=\"4\"></textarea>
+                                                   <form action=".$hrefComentari." method=\"POST\">
+                                                    <textarea rows=\"4\" name=\"comentari\"></textarea>
                                                     <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>
-                                                    <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
+                                                   </form>
+                                                   <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
+                                                    
                                                 </div>
                                                 <div class=\"clearfix\"></div>
                                                 </div>";
@@ -240,9 +258,11 @@ class UserTasks implements UserModel
         $s = $this->db->fetchAssoc($sql, array((int)$id));
         $visits = $s['visits'];
         $privada = $s['private'];
-        $visits = $visits + 1;
-        $sql = "UPDATE imatge SET visits = ?  WHERE id = ?";
-        $this->db->executeUpdate($sql, array((int)$visits, (int)$id));
+        if($privada == 0){
+            $visits = $visits + 1;
+            $sql = "UPDATE imatge SET visits = ?  WHERE id = ?";
+            $this->db->executeUpdate($sql, array((int)$visits, (int)$id));
+        }
 
         return $privada;
     }
@@ -293,11 +313,11 @@ class UserTasks implements UserModel
             $sql = "UPDATE imatge SET likes = ? WHERE id = ?";
             $this->db->executeUpdate($sql, array($likes-1, (int)$id));
             //DELETE  FROM logejat
-            $sql = "DELETE FROM likes WHERE image_id = ? ";
+            $sql = "DELETE FROM likes WHERE image_id = '$id' AND user_id =  '$id_usuari'";
             //echo($id);
             //echo($id_usuari);
-            $s = $this->db->query($sql, array((int)$id));
-            echo($s);
+            $this->db->query($sql);
+
 
         }
 
@@ -308,6 +328,43 @@ class UserTasks implements UserModel
         $info = $this->db->fetchAssoc($sql, array($nickname));
         $image = $info['img_path'];
         unlink($image);
+    }
+
+
+    public function comentari($id, $usuari_log){
+        $comentari = htmlspecialchars($_POST['comentari']);
+        $id_usuari = "";
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+        if(!$trobat){
+            $sql = "SELECT * FROM usuari WHERE email = ?";
+            $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+
+            if($trobat){
+                $sql = "SELECT id FROM usuari WHERE email = ?";
+                $i = $this->db->fetchAssoc($sql, array($usuari_log));
+                $id_usuari = $i['id'];
+                //echo("email" . $id_usuari);
+            }
+        }else{
+            $sql = "SELECT id FROM usuari WHERE username = ?";
+            $i = $this->db->fetchAssoc($sql, array($usuari_log));
+            $id_usuari = $i['id'];
+
+        }
+
+        $message = "";
+        $sql = "SELECT * FROM comentari WHERE image_id = ? and user_id = ?";
+        $exist = $this->db->fetchAll($sql, array($id, (int)$id_usuari));
+        if( !$exist){
+            $sql = "INSERT INTO comentari (user_id, image_id, comentari) VALUES (?,?,?)";
+            $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari));
+        }else{
+            $message = "Ya has comentado 1 vez en esta imagen, elimina el comentario existente.";
+        }
+
+        return $message;
+
     }
 
 

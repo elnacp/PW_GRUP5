@@ -31,13 +31,17 @@ interface UserModel
 
     public function editInformation($title, $path_name, $private, $id);
 
-    public function home1($log);
+    public function home1($log, $usuari);
 
     public function incrementarVisites($id);
 
     public function like($id, $usuari_log);
 
+
     public function deleteActualPic($nickname);
+
+
+    public function comentari($id, $usuari_log);
 
 
 }

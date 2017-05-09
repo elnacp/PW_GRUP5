@@ -37,6 +37,10 @@ $app->get('/editar/{id}','SilexApp\\Controller\\TaskController::editarImatge');
 $app->get('/visualitzacioImatge/{id}','SilexApp\\Controller\\TaskController::visualitzacioImatge');
 $app->get('/like/{id}/{usuari_log}','SilexApp\\Controller\\TaskController::likeImage');
 
+//$app->get('/comment/{usuari_log}','SilexApp\\Controller\\FunctionsController::commentImage' );
+$app->get('/likeHome/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::likeHome');
+$app->post('/comentari/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::comentari');
+
 
 $app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile');
 $app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');

@@ -32,14 +32,30 @@
         <div class="panel-google-plus-comment">
             <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
             <div class="panel-google-plus-textarea">
-                <textarea rows="4"></textarea>
-                <button type="submit" class="[ btn btn-success disabled ]">Aceptar</button>
-                <button type="reset" class="[ btn btn-default ]">Cancel</button>
+                <form action="" method="POST">
+                    <textarea rows="4"></textarea>
+                    <a type="submit" href="/comment/{{ usuari_log }}" class="[ btn btn-success disabled ]">Aceptar</a>
+                    <button type="reset" class="[ btn btn-default ]">Cancel</button>
+                </form>
             </div>
             <div class="clearfix"></div>
         </div>
         {% endif %}
     </div>
+
+    {% if  message %}
+        <div class="[ panel panel-default ] panel-google-plus">
+            <div class="panel-heading">
+
+                <h3>ERROR! </h3>
+                <p>
+                    Message: {{ message }}
+                </p>
+
+            </div>
+
+        </div>
+    {% endif %}
 
     <!-- COMENTARIS -->
     <div class="[ panel panel-default ] panel-google-plus">

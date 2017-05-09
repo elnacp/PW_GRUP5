@@ -194,7 +194,7 @@ class UserTasks implements UserModel
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/".$s['id'];
 
-            $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
+            $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus center-block\" id=\"post\">
                                             <div class=\"panel-heading\">                                         
                                                 <h2>
                                                     <a href=".$href.">".$title." </a>

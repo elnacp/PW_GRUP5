@@ -192,6 +192,10 @@ body {
 }
 
 #imgPost{
-    width:50%;
+    width:30%;
 
+}
+
+#post{
+    width:100%;
 }

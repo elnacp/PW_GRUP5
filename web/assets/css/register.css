@@ -225,7 +225,7 @@ span.checkbox{
     width: 20px;
     height: 20px;
     position: relative;
-   float: right;
+    float: right;
 }
 
 .checkbox .label{
@@ -235,4 +235,9 @@ span.checkbox{
     height: 345px;
     border: 1px solid #000;
     margin: 10px 5px 0 0;
+}
+
+input.radio{
+    margin-top: 20px;
+    margin-left: 230px;
 }

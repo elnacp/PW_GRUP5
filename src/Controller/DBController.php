@@ -171,18 +171,19 @@ class DBController
         //$imgName = htmlspecialchars($request->files->get('ProfileImg'));
         $privada = htmlspecialchars($request->get('privada'));
         $output = htmlspecialchars($request->get('registerImg'));
-        var_dump($output);
+        //var_dump($output);
         //var_dump($request->files->get('imagen'));
         $path = $request->files->get('imagen');
         $path = (String)$request->files->get('imagen');
+        $size = $request->get('size');
         //var_dump($path);
 
 
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
         //$title = str_replace(" ", "_", $img);
-
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") . ".jpg");
+        //var_dump($img->getPathname());
+       // move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") . ".jpg");
         $img = './assets/uploads/' . $title . date("m-d-y") . ".jpg";
         //var_dump($privada);
         //var_dump($request->files->get('imagen'));
@@ -191,6 +192,11 @@ class DBController
             $private = 1;
         } else {
             $private = 0;
+        }
+        if($size === 'gran'){
+            $sizeImage = 400;
+        }else{
+            $sizeImage = 100;
         }
 
         $folder = "./assets/img/";
@@ -203,7 +209,7 @@ class DBController
 
 
         $repo = new UserTasks($app['db']);
-        $ok = $repo->DBnewPost($title, $img, $private);
+        $ok = $repo->DBnewPost($title, $img, $private, $sizeImage);
         $response = new Response();
         $repo = new UserTasks($app['db']);
         if($app['session']->has('name')){
@@ -259,7 +265,7 @@ class DBController
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
         $size = htmlspecialchars($request->get('size'));
-
+        //var_dump($size);
         if ($size === "gran"){
             $sizeImage = 400;
         }else{

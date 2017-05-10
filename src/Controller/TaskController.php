@@ -115,8 +115,8 @@ class TaskController{
             'logejat' => true,
             'titol' => $imatge['title'],
             'privada' => $estat,
-            'id' => $id
-
+            'id' => $id,
+            'sizeImage'=>$imatge['sizeImage']
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

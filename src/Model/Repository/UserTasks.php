@@ -97,7 +97,7 @@ class UserTasks implements UserModel
         return true;
     }
 
-    public function DBnewPost($title, $path_name, $private){
+    public function DBnewPost($title, $path_name, $private, $sizeImage){
         $sql = "SELECT * FROM logejat LIMIT 1";
         $user_id = $this->db->fetchAssoc($sql);
         $id = $user_id['user_id'];
@@ -107,7 +107,8 @@ class UserTasks implements UserModel
             'title' => $title,
             'img_path' => $path_name,
             'visits' => 0,
-            'private'=> $private
+            'private'=> $private,
+            'sizeImage'=>$sizeImage
         ]);
         return true;
 
@@ -134,6 +135,7 @@ class UserTasks implements UserModel
                         </div>";
 
         }
+        //var_dump($dades);
         return $dades;
     }
 
@@ -166,8 +168,9 @@ class UserTasks implements UserModel
 
     public function editInformation($title, $path_name, $private, $id, $sizeImage)
     {
-        $sql = "UPDATE imatge SET title = ?, img_path  = ?, private = ? WHERE id = ?";
-        $this->db->executeUpdate($sql, array($title, $path_name, $private, (int) $id,$sizeImage));
+        var_dump($sizeImage);
+        $sql = "UPDATE imatge SET title = ?, img_path  = ?, private = ?, sizeImage = ? WHERE id = ?";
+        $this->db->executeUpdate($sql, array($title, $path_name, $private, (int) $id, $sizeImage));
     }
 
 

@@ -30,20 +30,19 @@
                         <input type="file" id="files" name="imagen" />
                         <output id="registerImg"></output>
                         <br>
-                        <input type="file" id="files" name="imagen" />
-                        <label>
-                            Privada
-                        </label>
-                        <span class="checkbox">
-                            <input type="checkbox" id="imageGran" name="gran">400*300</input>
-                            <input type="checkbox" id="imagePetita" name="petita">100*100</input>
-                        </span>
 
+                            <label>400x300</label>
+                            <input class="radio" type="radio" id="imageGran" name="size" value="gran"></input>
+
+                            <label>100x100</label>
+                            <input class="radio" type="radio" id="imagePetita" name="size" value="petita"></input>
+
+                        <br>
+                        <br>
+                        <label>Privada</label>
                         <span class="checkbox">
                             <input  type="checkbox" name="privada"  {{ privada }}>
                         </span>
-                        <br>
-                        <br>
                     </div>
                     <button type="submit" class="button button-block" />Publicar</button>
                 </form>

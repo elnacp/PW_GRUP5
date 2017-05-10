@@ -210,6 +210,7 @@ class UserTasks implements UserModel
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/" . $s['id'];
 
+            //seguir el mateix exemple que el href anterior per a fer el perfil del usuari
              $href1 = "/likeHome/" . $s['id'] . "/" . $usuari;
              $hrefComentari = "/comentari/".$s['id']."/".$usuari;
 
@@ -376,6 +377,12 @@ class UserTasks implements UserModel
         }
 
         return $message;
+
+    }
+
+    public function perfilUsuari($username){
+        $sql = "SELECT * FROM usuari  WHERE username = $username ";
+        $stm = $this->db->fetchAssoc($sql);
 
     }
 }

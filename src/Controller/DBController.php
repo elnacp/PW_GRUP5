@@ -68,8 +68,8 @@ class DBController
 
         $repo = new UserTasks($app['db']);
         $repo->deleteActualPic($name);
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y") . ".jpg");
-        $img = './assets/uploads/' . $name . date("m-d-y-u") . ".jpg";
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg";
 
         $repo->validateEditProfile($name, $birth, $pass1, $img);
         $response = new Response();
@@ -91,8 +91,8 @@ class DBController
         $password = $request->get('password');
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y") . ".jpg");
-        $img = './assets/uploads/' . $nickname . date("m-d-y") . ".jpg";
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg";
         $repo = new UserTasks($app['db']);
         $exists = $repo->checkUser($nickname);
         $response = new Response();
@@ -156,8 +156,8 @@ class DBController
         $img = $request->files->get('ProfileImg');
         //$title = str_replace(" ", "_", $img);
 
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") . ".jpg");
-        $img = './assets/uploads/' . $title . date("m-d-y") . ".jpg";
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa"). ".jpg";
         //var_dump($privada);
         //var_dump($request->files->get('imagen'));
         //var_dump($request->files);

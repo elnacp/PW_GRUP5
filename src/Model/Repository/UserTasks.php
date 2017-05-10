@@ -127,12 +127,22 @@ class UserTasks implements UserModel
         foreach( $stm as $s){
             $eliminar = "/eliminar/".$s['id'];
             $editar = "/editar/".$s['id'];
-            $dades = $dades."<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
+            if($s['sizeImage'] == 400){
+                $dades = $dades."<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <h1>". $s['title'] ."</h1>
-                            <img src=".$s['img_path']." class=\"img-responsive\">
+                            <img src=".$s['img_path']." class=\"img-responsive\" width=\"400\" height=\"300\">
                             <li> <a href=".$eliminar."> Eliminar </a> </li>
                             <li><a href=".$editar."> Editar </a> </li>
                         </div>";
+            }else{
+                $dades = $dades."<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
+                            <h1>". $s['title'] ."</h1>
+                            <img src=".$s['img_path']." class=\"img-responsive\" width=\"100\" height=\"100\">
+                            <li> <a href=".$eliminar."> Eliminar </a> </li>
+                            <li><a href=".$editar."> Editar </a> </li>
+                        </div>";
+            }
+
 
         }
         //var_dump($dades);

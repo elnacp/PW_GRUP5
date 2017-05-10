@@ -32,11 +32,11 @@
         <div class="panel-google-plus-comment">
             <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
             <div class="panel-google-plus-textarea">
-                <form action="" method="POST">
-                    <textarea rows="4"></textarea>
-                    <a type="submit" href="/comment/{{ usuari_log }}" class="[ btn btn-success disabled ]">Aceptar</a>
-                    <button type="reset" class="[ btn btn-default ]">Cancel</button>
+                <form action="/comentari/{{ id }}/{{ usuari_log }}" method="POST">
+                    <textarea rows="4" name="comentari"></textarea>
+                    <button type="submit"  class="[ btn btn-success disabled ]"> Comentar</button>
                 </form>
+                <button type="reset" class="[ btn btn-default ]">Cancel</button>
             </div>
             <div class="clearfix"></div>
         </div>

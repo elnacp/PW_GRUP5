@@ -47,9 +47,6 @@ $app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
 $app->post('/DBRegister','SilexApp\\Controller\\DBController::DBRegister');
 $app->post('/DBnewPost','SilexApp\\Controller\\DBController::DBnewPost');
 $app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\DBController::DBeditImage');
-
-
-
 $app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
 
 

@@ -160,7 +160,11 @@ class DBController
         $ok = $repo->DBnewPost($title, $path_name, $private);
         $response = new Response();
         $repo = new UserTasks($app['db']);
-        $imgMesVistes = $repo->home1();
+        if($app['session']->has('name')){
+            $log = true;
+        }
+        $usuari =  $app['session']->get('name');
+        $imgMesVistes = $repo->home1($log,$usuari);
         if ($ok) {
             $content = $app['twig']->render('hello.twig', [
                     'logejat' => true,

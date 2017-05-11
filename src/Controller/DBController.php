@@ -53,18 +53,25 @@ class DBController
     }
 
 
-    public function DBeditProfile(Application $app)
+    public function DBeditProfile(Application $app, Request $request)
     {
         $name = htmlspecialchars($_POST['nickname']);
         $birth = htmlspecialchars($_POST['edad']);
         $pass1 = htmlspecialchars($_POST['password1']);
-        $img1 = $_POST['imgP'];
+        //$img1 = $_POST['imgP'];
+        /** @var UploadedFile $img */
+        $img = $request->files->get('newProfileImg');
+
 
         //$pass2 = htmlspecialchars($_POST['password2']);
         //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
-        $repo->validateEditProfile($name, $birth, $pass1, $img1);
+        $repo->deleteActualPic($name);
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg";
+
+        $repo->validateEditProfile($name, $birth, $pass1, $img);
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
                 'logejat' => true,
@@ -84,8 +91,8 @@ class DBController
         $password = $request->get('password');
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y") . ".jpg");
-        $img = './assets/uploads/' . $nickname . date("m-d-y") . ".jpg";
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg";
         $repo = new UserTasks($app['db']);
         $exists = $repo->checkUser($nickname);
         $response = new Response();
@@ -142,9 +149,15 @@ class DBController
     public function DBnewPost(Application $app, Request $request)
     {
         $title = htmlspecialchars($request->get('title'));
-        $imgName = htmlspecialchars($request->files->get('imagen'));
+        //$imgName = htmlspecialchars($request->files->get('ProfileImg'));
         $privada = htmlspecialchars($request->get('privada'));
 
+        /** @var UploadedFile $img */
+        $img = $request->files->get('ProfileImg');
+        //$title = str_replace(" ", "_", $img);
+
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa"). ".jpg";
         //var_dump($privada);
         //var_dump($request->files->get('imagen'));
         //var_dump($request->files);
@@ -153,18 +166,22 @@ class DBController
         } else {
             $private = 0;
         }
-        $folder = "/assets/img/";
-        $path_name = $imgName;
+        //$folder = "/assets/img/";
+        //$path_name = $imgName;
         //var_dump($path_name);
+
+
         $repo = new UserTasks($app['db']);
-        $ok = $repo->DBnewPost($title, $path_name, $private);
+        $ok = $repo->DBnewPost($title, $img, $private);
         $response = new Response();
         $repo = new UserTasks($app['db']);
         if($app['session']->has('name')){
             $log = true;
         }
+
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
+
         if ($ok) {
             $content = $app['twig']->render('hello.twig', [
                     'logejat' => true,

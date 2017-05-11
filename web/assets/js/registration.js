@@ -7,7 +7,6 @@ $("#files").change(function(){
         var reader = new FileReader();
 
         reader.readAsDataURL(this.files[0]);
-        //reader.toDataURL("image/jpeg", 1.0);
         reader.onload = function(e){
             $("#profilePic").attr('src', e.target.result);
             $("#files").attr('value', e.target.result);

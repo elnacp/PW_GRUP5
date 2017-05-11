@@ -1,18 +1,14 @@
 // JavaScript Document
 "use strict";
+$("#files").change(function(){
+    if(this.files && this.files[0]){
+        var reader = new FileReader();
 
-function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
+        reader.readAsDataURL(this.files[0]);
+        reader.onload = function(e){
+            $("#PostImg").attr('src', e.target.result);
+            $("#files").attr('value', e.target.result);
 
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-        output.push('<img src=', URL.createObjectURL(event.target.files[i]), '>');
+        }
     }
-    document.getElementById('registerImg').innerHTML =  output.join('');
-    //document.getElementById('profilePic').style.width = "50px";
-}
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
-/**
- * Created by noa on 24/4/17.
- */
+});

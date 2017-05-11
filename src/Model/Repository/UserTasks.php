@@ -128,8 +128,7 @@ class UserTasks implements UserModel
             $editar = "/editar/".$s['id'];
             $dades = $dades."<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <h1>". $s['title'] ."</h1>
-                            <!--<img src=\"http://fakeimg.pl/365x365/\" class=\"img-responsive\">-->
-                            <h3> ". $s['img_path'] ."</h3>
+                            <img src=".$s['img_path']." class=\"img-responsive\">
                             <li> <a href=".$eliminar."> Eliminar </a> </li>
                             <li><a href=".$editar."> Editar </a> </li>
                         </div>";
@@ -186,15 +185,23 @@ class UserTasks implements UserModel
             $sql1 = "SELECT * FROM usuari WHERE id = ?";
             $stm1 = $this->db->fetchAssoc($sql1, array((int)$id));
             $autor = $stm1['username'];
+            $profilePic = $stm1['img_path'];
             $title = $s['title'];
+            $image = $s['img_path'];
+            $image = str_replace(" ", "_", $image);
+
             $dia = $s['created_at'];
             $likes = $s['likes'];
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/".$s['id'];
 
+
+
             $href1 = "/likeHome/".$s['id']."/".$usuari;
             $hrefComentari = "/comentari/".$s['id']."/".$usuari;
 
+
+            ////////////
             $imgMesVistes = $imgMesVistes."<div class=\"[ panel panel-default ] panel-google-plus\">
                                             <div class=\"panel-heading\">                                         
                                                 <h2>
@@ -202,9 +209,10 @@ class UserTasks implements UserModel
                                                 </h2>
                                                 <h3>".$autor."</h3>
                                                 <h5><span>Publicat - </span> - <span>".$dia."</span> </h5>
-                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
+                                                <img class=\"img-circle\" id=\"ProfileImg\" src=".$profilePic." alt=\"User Image\" />
                                             </div>
                                             <!-- IMATGE -->
+                                             <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=".$image." alt=\"User Image\" />
                                             <div class=\"panel-footer\">";
             if($log){
 
@@ -232,6 +240,9 @@ class UserTasks implements UserModel
             }
 
             $imgMesVistes = $imgMesVistes."</div>";
+
+
+
 
             $c1--;
             //img - titol - autor - dia publicación - numero likes - número de visualizaciones
@@ -311,6 +322,13 @@ class UserTasks implements UserModel
 
         }
 
+    }
+
+    public function deleteActualPic($nickname){
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $info = $this->db->fetchAssoc($sql, array($nickname));
+        $image = $info['img_path'];
+        unlink($image);
     }
 
 

@@ -467,6 +467,16 @@ class UserTasks implements UserModel
         }
     }
 
+    public function notificacionsUser(){
+        $sql = "SELECT * FROM logejat";
+        $s = $this->db->fetchAssoc($sql);
+        $id = $s['user_id'];
+        $sql = "SELECT username FROM usuari WHERE id = ?";
+        $d = $this->db->fetchAssoc($sql, array((int)$id));
+        $username = $d['username'];
+        //ACABARO
+    }
+
 
 
 

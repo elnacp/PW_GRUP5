@@ -48,6 +48,8 @@ interface UserModel
 
     public function notificacio($id, $usuari_log, $type);
 
+    public function notificacionsUser();
+
 
 
 

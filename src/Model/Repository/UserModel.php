@@ -47,5 +47,7 @@ interface UserModel
 
     public function eliminarComentari($id);
 
+    public function editarComentari($id);
+
 
 }

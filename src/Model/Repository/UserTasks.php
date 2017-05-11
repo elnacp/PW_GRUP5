@@ -398,5 +398,17 @@ class UserTasks implements UserModel
         return $message;
     }
 
+    public function editarComentari($id){
+        $comentari = htmlspecialchars($_POST['comentari']);
+        $sql = "UPDATE comentari SET comentari = ? WHERE id = ?";
+        $ok = $this->db->executeUpdate($sql, array($comentari, (int)$id));
+        if( $ok){
+            $message = "Se ha editado correctamente";
+        }else{
+            $message = "No se ha podido editar";
+        }
+        return $message;
+    }
+
 
 }

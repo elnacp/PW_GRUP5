@@ -12,7 +12,9 @@ class FunctionsController{
 
     public function likeHome(Application $app, $id, $usuari_log){
         $repo = new UserTasks($app['db']);
+        $type = 2;
         $repo->like($id, $usuari_log);
+        $repo->notificacio($id, $usuari_log,$type );
         if($app['session']->has('name')){
             $log = true;
         }
@@ -41,7 +43,8 @@ class FunctionsController{
     public function comentari(Application $app, $id, $usuari_log){
         $repo = new UserTasks($app['db']);
         $message = $repo->comentari($id, $usuari_log);
-        $repo->notificacioComentari($id, $usuari_log);
+        $type = 1;
+        $repo->notificacio($id, $usuari_log, $type);
         $response = new Response();
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $sql = "SELECT * FROM imatge WHERE id = ?";
@@ -52,6 +55,9 @@ class FunctionsController{
         $sql3 = "SELECT * FROM usuari WHERE id = ?";
         $s3 = $app['db']->fetchAssoc($sql3, array((int)$autor));
         $usuari =  $app['session']->get('name');
+        $sql4 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
+        $l = $app['db']->fetchAssoc($sql4, array((int)$s['id']));
+        $likes = $l['total'];
         $content = $app['twig']->render('imatgePublica.twig', [
                 'id' => $id,
                 'usuari_log' => $usuari,
@@ -60,7 +66,7 @@ class FunctionsController{
                 'title' => $s['title'],
                 'dia' => date("Y-m-d H:i:s"),
                 'visites' => $s['visits'],
-                'likes' => $s['likes'],
+                'likes' => $likes,
                 'message' => $message,
                 'imPerfil' => $s3['img_path']
 

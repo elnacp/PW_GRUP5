@@ -191,7 +191,9 @@ class UserTasks implements UserModel
             $image = str_replace(" ", "_", $image);
 
             $dia = $s['created_at'];
-            $likes = $s['likes'];
+            $sql2 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
+            $l = $this->db->fetchAssoc($sql2, array((int)$s['id']));
+            $likes = $l['total'];
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/".$s['id'];
 
@@ -410,7 +412,7 @@ class UserTasks implements UserModel
         return $message;
     }
 
-    public function notificacioComentari($id, $usuari_log){
+    public function notificacio($id, $usuari_log, $type){
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
         $username = "";
@@ -438,10 +440,34 @@ class UserTasks implements UserModel
             $sql = "SELECT * FROM imatge WHERE id = ?";
             $d = $this->db->fetchAssoc($sql, array((int)$id));
             $title = $d['title'];
-            $sql = "INSERT INTO notificacions (nom_usuari, titol, type) VALUE (?,?,?)";
-            $this->db->executeUpdate($sql, array( $username, $title, 1));
+
+            if($type == 1){
+                $sql = "SELECT * FROM notificacions WHERE nom_usuari = ? and titol = ? and type = ?";
+                $exist = $this->db->fetchAssoc($sql, array($username, $title, $type));
+                if(!$exist) {
+                    $sql = "INSERT INTO notificacions (nom_usuari, titol, type) VALUE (?,?,?)";
+                    $this->db->executeUpdate($sql, array($username, $title, $type));
+                }
+            }else if( $type == 2){
+                $sql = "SELECT * FROM notificacions WHERE nom_usuari = ? and titol = ? and type = ?";
+                $exist = $this->db->fetchAssoc($sql, array($username, $title, $type));
+                if(!$exist) {
+                    $sql = "INSERT INTO notificacions (nom_usuari, titol, type) VALUE (?,?,?)";
+                    $this->db->executeUpdate($sql, array($username, $title, $type));
+                }else {
+                    $sql = "DELETE FROM notificacions WHERE nom_usuari ='$username'  AND titol =  '$title' AND type= '$type'";
+                    $this->db->query($sql);
+                }
+            }
+
+
+
+
+
         }
     }
+
+
 
 
 }

@@ -46,7 +46,9 @@ interface UserModel
 
     public function editarComentari($id);
 
-    public function notificacioComentari($id, $usuari_log);
+    public function notificacio($id, $usuari_log, $type);
+
+
 
 
 

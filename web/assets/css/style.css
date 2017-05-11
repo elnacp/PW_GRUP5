@@ -16,6 +16,10 @@ footer{
     margin-left:20px;
 }
 
+.usuari, usuariImage{
+    float:left;
+}
+
 .title-widget {
     color: #898989;
     font-size: 20px;

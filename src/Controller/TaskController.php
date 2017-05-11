@@ -68,7 +68,8 @@ class TaskController{
     }
     public function LogIn(Application $app){
         $content = $app['twig']->render('LogIn.twig',[
-            'logejat' => false
+            'logejat' => false,
+            'message' => null
         ] );
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

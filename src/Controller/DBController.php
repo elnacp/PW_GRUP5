@@ -24,7 +24,7 @@ class DBController
         if (!$exists) {
             //echo("hello");
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
-            $content = $app['twig']->render('error.twig', [
+            $content = $app['twig']->render('LogIn.twig', [
                     'message' => 'User not found',
                     'logejat' => false
                 ]

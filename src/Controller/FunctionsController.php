@@ -75,12 +75,12 @@ class FunctionsController{
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $repo = new UserTasks($app['db']);
         $titols_img[] = "";
-        $usuari = "";
-        $dades = $repo->comentarisUser($usuari);
+        $dades = $repo->comentarisUser();
         $content = $app['twig']->render('userComments.twig', [
                 'logejat' => true,
                 'comentaris' => $dades,
-                'usuari' => $usuari
+                'message' => null
+
             ]
         );
         $response->setContent($content);

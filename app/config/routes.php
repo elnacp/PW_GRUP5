@@ -42,6 +42,8 @@ $app->get('/likeHome/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsControll
 $app->post('/comentari/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::comentari')->before($before);
 $app->get('/comentaris','SilexApp\\Controller\\FunctionsController::comentarisUser')->before($before);
 
+$app->get('/eliminarComment/{id}','SilexApp\\Controller\\ControllerComments::eliminarComentari')->before($before);
+
 $app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile');
 $app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
 $app->post('/DBRegister','SilexApp\\Controller\\DBController::DBRegister');

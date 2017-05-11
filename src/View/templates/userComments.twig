@@ -11,7 +11,15 @@
             <!-- Contenedor Principal -->
             <div class="comments-container ">
                 <h1>Comentarios:</h1>
-
+                {% if message %}
+                <div class="[ panel panel-default ] panel-google-plus">
+                    <div class="panel-heading">
+                        <p>
+                            Message: {{ message }}
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
                 <ul id="comments-list" class="comments-list">
                     {% for c in comentaris %}
                     <li>
@@ -20,9 +28,8 @@
                             <div class="comment-box">
                                 <div class="comment-head">
                                     <a> {{ c.titol }}</a>
-                                    <a href="http://creaticode.com/blog" >{{ usuari }}</a></h6>
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    <a href="/editarComment/{{ c.id }}" ><i  class="fa fa-pencil-square-o" aria-hidden="true"></i> </a>
+                                    <a href="/eliminarComment/{{ c.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="comment-content">
                                    {{ c.comentari }}

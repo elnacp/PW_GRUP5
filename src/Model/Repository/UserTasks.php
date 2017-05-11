@@ -372,7 +372,7 @@ class UserTasks implements UserModel
 
     }
 
-    public function comentarisUser($usuari)
+    public function comentarisUser()
     {
         $sql = "SELECT * FROM logejat";
         $d = $this->db->fetchAssoc($sql);
@@ -384,6 +384,18 @@ class UserTasks implements UserModel
         $d = $this->db->fetchAll($sql, array((int)$id));
         return $d;
 
+    }
+
+    public function eliminarComentari($id){
+        $sql = "DELETE  FROM comentari WHERE id = $id";
+        $ok = $this->db->exec($sql);
+        $message = "";
+        if( $ok){
+            $message = "Se ha eliminado correctamente";
+        }else{
+            $message = "No se ha podido eliminar";
+        }
+        return $message;
     }
 
 

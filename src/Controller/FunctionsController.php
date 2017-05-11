@@ -41,6 +41,7 @@ class FunctionsController{
     public function comentari(Application $app, $id, $usuari_log){
         $repo = new UserTasks($app['db']);
         $message = $repo->comentari($id, $usuari_log);
+        $repo->notificacioComentari($id, $usuari_log);
         $response = new Response();
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $sql = "SELECT * FROM imatge WHERE id = ?";
@@ -80,7 +81,6 @@ class FunctionsController{
                 'logejat' => true,
                 'comentaris' => $dades,
                 'message' => null
-
             ]
         );
         $response->setContent($content);

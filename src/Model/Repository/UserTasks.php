@@ -410,5 +410,38 @@ class UserTasks implements UserModel
         return $message;
     }
 
+    public function notificacioComentari($id, $usuari_log){
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+        $username = "";
+        if(!$trobat){
+            $sql = "SELECT * FROM usuari WHERE email = ?";
+            $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+
+            if($trobat){
+                $sql = "SELECT * FROM usuari WHERE email = ?";
+                $i = $this->db->fetchAssoc($sql, array($usuari_log));
+                $id_usuari = $i['id'];
+                $username = $i['username'];
+                //echo("email" . $id_usuari);
+            }
+        }else{
+            $sql = "SELECT * FROM usuari WHERE username = ?";
+            $i = $this->db->fetchAssoc($sql, array($usuari_log));
+            $id_usuari = $i['id'];
+            $username = $i['username'];
+
+        }
+        $sql = "SELECT * FROM imatge WHERE id = ? and user_id = ?";
+        $exist = $this->db->fetchAssoc($sql, array($id, (int)$id_usuari));
+        if( !$exist){
+            $sql = "SELECT * FROM imatge WHERE id = ?";
+            $d = $this->db->fetchAssoc($sql, array((int)$id));
+            $title = $d['title'];
+            $sql = "INSERT INTO notificacions (nom_usuari, titol, type) VALUE (?,?,?)";
+            $this->db->executeUpdate($sql, array( $username, $title, 1));
+        }
+    }
+
 
 }

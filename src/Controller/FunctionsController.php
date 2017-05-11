@@ -48,6 +48,8 @@ class FunctionsController{
         $autor = $s['user_id'];
         $sql1 = "SELECT username FROM usuari WHERE id = ?";
         $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
+        $sql3 = "SELECT * FROM usuari WHERE id = ?";
+        $s3 = $app['db']->fetchAssoc($sql3, array((int)$autor));
         $usuari =  $app['session']->get('name');
         $content = $app['twig']->render('imatgePublica.twig', [
                 'id' => $id,
@@ -58,8 +60,27 @@ class FunctionsController{
                 'dia' => date("Y-m-d H:i:s"),
                 'visites' => $s['visits'],
                 'likes' => $s['likes'],
-                'message' => $message
+                'message' => $message,
+                'imPerfil' => $s3['img_path']
 
+            ]
+        );
+        $response->setContent($content);
+        return $response;
+    }
+
+    public function comentarisUser(Application $app){
+        $response = new Response();
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $repo = new UserTasks($app['db']);
+        $titols_img[] = "";
+        $usuari = "";
+        $dades = $repo->comentarisUser($usuari);
+        $content = $app['twig']->render('userComments.twig', [
+                'logejat' => true,
+                'comentaris' => $dades,
+                'usuari' => $usuari
             ]
         );
         $response->setContent($content);
@@ -67,8 +88,9 @@ class FunctionsController{
 
 
 
-
-
     }
+
+
+
 
 }

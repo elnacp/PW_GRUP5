@@ -32,15 +32,15 @@ $app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser');
 $app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn');
 $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost')->before($before);
 $app->get('/galeria', 'SilexApp\\Controller\\TaskController::galeria')->before($before);
-$app->get('/eliminar/{id}','SilexApp\\Controller\\TaskController::eliminarImatge');
-$app->get('/editar/{id}','SilexApp\\Controller\\TaskController::editarImatge');
+$app->get('/eliminar/{id}','SilexApp\\Controller\\TaskController::eliminarImatge')->before($before);
+$app->get('/editar/{id}','SilexApp\\Controller\\TaskController::editarImatge')->before($before);
 $app->get('/visualitzacioImatge/{id}','SilexApp\\Controller\\TaskController::visualitzacioImatge');
-$app->get('/like/{id}/{usuari_log}','SilexApp\\Controller\\TaskController::likeImage');
+$app->get('/like/{id}/{usuari_log}','SilexApp\\Controller\\TaskController::likeImage')->before($before);
 
 //$app->get('/comment/{usuari_log}','SilexApp\\Controller\\FunctionsController::commentImage' );
-$app->get('/likeHome/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::likeHome');
-$app->post('/comentari/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::comentari');
-
+$app->get('/likeHome/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::likeHome')->before($before);
+$app->post('/comentari/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::comentari')->before($before);
+$app->get('/comentaris','SilexApp\\Controller\\FunctionsController::comentarisUser')->before($before);
 
 $app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile');
 $app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');

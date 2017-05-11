@@ -358,13 +358,31 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM comentari WHERE image_id = ? and user_id = ?";
         $exist = $this->db->fetchAll($sql, array($id, (int)$id_usuari));
         if( !$exist){
-            $sql = "INSERT INTO comentari (user_id, image_id, comentari) VALUES (?,?,?)";
-            $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari));
+            $sql = "SELECT * FROM imatge WHERE id = ?";
+            $s = $this->db->fetchAssoc($sql, array($id));
+            $titol1 = $s['title'];
+
+            $sql = "INSERT INTO comentari (user_id, image_id, comentari, titol) VALUES (?,?,?,?)";
+            $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari, $titol1));
         }else{
             $message = "Ya has comentado 1 vez en esta imagen, elimina el comentario existente.";
         }
 
         return $message;
+
+    }
+
+    public function comentarisUser($usuari)
+    {
+        $sql = "SELECT * FROM logejat";
+        $d = $this->db->fetchAssoc($sql);
+        $id = $d['user_id'];
+        $sql = "SELECT username FROM usuari WHERE id = ?";
+        $u = $this->db->fetchAssoc($sql, array((int)$id));
+        $usuari = $u['username'];
+        $sql = "SELECT * FROM comentari WHERE user_id = ?";
+        $d = $this->db->fetchAll($sql, array((int)$id));
+        return $d;
 
     }
 

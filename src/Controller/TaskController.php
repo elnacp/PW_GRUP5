@@ -205,6 +205,8 @@ class TaskController{
         $autor = $s['user_id'];
         $sql1 = "SELECT username FROM usuari WHERE id = ?";
         $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
+        $sql3 = "SELECT * FROM usuari WHERE id = ?";
+        $s3 = $app['db']->fetchAssoc($sql3, array((int)$autor));
         $usuari =  $app['session']->get('name');
         $content = $app['twig']->render('imatgePublica.twig', [
                 'id' => $id,
@@ -215,7 +217,8 @@ class TaskController{
                 'dia' => date("Y-m-d H:i:s"),
                 'visites' => $s['visits'],
                 'likes' => $s['likes'],
-                'message' => null
+                'message' => null,
+                'imPerfil' => $s3['img_path']
 
             ]
         );

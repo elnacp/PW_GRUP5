@@ -43,5 +43,7 @@ interface UserModel
 
     public function comentari($id, $usuari_log);
 
+    public function comentarisUser($usuari);
+
 
 }

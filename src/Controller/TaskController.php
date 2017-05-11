@@ -222,7 +222,41 @@ class TaskController{
 
     }
 
+    public function publicProfile(Application $app, $username){
+        $response = new Response();
+        $repo = new UserTasks($app['db']);
+        $repo->perfilUsuari($username);
+        $opcio = "";
+        $dades = $repo->imatgesPerfil($username, $opcio);
 
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $s = $app['db']->fetchAssoc($sql, array($username));
+        $id = $s['id'];
+        var_dump($id);
+        //$sql1 = "SELECT COUNT (*) FROM imatge WHERE user_id = ?";
+        //$s2 = $app['db']->fetchAssoc($sql1, array($id));
+        //$sql2 = "SELECT COUNT(*) FROM  comentari WHERE user_id = ?";
+        //$s3 = $app['db']->fetchAssoc($sql2, array($id));
+        //$sql3 = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
+        //$s4 = $app['db']->fetchAssoc($sql3, array($id));
+
+
+        $content = $app['twig']->render('hello.twig',[
+            /*'autor'=>$username,
+            'publicacions'=> $s2[''],
+            'comentaris' => $s3[''],
+            'title' =>$s4['title'],
+            'img_path' =>$s4['img_path'],
+            'dades' =>$dades
+*/
+        ]);
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+    }
 
 }
 

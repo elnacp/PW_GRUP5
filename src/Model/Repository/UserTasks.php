@@ -440,20 +440,21 @@ class UserTasks implements UserModel
             $sql = "SELECT * FROM imatge WHERE id = ?";
             $d = $this->db->fetchAssoc($sql, array((int)$id));
             $title = $d['title'];
+            $id_img = $d['id'];
 
             if($type == 1){
                 $sql = "SELECT * FROM notificacions WHERE nom_usuari = ? and titol = ? and type = ?";
                 $exist = $this->db->fetchAssoc($sql, array($username, $title, $type));
                 if(!$exist) {
-                    $sql = "INSERT INTO notificacions (nom_usuari, titol, type) VALUE (?,?,?)";
-                    $this->db->executeUpdate($sql, array($username, $title, $type));
+                    $sql = "INSERT INTO notificacions (nom_usuari, titol, type, image_id) VALUE (?,?,?, ?)";
+                    $this->db->executeUpdate($sql, array($username, $title, $type, $id_img));
                 }
             }else if( $type == 2){
                 $sql = "SELECT * FROM notificacions WHERE nom_usuari = ? and titol = ? and type = ?";
                 $exist = $this->db->fetchAssoc($sql, array($username, $title, $type));
                 if(!$exist) {
-                    $sql = "INSERT INTO notificacions (nom_usuari, titol, type) VALUE (?,?,?)";
-                    $this->db->executeUpdate($sql, array($username, $title, $type));
+                    $sql = "INSERT INTO notificacions (nom_usuari, titol, type, image_id) VALUE (?,?,?, ?)";
+                    $this->db->executeUpdate($sql, array($username, $title, $type, $id_img));
                 }else {
                     $sql = "DELETE FROM notificacions WHERE nom_usuari ='$username'  AND titol =  '$title' AND type= '$type'";
                     $this->db->query($sql);
@@ -471,10 +472,23 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM logejat";
         $s = $this->db->fetchAssoc($sql);
         $id = $s['user_id'];
-        $sql = "SELECT username FROM usuari WHERE id = ?";
-        $d = $this->db->fetchAssoc($sql, array((int)$id));
-        $username = $d['username'];
-        //ACABARO
+        $sql = "SELECT id FROM imatge WHERE user_id = ?";
+        $dades = $this->db->fetchAll($sql, array((int)$id));
+        $notificacions[] = "";
+        foreach($dades as $i){
+            $id_img = $i['id'];
+            $sql1 = "SELECT * FROM notificacions WHERE image_id = ?";
+            $info = $this->db->fetchAll($sql1, array($id_img));
+            foreach ($info as $in){
+                echo($in['type']);
+                array_push($notificacions, $in);
+            }
+
+        }
+
+        //return $notificacions;
+
+
     }
 
 

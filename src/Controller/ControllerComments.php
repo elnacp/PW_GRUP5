@@ -70,15 +70,14 @@ class ControllerComments
         $response = new Response();
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $repo = new UserTasks($app['db']);
-        $ok= $repo->notificacionsUser();
+        $dades= $repo->notificacionsUser();
         $content = $app['twig']->render('notificacionsUser.twig', [
                 'logejat' => true,
-                'comentaris' => $dades,
-                'message' => $ok
+                'notificacions' => $dades,
 
             ]
         );
         $response->setContent($content);
-        return $response;
+        //return $response;
     }
 }

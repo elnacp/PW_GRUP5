@@ -233,7 +233,7 @@ class TaskController{
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $s = $app['db']->fetchAssoc($sql, array($username));
         $id = $s['id'];
-        var_dump($id);
+        //var_dump($id);
         $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
         $s2 = $app['db']->fetchAssoc($sql1, array($id));
         $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
@@ -241,9 +241,10 @@ class TaskController{
         $sql3 = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
         $s4 = $app['db']->fetchAssoc($sql3, array($id));
 
-        var_dump($s2);
-        var_dump($s3);
+        //var_dump($s2);
+        var_dump($s4);
         $content = $app['twig']->render('publicProfile.twig',[
+            'logejat' => false,
             'autor'=>$username,
             'publicacions'=> $s2,
             'comentaris' => $s3,

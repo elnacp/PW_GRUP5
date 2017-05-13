@@ -391,23 +391,24 @@ class UserTasks implements UserModel
 
     public function perfilUsuari($username)
     {
-        $sql = "SELECT * FROM usuari  WHERE username = $username ";
-        $stm = $this->db->fetchAssoc($sql);
-
+       // $sql = "SELECT * FROM usuari  WHERE username = $username ";
+        //$stm = $this->db->fetchAssoc($sql);
+        //var_dump($username);
     }
 
     public function imatgesPerfil($username, $opcio)
     {
-        $sql = "SELECT user_id FROM usuari WHERE username = ?";
+        //var_dump($username);
+        $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array($username));
-        $id = $stm['user_id'];
-        $sql = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY $opcio ASC";
+        $id = $stm['id'];
+        $sql = "SELECT title,img_path FROM imatge WHERE user_id = ?"; // ORDER BY $opcio ASC
         $stm = $this->db->fetchAll($sql, array((int)$id));
 
         $dades = "";
 
         foreach ($stm as $s) {
-            $visualitzacioImatge = "/perfil/" . $s['id'];
+            $visualitzacioImatge = "/perfil/" . $username;
             $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"400\" height=\"300\">
                             <li> <a href=". $visualitzacioImatge .">".$s['title']."</a> </li>

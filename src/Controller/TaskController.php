@@ -225,21 +225,24 @@ class TaskController{
     public function publicProfile(Application $app, $username){
         $response = new Response();
         $repo = new UserTasks($app['db']);
-        $sql = "SELECT id FROM usuari WHERE username = ?";
-        $s = $app['db']->fetchAssoc($sql, array($username));
-        $id = $s['id'];
-        $repo->perfilUsuari($id);
+        $repo->perfilUsuari($username);
         $opcio = "";
-        $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
-        $s2 = $this->db->fetchAssoc($sql1, array($id));
-        $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
-        $s3 = $this->db->fetchAssoc($sql2, array($id));
-        $sql3 = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
-        $s4 = $this->db->fetchAssoc($sql3, array($id));
         $dades = $repo->imatgesPerfil($username, $opcio);
         //var_dump($username);
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $s = $app['db']->fetchAssoc($sql, array($username));
+        $id = $s['id'];
+        //var_dump($id);
+        $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
+        $s2 = $app['db']->fetchAssoc($sql1, array($id));
+        $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
+        $s3 = $app['db']->fetchAssoc($sql2, array($id));
+        $sql3 = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
+        $s4 = $app['db']->fetchAssoc($sql3, array($id));
 
+        //var_dump($s2);
+        var_dump($s4);
         $content = $app['twig']->render('publicProfile.twig',[
             'logejat' => false,
             'autor'=>$username,

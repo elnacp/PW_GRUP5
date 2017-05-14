@@ -398,7 +398,7 @@ class UserTasks implements UserModel
 
         foreach ($stm as $s) {
             $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
-                           <h1> <a href=" . $s['title'] . ">  Eliminar</a></h1>
+                           <h1> <a href=" . $s['title'] . "></a></h1>
                            <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
                        </div>";
         }
@@ -411,19 +411,21 @@ class UserTasks implements UserModel
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array($username));
         $id = $stm['id'];
-        $sql = "SELECT title,img_path FROM imatge WHERE user_id = ?"; // ORDER BY $opcio ASC
+        $sql = "SELECT * FROM imatge WHERE user_id = ?"; // ORDER BY $opcio ASC
         $stm = $this->db->fetchAll($sql, array((int)$id));
 
         $dades = "";
 
         foreach ($stm as $s) {
             $visualitzacioImatge = "/perfil/" . $username;
-            $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
-                            <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"400\" height=\"300\">
+            $dades = $dades .
+                            "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
+                            <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
                             <li> <a href=". $visualitzacioImatge .">".$s['title']."</a> </li>
                             </div>";
             //var_dump($dades);
-            return $dades;
+
         }
+        return $dades;
     }
 }

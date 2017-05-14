@@ -14,14 +14,15 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" name="img_path" id="img_path"  class="img-circle img-responsive"> </div>
+                <div class="col-md-3 col-lg-3 " align="center">
+                    <img alt="User Pic" name="img_path" id="img_path"  class="img-circle img-responsive"> </div>
 
                  <div class=" col-md-9 col-lg-9 ">
                     <table class="profileTable">
                         <tbody>
                         <tr>
                             <td>Nom d'usuari:</td>
-                            <td>Programming</td>
+                            <td><p id="autor"></p></td>
                         </tr>
                         <tr>
                             <td>Imatges Publicades</td>
@@ -34,9 +35,6 @@
 
                         </tbody>
                     </table>
-
-                    <a href="#" class="btn btn-primary">My Sales Performance</a>
-                    <a href="#" class="btn btn-primary">Team Sales Performance</a>
                 </div>
                 <p>Odernar per:
                     <select name="opcio">
@@ -47,6 +45,7 @@
                     </select>
                 </p>
             </div>
+            {{  dades| raw }}
         </div>
 
     </div>

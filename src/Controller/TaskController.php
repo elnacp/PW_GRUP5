@@ -12,7 +12,7 @@ class TaskController{
         $ultimesImg = "";
         $repo = new UserTasks($app['db']);
         $log = false;
-        if($app['session']->has('name')){
+        if(isset($_COOKIE["guest"])){
             $log = true;
         }
         $usuari =  $app['session']->get('name');

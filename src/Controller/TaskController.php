@@ -175,7 +175,7 @@ class TaskController{
             $sql4 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
             $l = $app['db']->fetchAssoc($sql4, array((int)$s['id']));
             $likes = $l['total'];
-            $content = $app['twig']->render('imatgePublica.twig', [
+            $content = $app['twig']->render('fx.twig', [
                     'id' => $id,
                     'usuari_log' => $usuari,
                     'logejat' => $logejat,

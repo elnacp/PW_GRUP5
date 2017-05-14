@@ -46,6 +46,7 @@ $app->get('/eliminarComment/{id}','SilexApp\\Controller\\ControllerComments::eli
 $app->get('/editarComment/{id}','SilexApp\\Controller\\ControllerComments::editarComentari')->before($before);
 $app->post('/nouComentari/{id}', 'SilexApp\\Controller\\ControllerComments::nouComentari')->before($before);
 $app->get('/notificacions', 'SilexApp\\Controller\\ControllerComments::notificacionsUser')->before($before);
+$app->get('/visualitzada/{id}','SilexApp\\Controller\\ControllerComments::notificacioVisualitzada')->before($before);
 
 $app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile')->before($before);
 $app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');

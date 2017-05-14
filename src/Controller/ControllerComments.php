@@ -70,6 +70,8 @@ class ControllerComments
         $response = new Response();
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $repo = new UserTasks($app['db']);
+        $sql = "DELETE  FROM notificacionsUsuari";
+        $app['db']->query($sql);
         $dades= $repo->notificacionsUser();
         $content = $app['twig']->render('notificacionsUser.twig', [
                 'logejat' => true,
@@ -78,6 +80,26 @@ class ControllerComments
             ]
         );
         $response->setContent($content);
-        //return $response;
+        return $response;
     }
+
+    public function notificacioVisualitzada(Application $app, $id){
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $repo = new UserTasks($app['db']);
+        $sql = "DELETE  FROM notificacionsUsuari";
+        $app['db']->query($sql);
+        $repo->visualitzada($id);
+        $dades= $repo->notificacionsUser();
+        $content = $app['twig']->render('notificacionsUser.twig', [
+                'logejat' => true,
+                'notificacions' => $dades,
+
+            ]
+        );
+        $response->setContent($content);
+        return $response;
+    }
+
+
 }

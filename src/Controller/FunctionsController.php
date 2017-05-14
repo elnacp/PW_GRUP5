@@ -56,7 +56,7 @@ class FunctionsController{
         $s3 = $app['db']->fetchAssoc($sql3, array((int)$autor));
         $usuari =  $app['session']->get('name');
         $sql4 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
-        $l = $this->db->fetchAssoc($sql4, array((int)$s['id']));
+        $l = $app['db']->fetchAssoc($sql4, array((int)$s['id']));
         $likes = $l['total'];
         $content = $app['twig']->render('imatgePublica.twig', [
                 'id' => $id,

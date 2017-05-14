@@ -8,6 +8,8 @@ use Doctrine\DBAL\Connection;
 use Silex\Application;
 use Doctrine\DBAL\Configuration;
 
+
+
 class UserTasks implements UserModel
 {
     /** @var  Connection */
@@ -474,21 +476,26 @@ class UserTasks implements UserModel
         $id = $s['user_id'];
         $sql = "SELECT id FROM imatge WHERE user_id = ?";
         $dades = $this->db->fetchAll($sql, array((int)$id));
-        $notificacions[] = "";
+
         foreach($dades as $i){
             $id_img = $i['id'];
-            $sql1 = "SELECT * FROM notificacions WHERE image_id = ?";
+            $sql1 = "SELECT * FROM notificacions WHERE image_id = ? ";
             $info = $this->db->fetchAll($sql1, array($id_img));
             foreach ($info as $in){
-                echo($in['type']);
-                array_push($notificacions, $in);
+                $sql2 = "INSERT INTO notificacionsUsuari (usuari, titol, type, image_id, visualitzada, id_notificacio) VALUE (?,?,?, ?, ?,?)";
+                $this->db->executeUpdate($sql2, array($in['nom_usuari'], $in['titol'], $in['type'], $in['image_id'], $in['visualitzada'], $in['id']));
             }
 
         }
+        $sql  = "SELECT * FROM notificacionsUsuari";
+        $dades = $this->db->fetchAll($sql);
+        return $dades;
 
-        //return $notificacions;
+    }
 
-
+    public function visualitzada($id){
+        $sql = "DELETE FROM notificacions WHERE id = '$id'";
+        $this->db->exec($sql);
     }
 
 

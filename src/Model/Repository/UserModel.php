@@ -50,6 +50,8 @@ interface UserModel
 
     public function notificacionsUser();
 
+    public function visualitzada($id);
+
 
 
 

@@ -19,11 +19,11 @@
                                 <!-- Contenedor del Comentario -->
                                 <div class="comment-box">
                                     <div class="comment-head">
-                                        <a> {{ n.nom_usuari }}  </a>
-                                        <a href="#" ><i class="icon-ok-sign"></i> icon-ok-sign </a>
+                                        <a> {{ n.usuari }}  </a>
+                                        <a href="/visualitzada/{{  n.id_notificacio }}" ><i class="fa fa-eye" aria-hidden="true"></i></a>
                                     </div>
                                     <div class="comment-content">
-                                        <p> Ha comentado en  {{ n.titol }} </p>
+                                        <p> Ha comentado en:  <a href="#">{{ n.titol }}</a>  </p>
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
             </div>
 
             <div class="comments-container ">
-                <h1>Notificacions de Comentario:</h1>
+                <h1>Notificacions de Like:</h1>
                 <ul id="comments-list" class="comments-list">
                     {% for n in notificacions %}
                         {% if n.type == 2 %}
@@ -44,11 +44,11 @@
                                     <!-- Contenedor del Comentario -->
                                     <div class="comment-box">
                                         <div class="comment-head">
-                                            <a> {{ n.nom_usuari }}  </a>
-                                            <a href="#" ><i class="icon-ok-sign"></i> icon-ok-sign </a>
+                                            <a> {{ n.usuari }}  </a>
+                                            <a href="/visualitzada/{{ n.id_notificacio }}" ><i class="fa fa-eye" aria-hidden="true"></i></a>
                                         </div>
                                         <div class="comment-content">
-                                            <p> Le ha dado like a la siguiente imagen  {{ n.titol }} </p>
+                                            <p> Le ha dado like a la siguiente imagen: <a>{{ n.titol }}</a>  </p>
                                         </div>
                                     </div>
                                 </div>

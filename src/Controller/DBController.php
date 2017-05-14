@@ -99,38 +99,37 @@ class DBController
 
 
         if (!$exists) {
-
-            /*$aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
+            $aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
 
             $mensaje = "Registro en tuweb.com\n\n";
             $mensaje .= "Estos son tus datos de registro:\n";
             $mensaje .= "Unsuario: $nickname.\n";
             $mensaje .= "Contraseña: $password.\n\n";
-            $mensaje .= "Debes activar tu cuenta pulsando este enlace: http://www.tuweb.com/activacion.php?id=".$aleatorio;
+            $mensaje .= "Debes activar tu cuenta pulsando este enlace: grup5.dev/activacion.php?id=".$aleatorio;
 
-            $cabeceras = 'From: webmaster@example.com' . "\r\n" .
-                'Reply-To: webmaster@example.com' . "\r\n" .
+            $cabeceras = 'From: Dogygram@example.com' . "\r\n" .
+                'Reply-To: Dogygram@example.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
             $sendMail = mail($email,'Activar cuenta',$mensaje, $cabeceras);
-            if($sendMail){*/
-            $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
-            $response->setStatusCode(Response::HTTP_OK);
+            if($sendMail){
+                $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+                $response->setStatusCode(Response::HTTP_OK);
 
-            $content = $app['twig']->render('validate.twig', [
+                $content = $app['twig']->render('validate.twig', [
                     'message' => 'Activa tu usuario mediante el siguiente link:',
                     'logejat' => false,
                     'name' => $nickname
                 ]
             );
-            /*}else{
+            }else{
                 $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                 $content = $app['twig']->render('error.twig', [
                         'message' => 'No se ha podido enviar el email',
                         'logejat' => false
 
                 ]);
-            }*/
+            }
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [

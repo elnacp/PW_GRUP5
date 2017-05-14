@@ -389,11 +389,20 @@ class UserTasks implements UserModel
 
     }
 
-    public function perfilUsuari($username)
+    public function perfilUsuari($id)
     {
-       // $sql = "SELECT * FROM usuari  WHERE username = $username ";
-        //$stm = $this->db->fetchAssoc($sql);
-        //var_dump($username);
+        $sql = "SELECT * FROM imatge WHERE user_id = ?";
+        $stm = $this->db->fetchAll($sql, array((int)$id));
+
+        $dades = "";
+
+        foreach ($stm as $s) {
+            $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
+                           <h1> <a href=" . $s['title'] . ">  Eliminar</a></h1>
+                           <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
+                       </div>";
+        }
+        return $dades;
     }
 
     public function imatgesPerfil($username, $opcio)

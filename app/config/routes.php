@@ -19,6 +19,19 @@ $before = function (Request $request, Application $app){
     }
 };
 
+$inici = function (Request $request, Application $app){
+    if($app['session']->has('name')){
+        $response = new Response();
+        $content = $app['twig']->render('error.twig', [
+            'message' => 'Ya estas logeado!',
+            'logejat' => true
+        ]);
+        $response->setContent($content);
+        $response->setStatusCode(Response::HTTP_FORBIDDEN);
+        return $response;
+    }
+};
+
 
 $app->get('/', 'SilexApp\\Controller\\TaskController::indexAction');
 $app->get('/edit', 'SilexApp\\Controller\\TaskController::editProfile')->before($before);
@@ -28,8 +41,8 @@ $app->get('/admin', 'SilexApp\\Controller\\BaseController::adminAction')->before
 $app->get('/iniciarSession/{name}', 'SilexApp\\Controller\\BaseController::iniciarSession');
 $app->get('/cerrarSession', 'SilexApp\\Controller\\BaseController::cerrarSession');
 
-$app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser');
-$app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn');
+$app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser')->before($inici);
+$app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn')->before($inici);
 $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost')->before($before);
 $app->get('/galeria', 'SilexApp\\Controller\\TaskController::galeria')->before($before);
 $app->get('/eliminar/{id}','SilexApp\\Controller\\TaskController::eliminarImatge')->before($before);

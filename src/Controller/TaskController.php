@@ -12,9 +12,10 @@ class TaskController{
         $ultimesImg = "";
         $repo = new UserTasks($app['db']);
         $log = false;
-        if(isset($_COOKIE["guest"])){
+        if($app['session']->has('name')){
             $log = true;
         }
+
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
         if(!$app['session']->has('name')) {
@@ -175,7 +176,7 @@ class TaskController{
             $sql4 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
             $l = $app['db']->fetchAssoc($sql4, array((int)$s['id']));
             $likes = $l['total'];
-            $content = $app['twig']->render('fx.twig', [
+            $content = $app['twig']->render('imatgePublica.twig', [
                     'id' => $id,
                     'usuari_log' => $usuari,
                     'logejat' => $logejat,

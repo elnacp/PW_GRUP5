@@ -231,11 +231,11 @@ class TaskController{
         $repo->perfilUsuari($id);
         $opcio = "";
         $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
-        $s2 = $this->db->fetchAssoc($sql1, array($id));
+        $s2 = $app['db']->fetchAssoc($sql1, array($id));
         $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
-        $s3 = $this->db->fetchAssoc($sql2, array($id));
+        $s3 = $app['db']->fetchAssoc($sql2, array($id));
         $sql3 = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
-        $s4 = $this->db->fetchAssoc($sql3, array($id));
+        $s4 = $app['db']->fetchAssoc($sql3, array($id));
         $dades = $repo->imatgesPerfil($username, $opcio);
         //var_dump($username);
         $response->setStatusCode(Response::HTTP_NOT_FOUND);

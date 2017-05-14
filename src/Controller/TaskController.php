@@ -240,12 +240,11 @@ class TaskController{
         $s3 = $app['db']->fetchAssoc($sql2, array($id));
         $sql3 = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
         $s4 = $app['db']->fetchAssoc($sql3, array($id));
-<<<<<<< HEAD
-=======
+
         $dades = $repo->imatgesPerfil($username, $opcio);
         //var_dump($username);
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
->>>>>>> a65a74fed0e9e8b86d167d7729d929e80a60d8f2
+
 
         //var_dump($s2);
         var_dump($s4);

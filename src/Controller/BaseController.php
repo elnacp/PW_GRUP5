@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\DBAL\Configuration;
 use SilexApp\Model\Repository\UserTasks;
 
+
 class BaseController{
     public function indexAction(Application $app){
         if($app['session']->has('name')){

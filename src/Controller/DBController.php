@@ -25,7 +25,7 @@ class DBController
         if (!$exists) {
             //echo("hello");
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
-            $content = $app['twig']->render('error.twig', [
+            $content = $app['twig']->render('LogIn.twig', [
                     'message' => 'User not found',
                     'logejat' => false
                 ]
@@ -176,8 +176,10 @@ class DBController
         if($app['session']->has('name')){
             $log = true;
         }
-        $usuari = $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log, $usuari);
+
+        $usuari =  $app['session']->get('name');
+        $imgMesVistes = $repo->home1($log,$usuari);
+
         if ($ok) {
             $content = $app['twig']->render('hello.twig', [
                     'logejat' => true,

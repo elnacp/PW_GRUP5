@@ -1,0 +1,66 @@
+{% extends "base.twig" %}
+{% block title %} Comentaris {% endblock %}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ asset('/userComments.css', 'css') }}>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+        <div class="row">
+            <!-- Contenedor Principal -->
+            <div class="comments-container ">
+                <h1>Notificacions de Comentario:</h1>
+                <ul id="comments-list" class="comments-list">
+                    {% for n in notificacions %}
+                       {% if n.type == 1 %}
+                        <li>
+                            <div class="comment-main-level">
+                                <!-- Contenedor del Comentario -->
+                                <div class="comment-box">
+                                    <div class="comment-head">
+                                        <a> {{ n.usuari }}  </a>
+                                        <a href="/visualitzada/{{  n.id_notificacio }}" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p> Ha comentado en:  <a href="#">{{ n.titol }}</a>  </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Respuestas de los comentarios -->
+                        </li>
+                       {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="comments-container ">
+                <h1>Notificacions de Like:</h1>
+                <ul id="comments-list" class="comments-list">
+                    {% for n in notificacions %}
+                        {% if n.type == 2 %}
+                            <li>
+                                <div class="comment-main-level">
+                                    <!-- Contenedor del Comentario -->
+                                    <div class="comment-box">
+                                        <div class="comment-head">
+                                            <a> {{ n.usuari }}  </a>
+                                            <a href="/visualitzada/{{ n.id_notificacio }}" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="comment-content">
+                                            <p> Le ha dado like a la siguiente imagen: <a>{{ n.titol }}</a>  </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Respuestas de los comentarios -->
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

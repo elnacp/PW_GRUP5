@@ -8,6 +8,8 @@ use Doctrine\DBAL\Connection;
 use Silex\Application;
 use Doctrine\DBAL\Configuration;
 
+
+
 class UserTasks implements UserModel
 {
     /** @var  Connection */
@@ -191,7 +193,9 @@ class UserTasks implements UserModel
             $image = str_replace(" ", "_", $image);
 
             $dia = $s['created_at'];
-            $likes = $s['likes'];
+            $sql2 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
+            $l = $this->db->fetchAssoc($sql2, array((int)$s['id']));
+            $likes = $l['total'];
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/".$s['id'];
 
@@ -358,8 +362,12 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM comentari WHERE image_id = ? and user_id = ?";
         $exist = $this->db->fetchAll($sql, array($id, (int)$id_usuari));
         if( !$exist){
-            $sql = "INSERT INTO comentari (user_id, image_id, comentari) VALUES (?,?,?)";
-            $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari));
+            $sql = "SELECT * FROM imatge WHERE id = ?";
+            $s = $this->db->fetchAssoc($sql, array($id));
+            $titol1 = $s['title'];
+
+            $sql = "INSERT INTO comentari (user_id, image_id, comentari, titol) VALUES (?,?,?,?)";
+            $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari, $titol1));
         }else{
             $message = "Ya has comentado 1 vez en esta imagen, elimina el comentario existente.";
         }
@@ -367,6 +375,130 @@ class UserTasks implements UserModel
         return $message;
 
     }
+
+    public function comentarisUser()
+    {
+        $sql = "SELECT * FROM logejat";
+        $d = $this->db->fetchAssoc($sql);
+        $id = $d['user_id'];
+        $sql = "SELECT username FROM usuari WHERE id = ?";
+        $u = $this->db->fetchAssoc($sql, array((int)$id));
+        $usuari = $u['username'];
+        $sql = "SELECT * FROM comentari WHERE user_id = ?";
+        $d = $this->db->fetchAll($sql, array((int)$id));
+        return $d;
+
+    }
+
+    public function eliminarComentari($id){
+        $sql = "DELETE  FROM comentari WHERE id = $id";
+        $ok = $this->db->exec($sql);
+        $message = "";
+        if( $ok){
+            $message = "Se ha eliminado correctamente";
+        }else{
+            $message = "No se ha podido eliminar";
+        }
+        return $message;
+    }
+
+    public function editarComentari($id){
+        $comentari = htmlspecialchars($_POST['comentari']);
+        $sql = "UPDATE comentari SET comentari = ? WHERE id = ?";
+        $ok = $this->db->executeUpdate($sql, array($comentari, (int)$id));
+        if( $ok){
+            $message = "Se ha editado correctamente";
+        }else{
+            $message = "No se ha podido editar";
+        }
+        return $message;
+    }
+
+    public function notificacio($id, $usuari_log, $type){
+        $sql = "SELECT * FROM usuari WHERE username = ?";
+        $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+        $username = "";
+        if(!$trobat){
+            $sql = "SELECT * FROM usuari WHERE email = ?";
+            $trobat = $this->db->fetchAssoc($sql, array($usuari_log));
+
+            if($trobat){
+                $sql = "SELECT * FROM usuari WHERE email = ?";
+                $i = $this->db->fetchAssoc($sql, array($usuari_log));
+                $id_usuari = $i['id'];
+                $username = $i['username'];
+                //echo("email" . $id_usuari);
+            }
+        }else{
+            $sql = "SELECT * FROM usuari WHERE username = ?";
+            $i = $this->db->fetchAssoc($sql, array($usuari_log));
+            $id_usuari = $i['id'];
+            $username = $i['username'];
+
+        }
+        $sql = "SELECT * FROM imatge WHERE id = ? and user_id = ?";
+        $exist = $this->db->fetchAssoc($sql, array($id, (int)$id_usuari));
+        if( !$exist){
+            $sql = "SELECT * FROM imatge WHERE id = ?";
+            $d = $this->db->fetchAssoc($sql, array((int)$id));
+            $title = $d['title'];
+            $id_img = $d['id'];
+
+            if($type == 1){
+                $sql = "SELECT * FROM notificacions WHERE nom_usuari = ? and titol = ? and type = ?";
+                $exist = $this->db->fetchAssoc($sql, array($username, $title, $type));
+                if(!$exist) {
+                    $sql = "INSERT INTO notificacions (nom_usuari, titol, type, image_id) VALUE (?,?,?, ?)";
+                    $this->db->executeUpdate($sql, array($username, $title, $type, $id_img));
+                }
+            }else if( $type == 2){
+                $sql = "SELECT * FROM notificacions WHERE nom_usuari = ? and titol = ? and type = ?";
+                $exist = $this->db->fetchAssoc($sql, array($username, $title, $type));
+                if(!$exist) {
+                    $sql = "INSERT INTO notificacions (nom_usuari, titol, type, image_id) VALUE (?,?,?, ?)";
+                    $this->db->executeUpdate($sql, array($username, $title, $type, $id_img));
+                }else {
+                    $sql = "DELETE FROM notificacions WHERE nom_usuari ='$username'  AND titol =  '$title' AND type= '$type'";
+                    $this->db->query($sql);
+                }
+            }
+
+
+
+
+
+        }
+    }
+
+    public function notificacionsUser(){
+        $sql = "SELECT * FROM logejat";
+        $s = $this->db->fetchAssoc($sql);
+        $id = $s['user_id'];
+        $sql = "SELECT id FROM imatge WHERE user_id = ?";
+        $dades = $this->db->fetchAll($sql, array((int)$id));
+
+        foreach($dades as $i){
+            $id_img = $i['id'];
+            $sql1 = "SELECT * FROM notificacions WHERE image_id = ? ";
+            $info = $this->db->fetchAll($sql1, array($id_img));
+            foreach ($info as $in){
+                $sql2 = "INSERT INTO notificacionsUsuari (usuari, titol, type, image_id, visualitzada, id_notificacio) VALUE (?,?,?, ?, ?,?)";
+                $this->db->executeUpdate($sql2, array($in['nom_usuari'], $in['titol'], $in['type'], $in['image_id'], $in['visualitzada'], $in['id']));
+            }
+
+        }
+        $sql  = "SELECT * FROM notificacionsUsuari";
+        $dades = $this->db->fetchAll($sql);
+        return $dades;
+
+    }
+
+    public function visualitzada($id){
+        $sql = "DELETE FROM notificacions WHERE id = '$id'";
+        $this->db->exec($sql);
+    }
+
+
 
 
 }

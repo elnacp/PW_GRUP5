@@ -9,6 +9,7 @@ namespace SilexApp\Model\Repository;
 
 //require ("PHPMailer_5.2.4/class.phpmailer.php");
 require 'PHPMailerAutoload.php';
+use PHPMailer;
 
 class EmailSender{
 

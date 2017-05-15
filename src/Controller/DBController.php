@@ -100,8 +100,9 @@ class DBController
 
 
         if (!$exists) {
-                $sender = new EmailSender();
-                if ($sender->sendEmail($email)){$repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+                //$sender = new EmailSender();
+                //if ($sender->sendEmail($email)){$repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+
                     $response->setStatusCode(Response::HTTP_OK);
 
                     $content = $app['twig']->render('validate.twig', [
@@ -111,7 +112,7 @@ class DBController
                     ]);
 
 
-                }else{
+               /* }else{
 
 
 
@@ -121,7 +122,7 @@ class DBController
                         'logejat' => false
 
                     ]);
-                }
+                }*/
 
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
@@ -204,7 +205,7 @@ class DBController
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'No se ha podido validar el usuario' . $nickname,
+                    'message' => 'No se ha podido validar el usuario ' . $nickname,
                     'logejat' => false
                 ]
             );

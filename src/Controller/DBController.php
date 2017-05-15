@@ -92,8 +92,13 @@ class DBController
         $password = $request->get('password');
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg");
-        $img = './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg";
+        if ($img == NULL){
+            $img = './assets/uploads/' . "User05-15-1712:23:43pm.jpg";
+        }else{
+            move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg";
+        }
+
         $repo = new UserTasks($app['db']);
         $exists = $repo->checkUser($nickname);
         $response = new Response();
@@ -102,7 +107,7 @@ class DBController
         if (!$exists) {
                 //$sender = new EmailSender();
                 //if ($sender->sendEmail($email)){$repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
-
+                    $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
                     $response->setStatusCode(Response::HTTP_OK);
 
                     $content = $app['twig']->render('validate.twig', [

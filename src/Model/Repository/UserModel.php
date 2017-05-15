@@ -52,4 +52,5 @@ interface UserModel
 
     public function visualitzada($id);
 
+    public function getActualProfilePic($username, $img);
 }

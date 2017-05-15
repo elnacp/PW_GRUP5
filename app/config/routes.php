@@ -68,3 +68,5 @@ $app->post('/DBnewPost','SilexApp\\Controller\\DBController::DBnewPost');
 $app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\DBController::DBeditImage');
 $app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
 $app->get('/perfil/{username}', 'SilexApp\\Controller\\DBController::publicProfile');
+
+$app->get('/reload', 'SilexApp\\Controller\\TaskController::editProfile')->before($before);

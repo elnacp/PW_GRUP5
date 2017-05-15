@@ -80,7 +80,8 @@ class TaskController{
     }
     public function newPost(Application $app){
         $content = $app['twig']->render('newPost.twig', [
-            'logejat' => true
+            'logejat' => true,
+            'message' => null
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

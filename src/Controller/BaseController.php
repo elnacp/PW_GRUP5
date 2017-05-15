@@ -8,7 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\DBAL\Configuration;
 use SilexApp\Model\Repository\UserTasks;
 
+
 class BaseController{
+
     public function indexAction(Application $app){
         if($app['session']->has('name')){
             $app['session']->remove('name');
@@ -18,6 +20,7 @@ class BaseController{
         $content = 'Session started for the user' . $app['session']->get('name');
         return new Response($content);
     }
+
     public function adminAction(Application $app){
         $content = $app['twig']->render('hello.twig',[
             'logejat' => true

@@ -351,8 +351,17 @@ class UserTasks implements UserModel
     {
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $info = $this->db->fetchAssoc($sql, array($nickname));
-        $image = $info['img_path'];
-        unlink($image);
+        if ($info){
+            $image = $info['img_path'];
+            unlink($image);
+
+        }else{
+            $sql = "SELECT * FROM imatge WHERE title = ?";
+            $info = $this->db->fetchAssoc($sql, array($nickname));
+            $image = $info['img_path'];
+            unlink($image);
+        }
+
     }
 
 
@@ -585,18 +594,39 @@ class UserTasks implements UserModel
         $this->db->exec($sql);
     }
 
-    public function dadesUsuari($username, $id)
+
+
+
+    public function getActualProfilePic($username, $img){
+        $sql = "SELECT img_path FROM usuari WHERE username = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$username));
+        if ($img == NULL){
+            $img = $stm['img_path'];
+        }
+        return $img;
+    }
+
+    public function getActualPostImg($id, $img)
     {
-        $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
-        $s2 = $this->db->fetchAssoc($sql1, array($id));
-        $s2 = implode('',$s2);
-        $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
-        $s3 = $this->db->fetchAssoc($sql2, array($id));
-        $s3 = implode('',$s3);
-        $sql3 = "SELECT img_path FROM usuari WHERE id= ?";
-        $s4 = $this->db->fetchAssoc($sql3, array($id));
-        $s4 = implode('',$s4);
-        $dades = "";
+        $sql = "SELECT img_path FROM imatge WHERE id = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$id));
+        if ($img == NULL) {
+            $img = $stm['img_path'];
+        }
+        return $img;
+    }
+        public function dadesUsuari($username, $id)
+        {
+            $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
+            $s2 = $this->db->fetchAssoc($sql1, array($id));
+            $s2 = implode('',$s2);
+            $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
+            $s3 = $this->db->fetchAssoc($sql2, array($id));
+            $s3 = implode('',$s3);
+            $sql3 = "SELECT img_path FROM usuari WHERE id= ?";
+            $s4 = $this->db->fetchAssoc($sql3, array($id));
+            $s4 = implode('',$s4);
+            $dades = "";
 
         $visualitzacioImatge = "/perfil/" . $username;
         $dades = $dades .

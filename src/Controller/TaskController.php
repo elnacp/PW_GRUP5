@@ -200,42 +200,7 @@ class TaskController{
 
     }
 
-    public function likeImage(Application $app, $id, $usuari_log){
-        $response = new Response();
-        $repo = new UserTasks($app['db']);
-        $repo->like($id, $usuari_log);
-        $type = 2;
-        $repo->notificacio($id, $usuari_log, $type);
-        $response->setStatusCode(Response::HTTP_NOT_FOUND);
-        $sql = "SELECT * FROM imatge WHERE id = ?";
-        $s = $app['db']->fetchAssoc($sql, array((int)$id));
-        $autor = $s['user_id'];
-        $sql1 = "SELECT username FROM usuari WHERE id = ?";
-        $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
-        $sql3 = "SELECT * FROM usuari WHERE id = ?";
-        $s3 = $app['db']->fetchAssoc($sql3, array((int)$autor));
-        $usuari =  $app['session']->get('name');
-        $sql4 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
-        $l = $app['db']->fetchAssoc($sql4, array((int)$s['id']));
-        $likes = $l['total'];
-        $content = $app['twig']->render('imatgePublica.twig', [
-                'id' => $id,
-                'usuari_log' => $usuari,
-                'logejat' => true,
-                'autor' => $s2['username'],
-                'title' => $s['title'],
-                'dia' => date("Y-m-d H:i:s"),
-                'visites' => $s['visits'],
-                'likes' => $likes,
-                'message' => null,
-                'imPerfil' => $s3['img_path']
 
-            ]
-        );
-        $response->setContent($content);
-        return $response;
-
-    }
 
 
 

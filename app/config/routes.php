@@ -48,10 +48,10 @@ $app->get('/galeria', 'SilexApp\\Controller\\TaskController::galeria')->before($
 $app->get('/eliminar/{id}','SilexApp\\Controller\\TaskController::eliminarImatge')->before($before);
 $app->get('/editar/{id}','SilexApp\\Controller\\TaskController::editarImatge')->before($before);
 $app->get('/visualitzacioImatge/{id}','SilexApp\\Controller\\TaskController::visualitzacioImatge');
-$app->get('/like/{id}/{usuari_log}','SilexApp\\Controller\\TaskController::likeImage')->before($before);
+$app->get('/like/{id}/{usuari_log}','SilexApp\\Controller\\LikeController::likeImage')->before($before);
 
 //$app->get('/comment/{usuari_log}','SilexApp\\Controller\\FunctionsController::commentImage' );
-$app->get('/likeHome/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::likeHome')->before($before);
+$app->get('/likeHome/{id}/{usuari_log}','SilexApp\\Controller\\LikeController::likeHome')->before($before);
 $app->post('/comentari/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsController::comentari')->before($before);
 $app->get('/comentaris','SilexApp\\Controller\\FunctionsController::comentarisUser')->before($before);
 

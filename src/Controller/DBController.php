@@ -118,7 +118,7 @@ class DBController
                     $content = $app['twig']->render('validate.twig', [
                         'message' => 'Email enviado correctamente:',
                         'logejat' => false,
-                        'name' => $nickname
+                        'name' => $nickname,
                     ]);
 
 
@@ -158,12 +158,16 @@ class DBController
         $img = $request->files->get('ProfileImg');
         $response = new Response();
 
+        $repo = new UserTasks($app['db']);
         if ($img == NULL){
-
+            $usuari =  $app['session']->get('name');
+            $img = $repo ->getActualProfilePic($usuari, null);
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $content = $app['twig']->render('newPost.twig', [
                     'message' => 'IMAGE NOT FOUND',
                     'logejat' => false,
+                    'username' => $usuari,
+                    'imagen' => $img
                 ]
             );
             $response->setContent($content);
@@ -178,7 +182,7 @@ class DBController
                 $private = 0;
             }
 
-            $repo = new UserTasks($app['db']);
+
             $ok = $repo->DBnewPost($title, $img, $private);
             $repo = new UserTasks($app['db']);
             if($app['session']->has('name')){

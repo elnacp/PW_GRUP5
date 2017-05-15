@@ -55,7 +55,4 @@ interface UserModel
     public function getActualProfilePic($username, $img);
 
 
-
-
-
 }

@@ -422,7 +422,6 @@ class UserTasks implements UserModel
         $dades = "";
 
         foreach ($stm as $s) {
-            var_dump($s['title']);
             $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                            <h1> <a href=" . $s['title'] . "></a></h1>
                            <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
@@ -464,8 +463,13 @@ class UserTasks implements UserModel
 
         foreach ($stm as $s) {
             //var_dump($s['title']);
+            $title = $s['title'];
+            $id = $s['id'];
+            $href = "/visualitzacioImatge" ."/". $id;
             $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
-                           <h2> <a href=" . $s['title'] . "></a></h2>
+                           <h3>
+                                <a href=" . $href . "> ".$title    . " </a>
+                                                </h3>
                            <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
                        </div>";
         }

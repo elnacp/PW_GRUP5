@@ -6,6 +6,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
+use SilexApp\Model\Repository\Ajax;
 
 class TaskController{
     public function indexAction(Application $app){
@@ -14,17 +15,21 @@ class TaskController{
         if($app['session']->has('name')){
             $log = true;
         }
+        $repo2 = new Ajax();
+        $data = $repo2->ultimesImages($app);
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
-                'dades' => $imgMesVistes
+                'dades' => $imgMesVistes,
+                'data' => $data
             ]);
         }else{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
-                'dades' => $imgMesVistes
+                'dades' => $imgMesVistes,
+                'data' => $data
             ]);
         }
         $response = new Response();

@@ -63,20 +63,25 @@ class DBController
         /** @var UploadedFile $img */
         $img = $request->files->get('newProfileImg');
 
-
         //$pass2 = htmlspecialchars($_POST['password2']);
         //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
         $repo->deleteActualPic($name);
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg");
-        $img = './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg";
+        if ($img != NULL){
+            move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg";
+        }else{
+            $img = $repo->getActualProfilePic($name,$img);
+        }
 
         $repo->validateEditProfile($name, $birth, $pass1, $img);
         $response = new Response();
-        $content = $app['twig']->render('error.twig', [
+        $content = $app['twig']->render('editProfile.twig', [
                 'logejat' => true,
-                'message' => 'hola'
+                'username' => $name,
+                'birthdate' =>$birth,
+                'imagen' =>$img
             ]
         );
         $response->setContent($content);

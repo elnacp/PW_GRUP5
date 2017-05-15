@@ -479,15 +479,15 @@ class UserTasks implements UserModel
                         <tbody>
                         <tr>
                             <td>Nom d'usuari:</td>
-                            <td><p id=\"autor\">$username</p></td>
+                            <td>$username</td>
                         </tr>
                         <tr>
-                            <td>Imatges Publicades</td>
-                            <td><p id=\"imatges\">$s2</td>
+                            <td>Imatges Publicades:</td>
+                            <td>$s2</td>
                         </tr>
                         <tr>
-                            <td>Comentaris Realitzats</td>
-                            <td><p id=\"comentaris\">$s3</td>
+                            <td>Comentaris Realitzats:</td>
+                            <td>$s3</td>
                         </tr>
 
                         </tbody>

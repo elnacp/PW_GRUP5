@@ -10,7 +10,7 @@
 
     <div class="panel panel-info">
         {{  dadesUsuari| raw }}
-    </div>
+
     <p>Odernar per:</p>
         <form method="get" id="sleccio">
             <input class="radio" type="radio" id="creacio" name="opcio" value="1" >Creacio</input><br>
@@ -26,10 +26,9 @@
         </div>
 
     </div>
-    </div>
-    </div>
 
-    <script src={{ asset('/hello.js', 'js') }}></script>
+
+    <script src={{ asset('/usuariPublic.js', 'js') }}></script>
 
 
 {% endblock %}

@@ -296,7 +296,7 @@ class DBController
     }
     public function publicProfile(Application $app, Request $request, $username){
         $opcio = htmlspecialchars($request->get('opcio'));
-        var_dump($opcio);
+        //var_dump($opcio);
 
         $response = new Response();
         $repo = new UserTasks($app['db']);

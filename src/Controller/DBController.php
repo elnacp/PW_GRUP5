@@ -308,17 +308,13 @@ class DBController
     }
     public function publicProfile(Application $app, Request $request, $username){
         $opcio = htmlspecialchars($request->get('opcio'));
-        //var_dump($opcio);
-
         $response = new Response();
         $repo = new UserTasks($app['db']);
-        $repo->perfilUsuari($username);
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $s = $app['db']->fetchAssoc($sql, array($username));
         $id = $s['id'];
-        //var_dump($id);
-
+        $repo->imatgesUsuari($id);
 
         $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
         $dadesUsuari = $repo->dadesUsuari($username,$id);

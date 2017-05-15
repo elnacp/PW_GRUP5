@@ -406,14 +406,14 @@ class UserTasks implements UserModel
     }
 
 
-    public function perfilUsuari($id)
+    public function imatgesUsuari($id)
     {
         $sql = "SELECT * FROM imatge WHERE user_id = ?";
         $stm = $this->db->fetchAll($sql, array((int)$id));
-
         $dades = "";
 
         foreach ($stm as $s) {
+            var_dump($s['title']);
             $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                            <h1> <a href=" . $s['title'] . "></a></h1>
                            <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
@@ -427,6 +427,7 @@ class UserTasks implements UserModel
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array($username));
         $id = $stm['id'];
+        $dades = "";
         switch ($opcio) {
             case 1:
                 $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
@@ -451,6 +452,15 @@ class UserTasks implements UserModel
                 $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
                 $stm = $this->db->fetchAll($sql, array((int)$id));
         }
+
+        foreach ($stm as $s) {
+            //var_dump($s['title']);
+            $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
+                           <h2> <a href=" . $s['title'] . "></a></h2>
+                           <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
+                       </div>";
+        }
+        return $dades;
     }
 
     public function comentarisUser()
@@ -574,7 +584,7 @@ class UserTasks implements UserModel
         $sql = "DELETE FROM notificacions WHERE id = '$id'";
         $this->db->exec($sql);
     }
-    
+
     public function dadesUsuari($username, $id)
     {
         $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";

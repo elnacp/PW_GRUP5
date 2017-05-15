@@ -137,10 +137,10 @@ class DBController
     {
         $title = htmlspecialchars($request->get('title'));
         $privada = htmlspecialchars($request->get('privada'));
-
+        $size = htmlspecialchars($request->get('size'));
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
-
+        //var_dump($size);
         $response = new Response();
 
         $repo = new UserTasks($app['db']);
@@ -166,8 +166,13 @@ class DBController
             } else {
                 $private = 0;
             }
+            if($size === "gran"){
+                $size = 400;
+            }else{
+                $size = 100;
+            }
 
-            $ok = $repo->DBnewPost($title, $img, $private);
+            $ok = $repo->DBnewPost($title, $img, $private, $size);
             $repo = new UserTasks($app['db']);
             if($app['session']->has('name')){
                 $log = true;

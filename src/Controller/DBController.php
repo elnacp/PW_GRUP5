@@ -24,7 +24,7 @@ class DBController
         if (!$exists) {
             //echo("hello");
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
-            $content = $app['twig']->render('error.twig', [
+            $content = $app['twig']->render('LogIn.twig', [
                     'message' => 'User not found',
                     'logejat' => false
                 ]
@@ -68,8 +68,8 @@ class DBController
 
         $repo = new UserTasks($app['db']);
         $repo->deleteActualPic($name);
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y") . ".jpg");
-        $img = './assets/uploads/' . $name . date("m-d-y-u") . ".jpg";
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg";
 
         $repo->validateEditProfile($name, $birth, $pass1, $img);
         $response = new Response();
@@ -91,28 +91,27 @@ class DBController
         $password = $request->get('password');
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y") . ".jpg");
-        $img = './assets/uploads/' . $nickname . date("m-d-y") . ".jpg";
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg";
         $repo = new UserTasks($app['db']);
         $exists = $repo->checkUser($nickname);
         $response = new Response();
 
 
         if (!$exists) {
-
-            /*$aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
+            $aleatorio = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
 
             $mensaje = "Registro en tuweb.com\n\n";
             $mensaje .= "Estos son tus datos de registro:\n";
             $mensaje .= "Unsuario: $nickname.\n";
             $mensaje .= "Contraseña: $password.\n\n";
-            $mensaje .= "Debes activar tu cuenta pulsando este enlace: http://www.tuweb.com/activacion.php?id=".$aleatorio;
+            $mensaje .= "Debes activar tu cuenta pulsando este enlace: grup5.dev/activacion.php?id=".$aleatorio;
 
-            $cabeceras = 'From: webmaster@example.com' . "\r\n" .
-                'Reply-To: webmaster@example.com' . "\r\n" .
+            $cabeceras = 'From: Dogygram@example.com' . "\r\n" .
+                'Reply-To: Dogygram@example.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
-<<<<<<< HEAD
+
             //$sendMail = mail($email,'Activar cuenta',$mensaje, $cabeceras);
             /*if($sendMail){*/
                 $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
@@ -136,20 +135,25 @@ class DBController
             $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
             $response->setStatusCode(Response::HTTP_OK);
 
-            $content = $app['twig']->render('validate.twig', [
+            $sendMail = mail($email,'Activar cuenta',$mensaje, $cabeceras);
+            if($sendMail){
+                $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+                $response->setStatusCode(Response::HTTP_OK);
+
+                $content = $app['twig']->render('validate.twig', [
                     'message' => 'Activa tu usuario mediante el siguiente link:',
                     'logejat' => false,
                     'name' => $nickname
                 ]
             );
-            /*}else{
+            }else{
                 $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                 $content = $app['twig']->render('error.twig', [
                         'message' => 'No se ha podido enviar el email',
                         'logejat' => false
 
                 ]);
-            }*/
+            }
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
@@ -182,9 +186,15 @@ class DBController
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
         //$title = str_replace(" ", "_", $img);
+
         //var_dump($img->getPathname());
        // move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") . ".jpg");
         $img = './assets/uploads/' . $title . date("m-d-y") . ".jpg";
+
+
+        move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
+        $img = './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa"). ".jpg";
+
         //var_dump($privada);
         //var_dump($request->files->get('imagen'));
         //var_dump($request->files);
@@ -215,8 +225,10 @@ class DBController
         if($app['session']->has('name')){
             $log = true;
         }
-        $usuari = $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log, $usuari);
+
+        $usuari =  $app['session']->get('name');
+        $imgMesVistes = $repo->home1($log,$usuari);
+
         if ($ok) {
             $content = $app['twig']->render('hello.twig', [
                     'logejat' => true,

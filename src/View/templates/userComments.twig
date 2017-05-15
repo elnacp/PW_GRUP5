@@ -1,0 +1,49 @@
+{% extends "base.twig" %}
+{% block title %} Comentaris {% endblock %}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ asset('/userComments.css', 'css') }}>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+        <div class="row">
+            <!-- Contenedor Principal -->
+            <div class="comments-container ">
+                <h1>Comentarios:</h1>
+                {% if message %}
+                <div class="[ panel panel-default ] panel-google-plus">
+                    <div class="panel-heading">
+                        <p>
+                            Message: {{ message }}
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+                <ul id="comments-list" class="comments-list">
+                    {% for c in comentaris %}
+                    <li>
+                        <div class="comment-main-level">
+                            <!-- Contenedor del Comentario -->
+                            <div class="comment-box">
+                                <div class="comment-head">
+                                    <a> {{ c.titol }}</a>
+                                    <a href="/editarComment/{{ c.id }}" ><i  class="fa fa-pencil-square-o" aria-hidden="true"></i> </a>
+                                    <a href="/eliminarComment/{{ c.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </div>
+                                <div class="comment-content">
+                                   {{ c.comentari }}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Respuestas de los comentarios -->
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

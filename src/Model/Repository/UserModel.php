@@ -16,7 +16,6 @@ interface UserModel
 
     public function RegisterUser($nickname, $email, $birthdate, $password, $img);
 
-
     public function logejarUsuari($name);
 
     public function validateEditProfile($name, $birth, $pass1, $img1);
@@ -40,5 +39,17 @@ interface UserModel
     public function deleteActualPic($nickname);
 
     public function comentari($id, $usuari_log);
+
+    public function comentarisUser();
+
+    public function eliminarComentari($id);
+
+    public function editarComentari($id);
+
+    public function notificacio($id, $usuari_log, $type);
+
+    public function notificacionsUser();
+
+    public function visualitzada($id);
 
 }

@@ -28,6 +28,7 @@ class DBController
             $content = $app['twig']->render('LogIn.twig', [
                     'message' => 'User not found',
                     'logejat' => false,
+                    //'imagen' =>null
                 ]
             );
             $response->setContent($content);
@@ -110,21 +111,17 @@ class DBController
 
 
         if (!$exists) {
-                //$sender = new EmailSender();
-                //if ($sender->sendEmail($email)){$repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+                $sender = new EmailSender();
+                if ($sender->sendEmail($email)){
                     $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
                     $response->setStatusCode(Response::HTTP_OK);
+                    $content = $app['twig']->render('error.twig', [
+                        'message' => 'Email Enviado correctamente',
+                        'logejat' => false
 
-                    $content = $app['twig']->render('validate.twig', [
-                        'message' => 'Email enviado correctamente:',
-                        'logejat' => false,
-                        'name' => $nickname,
                     ]);
 
-
-               /* }else{
-
-
+                }else{
 
                     $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                     $content = $app['twig']->render('error.twig', [
@@ -132,13 +129,14 @@ class DBController
                         'logejat' => false
 
                     ]);
-                }*/
+                }
 
         } else {
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
                     'message' => 'El usuario ya existe',
-                    'logejat' => false
+                    'logejat' => false,
+                    //'imagen' => null
                 ]
             );
         }
@@ -167,7 +165,7 @@ class DBController
                     'message' => 'IMAGE NOT FOUND',
                     'logejat' => false,
                     'username' => $usuari,
-                    'imagen' => $img
+                    //'imagen' => $img
                 ]
             );
             $response->setContent($content);
@@ -190,12 +188,14 @@ class DBController
             }
 
             $usuari =  $app['session']->get('name');
+            $imagen = $repo->getActualPostImg($usuari, null);
             $imgMesVistes = $repo->home1($log,$usuari);
 
             if ($ok) {
                 $content = $app['twig']->render('hello.twig', [
                         'logejat' => true,
-                        'dades' => $imgMesVistes
+                        'dades' => $imgMesVistes,
+                        'imagen' => $imagen,
                     ]
                 );
             }
@@ -217,7 +217,9 @@ class DBController
 
             $content = $app['twig']->render('error.twig', [
                     'message' => 'usuario activado correctamente' . $nickname,
-                    'logejat' => false
+                    'logejat' => false,
+                    //'imagen' => null
+
                 ]
             );
 
@@ -225,7 +227,8 @@ class DBController
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
                     'message' => 'No se ha podido validar el usuario ' . $nickname,
-                    'logejat' => false
+                    'logejat' => false,
+                    //'imagen' => null
                 ]
             );
 
@@ -246,7 +249,6 @@ class DBController
             $private = 0;
         }
 
-        //var_dump($path_name);
         $repo = new UserTasks($app['db']);
 
         if ($img != NULL){
@@ -261,7 +263,11 @@ class DBController
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
-            'message' => 'Se ha editado correctamente!'
+            'message' => 'Se ha editado correctamente!',
+            //'imagen' => null
+
+
+
 
         ]);
         $response = new Response();

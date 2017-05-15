@@ -13,15 +13,15 @@ class ControllerComments
 {
     public function eliminarComentari(Application $app, $id){
         $response = new Response();
-        $response = new Response();
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $repo = new UserTasks($app['db']);
+
         $ok = $repo->eliminarComentari($id);
         $dades = $repo->comentarisUser();
         $content = $app['twig']->render('userComments.twig', [
                 'logejat' => true,
                 'comentaris' => $dades,
-                'message' => $ok
+                'message' => $ok,
 
             ]
         );
@@ -41,7 +41,8 @@ class ControllerComments
         $content = $app['twig']->render('editarComentari.twig', [
                 'logejat' => true,
                 'comentari' => $dades,
-                'id' => $id
+                'id' => $id,
+                //'imagen' =>null
             ]
         );
         $response->setContent($content);
@@ -57,7 +58,8 @@ class ControllerComments
         $content = $app['twig']->render('userComments.twig', [
                 'logejat' => true,
                 'comentaris' => $dades,
-                'message' => $ok
+                'message' => $ok,
+                //'imagen' => null
 
             ]
         );
@@ -76,7 +78,7 @@ class ControllerComments
         $content = $app['twig']->render('notificacionsUser.twig', [
                 'logejat' => true,
                 'notificacions' => $dades,
-
+                //'imagen' => null
             ]
         );
         $response->setContent($content);
@@ -94,6 +96,7 @@ class ControllerComments
         $content = $app['twig']->render('notificacionsUser.twig', [
                 'logejat' => true,
                 'notificacions' => $dades,
+                //'imagen' => null
 
             ]
         );

@@ -21,12 +21,14 @@ class TaskController{
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
-                'dades' => $imgMesVistes
+                'dades' => $imgMesVistes,
+                'imagen' => null
             ]);
         }else{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
-                'dades' => $imgMesVistes
+                'dades' => $imgMesVistes,
+                'imagen' => null
             ]);
         }
         $response = new Response();
@@ -60,6 +62,7 @@ class TaskController{
     public function registerUser(Application $app){
         $content = $app['twig']->render('registerUser.twig',[
             'logejat' => false,
+            'imagen' => null
         ] );
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -70,7 +73,8 @@ class TaskController{
     public function LogIn(Application $app){
         $content = $app['twig']->render('LogIn.twig',[
             'logejat' => false,
-            'message' => null
+            'message' => null,
+            'imagen' => null
         ] );
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -81,7 +85,9 @@ class TaskController{
     public function newPost(Application $app){
         $content = $app['twig']->render('newPost.twig', [
             'logejat' => true,
-            'message' => null
+            'message' => null,
+            'imagen' => null
+
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -96,7 +102,8 @@ class TaskController{
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
-            'message' => NULL
+            'message' => NULL,
+            'imagen'=> null
 
         ]);
         $response = new Response();
@@ -118,7 +125,8 @@ class TaskController{
             'logejat' => true,
             'titol' => $imatge['title'],
             'privada' => $estat,
-            'id' => $id
+            'id' => $id,
+            'imagen' => null
 
         ]);
         $response = new Response();
@@ -137,7 +145,7 @@ class TaskController{
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
-            'message' => 'Se ha eliminado correctamente!'
+            'message' => 'Se ha eliminado correctamente!',
 
         ]);
         $response = new Response();
@@ -169,6 +177,7 @@ class TaskController{
             $sql = "SELECT * FROM imatge WHERE id = ?";
             $s = $app['db']->fetchAssoc($sql, array((int)$id));
             $autor = $s['user_id'];
+            $image= $s['img_path'];
             $sql1 = "SELECT username FROM usuari WHERE id = ?";
             $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
             $sql3 = "SELECT * FROM usuari WHERE id = ?";
@@ -187,7 +196,8 @@ class TaskController{
                     'visites' => $s['visits'],
                     'likes' => $likes,
                     'message' => null,
-                    'imPerfil' => $s3['img_path']
+                    'imPerfil' => $s3['img_path'],
+                    'Image' => $image
 
 
                 ]

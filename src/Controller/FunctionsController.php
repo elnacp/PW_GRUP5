@@ -40,7 +40,8 @@ class FunctionsController{
                 'visites' => $s['visits'],
                 'likes' => $likes,
                 'message' => $message,
-                'imPerfil' => $s3['img_path']
+                'imagen' => $s3['img_path'],
+                'Imagen' => $autor = $s['img_path']
 
             ]
         );
@@ -50,7 +51,6 @@ class FunctionsController{
 
     public function comentarisUser(Application $app){
         $response = new Response();
-        $response = new Response();
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $repo = new UserTasks($app['db']);
         $titols_img[] = "";
@@ -58,7 +58,9 @@ class FunctionsController{
         $content = $app['twig']->render('userComments.twig', [
                 'logejat' => true,
                 'comentaris' => $dades,
-                'message' => null
+                'message' => null,
+                'imagen' => null,
+                'Imagen'=>null
             ]
         );
         $response->setContent($content);

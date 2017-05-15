@@ -19,6 +19,7 @@ class LikeController{
         $sql = "SELECT * FROM imatge WHERE id = ?";
         $s = $app['db']->fetchAssoc($sql, array((int)$id));
         $autor = $s['user_id'];
+        $img = $s['img_path'];
         $sql1 = "SELECT username FROM usuari WHERE id = ?";
         $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
         $sql3 = "SELECT * FROM usuari WHERE id = ?";
@@ -37,7 +38,8 @@ class LikeController{
                 'visites' => $s['visits'],
                 'likes' => $likes,
                 'message' => null,
-                'imPerfil' => $s3['img_path']
+                //'imagen' => $s3['img_path'],
+                'Imagen' => $img
 
             ]
         );
@@ -60,12 +62,14 @@ class LikeController{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
                 'dades' => $imgMesVistes,
+                //'imagen' => null
 
             ]);
         }else{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
                 'dades' => $imgMesVistes,
+               // 'imagen'=>null
 
             ]);
         }

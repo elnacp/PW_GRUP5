@@ -11,7 +11,8 @@ $before = function (Request $request, Application $app){
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
             'message' => 'You must be logged',
-            'logejat' => false
+            'logejat' => false,
+            'imagen' => null
         ]);
         $response->setContent($content);
         $response->setStatusCode(Response::HTTP_FORBIDDEN);
@@ -24,7 +25,8 @@ $inici = function (Request $request, Application $app){
         $response = new Response();
         $content = $app['twig']->render('error.twig', [
             'message' => 'Ya estas logeado!',
-            'logejat' => true
+            'logejat' => true,
+            'imagen' => null
         ]);
         $response->setContent($content);
         $response->setStatusCode(Response::HTTP_FORBIDDEN);

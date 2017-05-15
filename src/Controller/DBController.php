@@ -152,48 +152,51 @@ class DBController
     public function DBnewPost(Application $app, Request $request)
     {
         $title = htmlspecialchars($request->get('title'));
-        //$imgName = htmlspecialchars($request->files->get('ProfileImg'));
         $privada = htmlspecialchars($request->get('privada'));
 
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
-        //$title = str_replace(" ", "_", $img);
-
-        move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
-        $img = './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa"). ".jpg";
-        //var_dump($privada);
-        //var_dump($request->files->get('imagen'));
-        //var_dump($request->files);
-        if ($privada === "on") {
-            $private = 1;
-        } else {
-            $private = 0;
-        }
-        //$folder = "/assets/img/";
-        //$path_name = $imgName;
-        //var_dump($path_name);
-
-
-        $repo = new UserTasks($app['db']);
-        $ok = $repo->DBnewPost($title, $img, $private);
         $response = new Response();
-        $repo = new UserTasks($app['db']);
-        if($app['session']->has('name')){
-            $log = true;
-        }
 
-        $usuari =  $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log,$usuari);
+        if ($img == NULL){
 
-        if ($ok) {
-            $content = $app['twig']->render('hello.twig', [
-                    'logejat' => true,
-                    'dades' => $imgMesVistes
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            $content = $app['twig']->render('newPost.twig', [
+                    'message' => 'IMAGE NOT FOUND',
+                    'logejat' => false,
                 ]
             );
-        }
-        $response->setContent($content);
+            $response->setContent($content);
+            return $response;
+        }else{
+            move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa"). ".jpg";
 
+            if ($privada === "on") {
+                $private = 1;
+            } else {
+                $private = 0;
+            }
+
+            $repo = new UserTasks($app['db']);
+            $ok = $repo->DBnewPost($title, $img, $private);
+            $repo = new UserTasks($app['db']);
+            if($app['session']->has('name')){
+                $log = true;
+            }
+
+            $usuari =  $app['session']->get('name');
+            $imgMesVistes = $repo->home1($log,$usuari);
+
+            if ($ok) {
+                $content = $app['twig']->render('hello.twig', [
+                        'logejat' => true,
+                        'dades' => $imgMesVistes
+                    ]
+                );
+            }
+            $response->setContent($content);
+        }
         return $response;
     }
 

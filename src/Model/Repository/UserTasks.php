@@ -407,14 +407,34 @@ class UserTasks implements UserModel
 
     public function imatgesPerfil($username, $opcio)
     {
-        //var_dump($username);
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array($username));
         $id = $stm['id'];
-        $sql = "SELECT * FROM imatge WHERE user_id = ?"; // ORDER BY $opcio ASC
-        $stm = $this->db->fetchAll($sql, array((int)$id));
-        /*$sql3 = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
-        $s4 = $this->db->fetchAssoc($sql3, array($id));*/
+        switch($opcio){
+            case 1:
+            $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
+            $stm = $this->db->fetchAll($sql, array((int)$id));
+                 break;
+            case 2:
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY likes ASC";
+                $stm = $this->db->fetchAll($sql, array((int)$id));
+
+                break;
+            case 3:
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY (SELECT SUM(image_id) FROM comentari,imatge WHERE comentari.image_id = imatge.id) ASC";
+                $stm = $this->db->fetchAll($sql, array((int)$id));
+                break;
+
+            case 4:
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY visits ASC";
+                $stm = $this->db->fetchAll($sql, array((int)$id));
+                break;
+
+            default:
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
+                $stm = $this->db->fetchAll($sql, array((int)$id));
+        }
+
         $dades = "";
 
         foreach ($stm as $s) {

@@ -27,7 +27,7 @@ class DBController
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $content = $app['twig']->render('LogIn.twig', [
                     'message' => 'User not found',
-                    'logejat' => false
+                    'logejat' => false,
                 ]
             );
             $response->setContent($content);
@@ -93,7 +93,7 @@ class DBController
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
         if ($img == NULL){
-            $img = './assets/uploads/' . "User05-15-1712:23:43pm.jpg";
+            $img = './assets/img/' . "User.jpg";
         }else{
             move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg");
             $img = './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg";

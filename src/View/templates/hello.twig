@@ -11,7 +11,21 @@
     {{ dades|raw}}
 
 
-    <a  class="btn btn-primary"><span class="glyphicon glyphicon-hand-right"></span> Show more</a>
+
+    <div class="[ panel panel-default ] panel-google-plus">
+        <h2> Últimas entradas de DOGYGRAM: </h2>
+    </div>
+    <div class="[ panel panel-default ] panel-google-plus">
+        <div class="information">
+
+        </div>
+    </div>
+
+    <div class="container">
+        <button class="btn btnt-primary loadmore" >Loadmore</button>
+    </div>
+
+
     <script src={{ asset('/hello.js', 'js') }}></script>
 
 {% endblock %}

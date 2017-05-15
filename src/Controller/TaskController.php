@@ -9,13 +9,11 @@ use SilexApp\Model\Repository\UserTasks;
 
 class TaskController{
     public function indexAction(Application $app){
-        $ultimesImg = "";
         $repo = new UserTasks($app['db']);
         $log = false;
         if($app['session']->has('name')){
             $log = true;
         }
-
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
         if(!$app['session']->has('name')) {

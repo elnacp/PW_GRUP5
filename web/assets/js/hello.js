@@ -26,7 +26,7 @@ $(function () {
 
 $(document).ready(function(){
         $("a").click(function(){
-            $.ajax({url: "demo_test.txt",
+            $.ajax({url: "",
                 success: function(result){
                     $("#div1").html(result);
             }});

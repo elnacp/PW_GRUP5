@@ -182,7 +182,7 @@ class DBController
                 $private = 0;
             }
 
-            
+
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $img, $private);
         $response = new Response();

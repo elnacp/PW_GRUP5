@@ -174,7 +174,7 @@ class UserTasks implements UserModel
 
     public function home1($log, $usuari){
 
-        $sql = "SELECT * FROM imatge  ORDER  BY visits DESC ";
+        $sql = "SELECT * FROM imatge  ORDER  BY visits DESC LIMIT 5";
         $stm = $this->db->fetchAll($sql);
         $c1 = 5;
         $c2 = 5;

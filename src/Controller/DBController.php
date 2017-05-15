@@ -174,23 +174,15 @@ class DBController
         $title = htmlspecialchars($request->get('title'));
         //$imgName = htmlspecialchars($request->files->get('ProfileImg'));
         $privada = htmlspecialchars($request->get('privada'));
-        $output = htmlspecialchars($request->get('registerImg'));
-        //var_dump($output);
-        //var_dump($request->files->get('imagen'));
-        $path = $request->files->get('imagen');
-        $path = (String)$request->files->get('imagen');
+
         $size = $request->get('size');
         //var_dump($path);
 
 
         /** @var UploadedFile $img */
-        $img = $request->files->get('ProfileImg');
-        //$title = str_replace(" ", "_", $img);
-
-        //var_dump($img->getPathname());
-       // move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") . ".jpg");
-        $img = './assets/uploads/' . $title . date("m-d-y") . ".jpg";
-
+        $img = $request->files->get('images');
+        var_dump($img);
+        die;
 
         move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
         $img = './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa"). ".jpg";

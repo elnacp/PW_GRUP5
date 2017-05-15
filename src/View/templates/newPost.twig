@@ -22,25 +22,27 @@
                         <label>
                             Título<span class="req">*</span>
                         </label>
-                        <input type="text" name="title" required autocomplete="off"/>
+                        <input title="Se necesita un titulo " type="text" name="title" required autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>
-                            Imagen de Perfil<span class="req"></span>
+                           Nuevo Post<span class="req"></span>
                         </label>
                         <br>
                         <br>
-                        <img id="profilePic" name="image" src="" class="img-thumbnail img-responsive">
-                        <input type="file" id="files" name="ProfileImg">
+                        <input type="file" id="files" name="ProfileImg" />
+                        <output id="list"></output>
                         <output id="registerImg" name="images"></output>
-
-                    </div>
-                    <div class="field-wrap">
+                        <label>400x300</label>
+                        <input class="radio" type="radio" id="imageGran" name="size" value="gran" checked="checked"></input>
+                        <label>100x100</label>
+                        <input class="radio" type="radio" id="imagePetita" name="size" value="petita"></input>
+                        <br>
                         <label>
                             Privada
                         </label>
                         <span class="checkbox">
-                            <input  type="checkbox" name="privada" >
+                            <input  type="checkbox" name="privada" ></input>
                         </span>
                         <br>
                         <br>
@@ -68,5 +70,6 @@
     {% endif %}
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src={{ asset('/indexRegistration.js', 'js') }}></script>
-    <script src={{ asset('/registration.js', 'js') }}></script>
+    <script src={{ asset('/newPost.js', 'js') }}></script>
+
 {% endblock %}

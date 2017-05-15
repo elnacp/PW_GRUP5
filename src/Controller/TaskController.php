@@ -121,8 +121,8 @@ class TaskController{
             'logejat' => true,
             'titol' => $imatge['title'],
             'privada' => $estat,
+            'sizeImage'=>$imatge['sizeImage'],
             'id' => $id
-
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -180,6 +180,7 @@ class TaskController{
             $sql4 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
             $l = $app['db']->fetchAssoc($sql4, array((int)$s['id']));
             $likes = $l['total'];
+            var_dump($s3['img_path']);
             $content = $app['twig']->render('imatgePublica.twig', [
                     'id' => $id,
                     'usuari_log' => $usuari,
@@ -206,7 +207,10 @@ class TaskController{
 
 
 
+    //public function publicProfile(Application $app, Request $request ,$username){
 
+
+    //}
 
 }
 

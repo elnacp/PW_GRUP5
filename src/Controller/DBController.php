@@ -67,8 +67,8 @@ class DBController
         //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
-        $repo->deleteActualPic($name);
         if ($img != NULL){
+            $repo->deleteActualPic($name);
             move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg");
             $img = './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg";
         }else{
@@ -110,52 +110,37 @@ class DBController
 
 
         if (!$exists) {
-                //$sender = new EmailSender();
-                //if ($sender->sendEmail($email)){$repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
-                    $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
-                    $response->setStatusCode(Response::HTTP_OK);
+            //$sender = new EmailSender();
+            //if ($sender->sendEmail($email)){$repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+            $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+            $response->setStatusCode(Response::HTTP_OK);
 
-                    $content = $app['twig']->render('validate.twig', [
-                        'message' => 'Email enviado correctamente:',
-                        'logejat' => false,
-                        'name' => $nickname,
-                    ]);
-
-
-               /* }else{
-
-
-
-                    $response->setStatusCode(Response::HTTP_BAD_REQUEST);
-                    $content = $app['twig']->render('error.twig', [
-                        'message' => 'No se ha podido enviar el email',
-                        'logejat' => false
-
-                    ]);
-                }*/
-
-        } else {
+            $content = $app['twig']->render('validate.twig', [
+                'message' => 'Email enviado correctamente:',
+                'logejat' => false,
+                'name' => $nickname,
+            ]);
+        }else{
             $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'El usuario ya existe',
-                    'logejat' => false
+                     'message' => 'El usuario ya existe',
+                     'logejat' => false
                 ]
-            );
-        }
+              );
+            }
         $response->setContent($content);
 
         return $response;
-
-
     }
 
     public function DBnewPost(Application $app, Request $request)
     {
         $title = htmlspecialchars($request->get('title'));
         $privada = htmlspecialchars($request->get('privada'));
-
+        $size = htmlspecialchars($request->get('size'));
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
+        //var_dump($size);
         $response = new Response();
 
         $repo = new UserTasks($app['db']);
@@ -181,8 +166,11 @@ class DBController
             } else {
                 $private = 0;
             }
-
-
+            if($size === "gran"){
+                $size = 400;
+            }else{
+                $size = 100;
+            }
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $img, $private);
         $response = new Response();
@@ -193,6 +181,7 @@ class DBController
         }
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
+
 
             if ($ok) {
                 $content = $app['twig']->render('hello.twig', [
@@ -239,24 +228,31 @@ class DBController
     public function DBeditImage(Application $app, Request $request, $id)
     {
         $title = htmlspecialchars($request->get('title'));
-        $imgName = htmlspecialchars($request->files->get('imagen'));
+        $img = $request->files->get('imagen');
         $privada = htmlspecialchars($request->get('privada'));
+
         if ($privada === "on") {
             $private = 1;
         } else {
             $private = 0;
         }
-        $folder = "/assets/img/";
-        $path_name = $imgName;
+
         //var_dump($path_name);
         $repo = new UserTasks($app['db']);
-        $repo->editInformation($title, $path_name, $private, $id);
+
+        if ($img != NULL){
+            $repo->deleteActualPic($title);
+            move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg";
+        }else{
+            $img = $repo->getActualPostImg($id,$img);
+        }
+        $repo->editInformation($title, $img, $private, $id);
         $dades = $repo->dadesImatges();
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
             'message' => 'Se ha editado correctamente!'
-
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -266,5 +262,31 @@ class DBController
 
 
     }
+    public function publicProfile(Application $app, Request $request, $username){
+        $opcio = htmlspecialchars($request->get('opcio'));
+        $response = new Response();
+        $repo = new UserTasks($app['db']);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $s = $app['db']->fetchAssoc($sql, array($username));
+        $id = $s['id'];
+        $repo->imatgesUsuari($id);
+
+        $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
+        $dadesUsuari = $repo->dadesUsuari($username,$id);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+        $content = $app['twig']->render('publicProfile.twig',[
+            'logejat' => false,
+            'imatgesPublic' =>$imatgesPublic,
+            'dadesUsuari' =>$dadesUsuari
+        ]);
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+    }
+
 
 }

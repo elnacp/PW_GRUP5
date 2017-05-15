@@ -332,7 +332,9 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $info = $this->db->fetchAssoc($sql, array($nickname));
         $image = $info['img_path'];
-        unlink($image);
+        if($image != "./assets/img/User.jpg"){
+            unlink($image);
+        }
     }
 
 
@@ -498,6 +500,14 @@ class UserTasks implements UserModel
         $this->db->exec($sql);
     }
 
+    public function getActualProfilePic($username, $img){
+        $sql = "SELECT img_path FROM usuari WHERE username = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$username));
+        if ($img == NULL){
+            $img = $stm['img_path'];
+        }
+        return $img;
+    }
 
 
 

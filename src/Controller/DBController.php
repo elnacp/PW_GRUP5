@@ -174,10 +174,10 @@ class DBController
         $ok = $repo->DBnewPost($title, $img, $private);
         $response = new Response();
         $repo = new UserTasks($app['db']);
+        $log = false;
         if($app['session']->has('name')){
             $log = true;
         }
-
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
 

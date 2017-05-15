@@ -140,6 +140,7 @@ class DBController
 
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
+
         $response = new Response();
 
         $repo = new UserTasks($app['db']);

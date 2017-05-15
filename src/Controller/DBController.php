@@ -67,8 +67,8 @@ class DBController
         //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
-        $repo->deleteActualPic($name);
         if ($img != NULL){
+            $repo->deleteActualPic($name);
             move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg");
             $img = './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg";
         }else{
@@ -237,18 +237,26 @@ class DBController
     public function DBeditImage(Application $app, Request $request, $id)
     {
         $title = htmlspecialchars($request->get('title'));
-        $imgName = htmlspecialchars($request->files->get('imagen'));
+        $img = $request->files->get('imagen');
         $privada = htmlspecialchars($request->get('privada'));
+
         if ($privada === "on") {
             $private = 1;
         } else {
             $private = 0;
         }
-        $folder = "/assets/img/";
-        $path_name = $imgName;
+
         //var_dump($path_name);
         $repo = new UserTasks($app['db']);
-        $repo->editInformation($title, $path_name, $private, $id);
+
+        if ($img != NULL){
+            $repo->deleteActualPic($title);
+            move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg";
+        }else{
+            $img = $repo->getActualPostImg($id,$img);
+        }
+        $repo->editInformation($title, $img, $private, $id);
         $dades = $repo->dadesImatges();
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,

@@ -331,10 +331,17 @@ class UserTasks implements UserModel
     public function deleteActualPic($nickname){
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $info = $this->db->fetchAssoc($sql, array($nickname));
-        $image = $info['img_path'];
-        if($image != "./assets/img/User.jpg"){
+        if ($info){
+            $image = $info['img_path'];
+            unlink($image);
+
+        }else{
+            $sql = "SELECT * FROM imatge WHERE title = ?";
+            $info = $this->db->fetchAssoc($sql, array($nickname));
+            $image = $info['img_path'];
             unlink($image);
         }
+
     }
 
 
@@ -503,6 +510,15 @@ class UserTasks implements UserModel
     public function getActualProfilePic($username, $img){
         $sql = "SELECT img_path FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array((string)$username));
+        if ($img == NULL){
+            $img = $stm['img_path'];
+        }
+        return $img;
+    }
+
+    public function getActualPostImg($id, $img){
+        $sql = "SELECT img_path FROM imatge WHERE id = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$id));
         if ($img == NULL){
             $img = $stm['img_path'];
         }

@@ -265,7 +265,6 @@ class DBController
         $imgName = htmlspecialchars($request->files->get('imagen'));
         $privada = htmlspecialchars($request->get('privada'));
         $size = htmlspecialchars($request->get('size'));
-        //var_dump($size);
         if ($size === "gran"){
             $sizeImage = 400;
         }else{
@@ -294,6 +293,35 @@ class DBController
         return $response;
 
 
+    }
+    public function publicProfile(Application $app, Request $request, $username){
+        $opcio = htmlspecialchars($request->get('opcio'));
+        var_dump($opcio);
+
+        $response = new Response();
+        $repo = new UserTasks($app['db']);
+        $repo->perfilUsuari($username);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $s = $app['db']->fetchAssoc($sql, array($username));
+        $id = $s['id'];
+        //var_dump($id);
+
+
+        $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
+        $dadesUsuari = $repo->dadesUsuari($username,$id);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+        $content = $app['twig']->render('publicProfile.twig',[
+            'logejat' => false,
+            'imatgesPublic' =>$imatgesPublic,
+            'dadesUsuari' =>$dadesUsuari
+        ]);
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
     }
 
 

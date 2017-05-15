@@ -9,43 +9,20 @@
     <br>
 
     <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Sheena Shrestha</h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center">
-                    <img alt="User Pic" name="img_path" id="img_path"  class="img-circle img-responsive"> </div>
-
-                 <div class=" col-md-9 col-lg-9 ">
-                    <table class="profileTable">
-                        <tbody>
-                        <tr>
-                            <td>Nom d'usuari:</td>
-                            <td><p id="autor"></p></td>
-                        </tr>
-                        <tr>
-                            <td>Imatges Publicades</td>
-                            <td name="hire">06/23/2013</td>
-                        </tr>
-                        <tr>
-                            <td>Comentaris Realitzats</td>
-                            <td>01/24/1988</td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <p>Odernar per:
-                    <select name="opcio">
-                        <option value="1">Creacio</option>
-                        <option value="2">Likes</option>
-                        <option value="3">Comentaris</option>
-                        <option value="4">Visualitzacions</option>
-                    </select>
-                </p>
+        {{  dadesUsuari| raw }}
+    </div>
+    <p>Odernar per:</p>
+        <form method="get" id="sleccio">
+            <input class="radio" type="radio" id="creacio" name="opcio" value="1" checked="checked">Creacio</input><br>
+            <input class="radio" type="radio" id="likes" name="opcio" value="2" >Likes</input><br>
+            <input class="radio" type="radio" id="comentaris" name="opcio" value="3" >Comentaris</input><br>
+            <input class="radio" type="radio" id="visualitzacions" name="opcio" value="4">Visualitzacions</input><br>
+            <button type="submit" class="button button-block" />Ordenar</button>
+        </form>
+            <div class="imatges">
+                {{  imatgesPublic| raw }}
             </div>
-            {{  dades| raw }}
+
         </div>
 
     </div>

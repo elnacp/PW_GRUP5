@@ -51,4 +51,4 @@ $app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\DBController::DBeditImage
 
 
 $app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
-$app->get('/perfil/{username}', 'SilexApp\\Controller\\TaskController::publicProfile');
+$app->get('/perfil/{username}', 'SilexApp\\Controller\\DBController::publicProfile');

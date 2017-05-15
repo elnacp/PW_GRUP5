@@ -413,7 +413,8 @@ class UserTasks implements UserModel
         $id = $stm['id'];
         $sql = "SELECT * FROM imatge WHERE user_id = ?"; // ORDER BY $opcio ASC
         $stm = $this->db->fetchAll($sql, array((int)$id));
-
+        /*$sql3 = "SELECT title,img_path FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
+        $s4 = $this->db->fetchAssoc($sql3, array($id));*/
         $dades = "";
 
         foreach ($stm as $s) {
@@ -426,6 +427,54 @@ class UserTasks implements UserModel
             //var_dump($dades);
 
         }
+        return $dades;
+    }
+    public function dadesUsuari($username, $id)
+    {
+        $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
+        $s2 = $this->db->fetchAssoc($sql1, array($id));
+        $s2 = implode('',$s2);
+        $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
+        $s3 = $this->db->fetchAssoc($sql2, array($id));
+        $s3 = implode('',$s3);
+        $sql3 = "SELECT img_path FROM usuari WHERE id= ?";
+        $s4 = $this->db->fetchAssoc($sql3, array($id));
+        $s4 = implode('',$s4);
+        $dades = "";
+
+        $visualitzacioImatge = "/perfil/" . $username;
+        $dades = $dades .
+            "<div class=\"panel-heading\">
+                 <h3 class=\"panel-title\">$username</h3>
+            </div>
+            
+            <div class=\"panel-body\">
+            
+                <div class=\"col-md-3 col-lg-3 \" align=\"center\">
+                    <img src=\"$s4\" alt=\"User Pic\" name=\"img_path\" id=\"img_path\"  class=\"img-circle img-responsive\"> 
+                </div>
+            <div class=\"row\">
+                 <div class=\" col-md-9 col-lg-9 \">
+                    <table class=\"profileTable\">
+                        <tbody>
+                        <tr>
+                            <td>Nom d'usuari:</td>
+                            <td><p id=\"autor\">$username</p></td>
+                        </tr>
+                        <tr>
+                            <td>Imatges Publicades</td>
+                            <td><p id=\"imatges\">$s2</td>
+                        </tr>
+                        <tr>
+                            <td>Comentaris Realitzats</td>
+                            <td><p id=\"comentaris\">$s3</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>";
+
         return $dades;
     }
 }

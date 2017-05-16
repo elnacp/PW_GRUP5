@@ -194,26 +194,11 @@ class DBController
             }
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $img, $private, $size);
-        $response = new Response();
-        $repo = new UserTasks($app['db']);
-        $log = false;
-        if($app['session']->has('name')){
-            $log = true;
-        }
-        $usuari =  $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log,$usuari, "0");
 
-
-            if ($ok) {
-                $content = $app['twig']->render('hello.twig', [
-                        'logejat' => true,
-                        'dades' => $imgMesVistes,
-                        'image' => $img,
-                        'username' => $usuari
-                    ]
-                );
+        if ($ok) {
+                $url = "/";
+                return new RedirectResponse($url);
             }
-            $response->setContent($content);
         }
         return $response;
     }

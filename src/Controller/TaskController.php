@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
 use SilexApp\Model\Repository\Ajax;
 use SilexApp\Model\Repository\UpdateBaseService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class TaskController{
     public function indexAction(Application $app){
@@ -28,6 +30,7 @@ class TaskController{
                 'dades' => $imgMesVistes
                 //'data' => $data
             ]);
+
         }else{
             $aux = new UpdateBaseService($app['db']);
             $info = $aux->getUserInfo($app['session']->get('name'));
@@ -39,6 +42,7 @@ class TaskController{
                 'dades' => $imgMesVistes
                 //'data' => $data
             ]);
+
         }
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -47,6 +51,7 @@ class TaskController{
         return $response;
 
     }
+
     public function editProfile(Application $app){
         $sql = "SELECT * FROM logejat";
         $usuari = $app['db']->fetchAssoc($sql);

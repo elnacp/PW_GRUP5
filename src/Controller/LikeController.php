@@ -3,6 +3,8 @@
 namespace SilexApp\Controller;
 
 use Silex\Application;
+
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
@@ -54,21 +56,23 @@ class LikeController{
         $type = 2;
         $repo->like($id, $usuari_log);
         $repo->notificacio($id, $usuari_log,$type );
-        if($app['session']->has('name')){
+        /*if($app['session']->has('name')){
             $log = true;
         }
         $usuari =  $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log,$usuari,"likes");
+        $imgMesVistes = $repo->home1($log,$usuari,"likes");*/
         if(!$app['session']->has('name')) {
-            $content = $app['twig']->render('hello.twig', [
+            /*$content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
                 'dades' => $imgMesVistes,
                 'username' => '',
                 'image' => null
 
-            ]);
+            ]);*/
+            $url = "/";
+            return new RedirectResponse($url);
         }else{
-            $aux = new UpdateBaseService($app['db']);
+            /*$aux = new UpdateBaseService($app['db']);
             $info = $aux->getUserInfo($app['session']->get('name'));
             list($name, $img) = explode("!=!", $info);
             $content = $app['twig']->render('hello.twig', [
@@ -77,12 +81,14 @@ class LikeController{
                 'username' => $usuari,
                 'image'=>'/.'.$img
 
-            ]);
+            ]);*/
+            $url = "/";
+            return new RedirectResponse($url);
         }
-        $response = new Response();
+        /*$response = new Response();
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
-        $response->setContent($content);
-        return $response;
+        $response->setContent($content);*/
+        //return $response;
     }
 }

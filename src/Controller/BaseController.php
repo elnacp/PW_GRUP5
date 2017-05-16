@@ -3,6 +3,7 @@
 namespace  SilexApp\Controller;
 
 use Silex\Application;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\DBAL\Configuration;
@@ -39,24 +40,9 @@ class BaseController{
     public function iniciarSession(Application $app, $name){
         $app['session']->set('name', $name);
         //setcookie("guest", "guest", time() + 3600 * 24 * 7);
-        $repo = new UserTasks($app['db']);
-        $log = false;
-        if($app['session']->has('name')){
-            $log = true;
-        }
-        $usuari = $app['session']->get('name');
-        $aux = new UpdateBaseService($app['db']);
-        $info = $aux->getUserInfo($usuari);
-        list($name, $img) = explode("!=!", $info);
-        $repo = new UserTasks($app['db']);
-        $imgMesVistes = $repo->home1($log, $usuari,"0");
-        $content = $app['twig']->render('hello.twig',[
-            'logejat' => true,
-            'dades' => $imgMesVistes,
-            'username' =>$usuari,
-            'image' => '.'.$img
-        ]);
-        return new Response($content);
+        $url = "/";
+        return new RedirectResponse($url);
+
     }
 
     public function cerrarSession(Application $app){
@@ -64,19 +50,8 @@ class BaseController{
         //setcookie("guest", "", time() - 3600 * 24 * 7);
         $app['db']->query($sql);
         $app['session']->remove('name');
-        $repo = new UserTasks($app['db']);
-        $log = false;
-        if($app['session']->has('name')){
-            $log = true;
-        }
-        $imgMesVistes = $repo->home1($log, NULL, "0");
-        $content = $app['twig']->render('hello.twig',[
-            'logejat' => false,
-            'dades' => $imgMesVistes,
-            'username' => null,
-            'image' => null
-        ]);
-        return new Response($content);
+        $url = "/";
+        return new RedirectResponse($url);
     }
 
 

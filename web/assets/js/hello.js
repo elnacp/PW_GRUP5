@@ -85,6 +85,7 @@ window.onload = function() {
                 div3.appendChild(h5);
                 var img = document.createElement('img');
                 img.setAttribute("class", "img-circle");
+                img.setAttribute("id", "ProfileImg");
                 img.setAttribute("src", postVisibles[index]['img_perfil']);
                 img.setAttribute("alt", "User Image");
                 div3.appendChild(img);

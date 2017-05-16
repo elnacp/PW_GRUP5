@@ -786,6 +786,7 @@ class UserTasks implements UserModel
             $sql = "SELECT * FROM usuari WHERE id = ?";
             $dades = $this->db->fetchAssoc($sql, array($dades['user_id']));
             $info['autor'] = $dades['username'];
+            $info['img_perfil'] = $dades['img_path'];
 
             array_push($a['info'], $info);
 

@@ -54,5 +54,10 @@ interface UserModel
 
     public function getActualProfilePic($username, $img);
 
+    public function createUserActivation($id, $code);
+
+    public function searchValidation($id, $code);
+
+    public function getName($id);
 
 }

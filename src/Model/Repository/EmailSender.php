@@ -5,42 +5,52 @@
  * Date: 14/5/17
  * Time: 19:47
  */
+
 namespace SilexApp\Model\Repository;
 
-//require ("PHPMailer_5.2.4/class.phpmailer.php");
-require 'PHPMailerAutoload.php';
 use PHPMailer;
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\DBAL\Configuration;
+
+require 'PHPMailerAutoload.php';
+
+use SilexApp\Model\Repository\UserTasks;
 
 class EmailSender{
 
-//$mail->SMTPDebug = 3;                               // Enable verbose debug output
-    function sendEmail($email){
 
-        $mail = new PHPMailer;
+    function sendEmail(Application $app, $email, $id){
 
 
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp-mail.outlook.com';  // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'clabaza123@hotmail.com';                 // SMTP username
-        $mail->Password = 'whiterose';                           // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                    // TCP port to connect to
+        $code = '';
+        $pattern = '1234567890abcdefghijklmnopqrstuvwxyz';
+        $max = strlen($pattern)-1;
+        for($i=0;$i < 15;$i++) $code .= $pattern{mt_rand(0,$max)};
 
-        $mail->setFrom('Dogygram@example.com', 'Mailer');
-        $mail->addAddress($email);               // Name is optional
+        $repo = new UserTasks($app['db']);
 
-        $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-        $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-        $mail->isHTML(true);                                  // Set email format to HTML
-
-        $message = 'Gracias por registrarte en <b>Dogygram</b>. Para activar la cuenta accede al Link:';
-        $message .= '<a href="grup5.dev"> grup5.dev</a>';
-        $mail->Subject = 'Activacion de Cuenta';
-        $mail->Body    = $message;
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-
+        $repo->createUserActivation($id,$code);
+        $url = 'grup5.dev/activateUser/'.$code.'/'.$id;
+        $msg = 'Muchas gracias por crear una cuenta en Doggygram. Para activar la cuenta entra en el siguiente link: ';
+        $msg.= '<a href='.$url.'>'.$url.'/a>';
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = 'UTF-8';
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPDebug = 2;
+        $mail->SMTPAuth= true;
+        $mail->Port = 587; // Or 5
+        $mail->Username= 'doggygram2017@gmail.com';
+        $mail->Password= 'ProjectesWeb2';
+        $mail->SMTPSecure = 'tls';
+        $mail->From = 'doggygram2017@gmail.com';
+        $mail->FromName= 'Doggygram';
+        $mail->isHTML(true);
+        $mail->Subject = 'Activar cuenta';
+        $mail->Body = $msg;
+        $mail->addAddress($email);
         return $mail->send();
 
     }

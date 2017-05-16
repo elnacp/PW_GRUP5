@@ -111,9 +111,11 @@ class DBController
 
 
         if (!$exists) {
+                $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+                $id = $repo->getUserId($nickname);
                 $sender = new EmailSender();
-                if ($sender->sendEmail($email)){
-                    $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
+                if ($sender->sendEmail($app,$email, $id)){
+
                     $response->setStatusCode(Response::HTTP_OK);
                     $content = $app['twig']->render('error.twig', [
                         'message' => 'Email Enviado correctamente',

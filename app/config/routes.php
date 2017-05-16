@@ -72,5 +72,7 @@ $app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
 
 $app->get('/reload', 'SilexApp\\Controller\\TaskController::editProfile')->before($before);
 
+$app->match('/activateUser/{code}/{id}', 'SilexApp\\Controller\\ActivationUser::validateUser');
+
 
 

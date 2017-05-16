@@ -103,7 +103,6 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM logejat LIMIT 1";
         $user_id = $this->db->fetchAssoc($sql);
         $id = $user_id['user_id'];
-        //var_dump($private);
         $this->db->insert('imatge', [
             'user_id' => $id,
             'title' => $title,
@@ -142,11 +141,10 @@ class UserTasks implements UserModel
     public function ActivateUser($nickname)
     {
         $active=1;
-
-        $trobat = false;
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $user = $this->db->fetchAssoc($sql, array((string)$nickname));
         if($user){
+
             $sql = "UPDATE usuari SET active = ?  WHERE username = ?";
             $this->db->executeUpdate($sql, array($active, (string) $nickname));
             $trobat = true;
@@ -525,6 +523,41 @@ class UserTasks implements UserModel
         return $img;
     }
 
+    public function getUserId($username){
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$username));
+        return $stm['id'];
+    }
 
+    public function createUserActivation($id, $code)
+    {
+        $this->db->insert('activation', [
+            'user_id' => $id,
+            'code' => $code
+        ]);
+    }
+
+    public function searchValidation($id, $code){
+        $trobat = false;
+        $sql = "SELECT * FROM activation WHERE code = ? and user_id = ?";
+        $user = $this->db->fetchAssoc($sql, array((string)$code, $id));
+        if($user){
+            $sql = "SELECT username FROM usuari WHERE id = ?";
+            $username = $this->db->fetchAssoc($sql, array((string)$id));
+            $this->ActivateUser($username['username']);
+
+            $trobat = true;
+
+        }else{
+            $trobat = false;
+        }
+        return $trobat;
+    }
+
+    public function getName($id){
+        $sql = "SELECT username FROM usuari WHERE id = ? ";
+        $user = $this->db->fetchAssoc($sql, array($id));
+        return $user['username'];
+    }
 
 }

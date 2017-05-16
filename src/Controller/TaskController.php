@@ -96,6 +96,7 @@ class TaskController{
         $response->setContent($content);
         return $response;
     }
+
     public function newPost(Application $app){
         $aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));

@@ -53,10 +53,18 @@ class UserTasks implements UserModel
 
     public function logejarUsuari($name)
     {
+
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array((string)$name));
-        $id = $stm['id'];
-        $sql = "INSERT INTO logejat ( user_id) VALUE ($id)";
+        if(!$stm){
+            $sql2 = "SELECT id FROM usuari WHERE email = ?";
+            $stm2 = $this->db->fetchAssoc($sql2, array((string)$name));
+            $id = $stm2['id'];
+        }else{
+            $id = $stm['id'];
+
+        }
+        $sql = "INSERT INTO logejat (user_id) VALUE ($id)";
         $this->db->query($sql);
     }
 
@@ -712,7 +720,13 @@ class UserTasks implements UserModel
     public function getUserId($username){
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array((string)$username));
-        return $stm['id'];
+        $id = $stm['id'];
+        if(!$stm){
+            $sql2 = "SELECT id FROM usuari WHERE email = ?";
+            $stm2 = $this->db->fetchAssoc($sql2, array((string)$username));
+            $id = $stm2['id'];
+        }
+        return $id;
     }
 
     public function createUserActivation($id, $code)

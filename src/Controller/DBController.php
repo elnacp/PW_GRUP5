@@ -40,7 +40,9 @@ class DBController
 
             //echo("adios");
             $repo->logejarUsuari($name);
-            $url = '/iniciarSession/' . $name;
+            $id = $repo->getUserId($name);
+            $act_name = $repo->getName($id);
+            $url = '/iniciarSession/' . $act_name;
             return new RedirectResponse($url);
         }
 

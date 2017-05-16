@@ -45,9 +45,9 @@ $app->get('/register', 'SilexApp\\Controller\\TaskController::registerUser')->be
 $app->get('/logIn', 'SilexApp\\Controller\\TaskController::LogIn')->before($inici);
 $app->get('/newPost', 'SilexApp\\Controller\\TaskController::newPost')->before($before);
 $app->get('/galeria', 'SilexApp\\Controller\\TaskController::galeria')->before($before);
-$app->get('/eliminar/{id}','SilexApp\\Controller\\TaskController::eliminarImatge')->before($before);
-$app->get('/editar/{id}','SilexApp\\Controller\\TaskController::editarImatge')->before($before);
-$app->get('/visualitzacioImatge/{id}','SilexApp\\Controller\\TaskController::visualitzacioImatge');
+$app->get('/eliminar/{id}','SilexApp\\Controller\\ImageController::eliminarImatge')->before($before);
+$app->get('/editar/{id}','SilexApp\\Controller\\ImageController::editarImatge')->before($before);
+$app->get('/visualitzacioImatge/{id}','SilexApp\\Controller\\ImageController::visualitzacioImatge');
 $app->get('/like/{id}/{usuari_log}','SilexApp\\Controller\\LikeController::likeImage')->before($before);
 
 //$app->get('/comment/{usuari_log}','SilexApp\\Controller\\FunctionsController::commentImage' );
@@ -56,7 +56,7 @@ $app->post('/comentari/{id}/{usuari_log}','SilexApp\\Controller\\FunctionsContro
 $app->get('/comentaris','SilexApp\\Controller\\FunctionsController::comentarisUser')->before($before);
 
 $app->get('/eliminarComment/{id}','SilexApp\\Controller\\ControllerComments::eliminarComentari')->before($before);
-$app->get('/editarComment/{id}','SilexApp\\Controller\\ControllerComments::editarComentari')->before($before);
+$app->get('/editarComment/{id}','SilexApp\\Controller\\ControlComments::editarComentari')->before($before);
 $app->post('/nouComentari/{id}', 'SilexApp\\Controller\\ControllerComments::nouComentari')->before($before);
 $app->get('/notificacions', 'SilexApp\\Controller\\ControllerComments::notificacionsUser')->before($before);
 $app->get('/visualitzada/{id}','SilexApp\\Controller\\ControllerComments::notificacioVisualitzada')->before($before);
@@ -66,12 +66,12 @@ $app->get('/visualitzada/{id}','SilexApp\\Controller\\ControllerComments::notifi
 $app->post('/afegir','SilexApp\\Controller\\ControllerComments::afegir' );
 $app->post('/post','SilexApp\\Controller\\ControllerComments::post');
 
-$app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile')->before($before);
-$app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');
-$app->post('/DBRegister','SilexApp\\Controller\\DBController::DBRegister');
+$app->post('/DBeditProfile', 'SilexApp\\Controller\\ProfileController::DBeditProfile')->before($before);
+$app->match('/DBlogin','SilexApp\\Controller\\ProfileController::DBlogin');
+$app->post('/DBRegister','SilexApp\\Controller\\ProfileController::DBRegister');
 $app->post('/DBnewPost','SilexApp\\Controller\\DBController::DBnewPost');
-$app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\DBController::DBeditImage');
+$app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\BaseController::DBeditImage');
 $app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
-$app->get('/perfil/{username}', 'SilexApp\\Controller\\DBController::publicProfile');
+$app->get('/perfil/{username}', 'SilexApp\\Controller\\FunctionsController::publicProfile');
 
 $app->get('/reload', 'SilexApp\\Controller\\TaskController::editProfile')->before($before);

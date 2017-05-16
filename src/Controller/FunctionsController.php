@@ -68,6 +68,32 @@ class FunctionsController{
 
     }
 
+    public function publicProfile(Application $app, Request $request, $username){
+        $opcio = htmlspecialchars($request->get('opcio'));
+        $response = new Response();
+        $repo = new UserTasks($app['db']);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $s = $app['db']->fetchAssoc($sql, array($username));
+        $id = $s['id'];
+        $repo->imatgesUsuari($id);
+
+        $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
+        $dadesUsuari = $repo->dadesUsuari($username,$id);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+        $content = $app['twig']->render('publicProfile.twig',[
+            'logejat' => false,
+            'imatgesPublic' =>$imatgesPublic,
+            'dadesUsuari' =>$dadesUsuari
+        ]);
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+    }
+
 
 
 

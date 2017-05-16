@@ -180,7 +180,7 @@ class TaskController{
             $sql = "SELECT * FROM imatge WHERE id = ?";
             $s = $app['db']->fetchAssoc($sql, array((int)$id));
             $autor = $s['user_id'];
-            $image= $s['img_path'];
+            $image= '.'.$s['img_path'];
             $sql1 = "SELECT username FROM usuari WHERE id = ?";
             $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
             $sql3 = "SELECT * FROM usuari WHERE id = ?";
@@ -199,7 +199,7 @@ class TaskController{
                     'visites' => $s['visits'],
                     'likes' => $likes,
                     'message' => null,
-                    'imgPerfil' => $s3['img_path'],
+                    'imgPerfil' => '.'.$s3['img_path'],
                     'imgPost' => $image
 
 

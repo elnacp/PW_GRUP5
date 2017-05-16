@@ -13,14 +13,14 @@
     <div class="[ panel panel-default ] panel-google-plus">
 
         <div class="panel-heading">
-            <img class="[ img-circle pull-left ]" src="{{ imagen }}" alt="profile" />
+            <img class="[ img-circle pull-left ]" src="{{ imgPerfil }}" alt="profile" />
             <h3>{{ autor }}</h3>
             <h2>{{ title }}</h2>
             <h5><span>Publicat</span> - <span>{{ dia }}</span> </h5>
         </div>
 
         <div class="panel-footer">
-            <img class="img-responsive" src="{{ Imagen }}" />
+            <img class="img-responsive" src="{{ imgPost }}" />
             {% if logejat %}
                 <a  href="/like/{{ id }}/{{ usuari_log }}" class="[ btn btn-default ]">Likes: +{{ likes }}</a>
             {% else %}

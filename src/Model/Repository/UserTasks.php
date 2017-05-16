@@ -212,9 +212,14 @@ class UserTasks implements UserModel
             $stm1 = $this->db->fetchAssoc($sql1, array((int)$id));
             $autor = $stm1['username'];
             $profilePic = $stm1['img_path'];
-            $title = $s['title'];
             $image = $s['img_path'];
             $image = str_replace(" ", "_", $image);
+            if($log){
+                $profilePic = '.'.$stm1['img_path'];
+                $image = '.'.$image;
+            }
+            $title = $s['title'];
+
 
             $dia = $s['created_at'];
             $sql2 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
@@ -237,7 +242,7 @@ class UserTasks implements UserModel
                                                     <a href=" . $hrefPerfil . "> ".$autor. " </a>
                                                 </h3>
                                                 <h5><span>Publicat - </span> - <span>" . $dia . "</span> </h5>
-                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
+                                                <img class=\"img-circle img-responsive\" src=".$profilePic." alt=\"User Image\"  id=\"ProfileImg\"/>
                                             </div>
                                          
                                             <!-- IMATGE -->
@@ -635,7 +640,7 @@ class UserTasks implements UserModel
             $s3 = implode('',$s3);
             $sql3 = "SELECT img_path FROM usuari WHERE id= ?";
             $s4 = $this->db->fetchAssoc($sql3, array($id));
-            $s4 = implode('',$s4);
+            //$s4 = implode('',$s4);
             $dades = "";
 
         $visualitzacioImatge = "/perfil/" . $username;
@@ -647,7 +652,7 @@ class UserTasks implements UserModel
             <div class=\"panel-body\">
             
                 <div class=\"col-md-3 col-lg-3 \" align=\"center\">
-                    <img src=". $s4 ." alt=\"User Pic\" name=\"img_path\" id=\"perfil\"  class=\"img-circle img-responsive\">
+                    <img src=". $s4['img_path'] ." alt=\"User Pic\" name=\"img_path\" id=\"perfil\"  class=\"img-circle img-responsive\">
                 </div>
             <div class=\"row\">
                  <div class=\" col-md-9 col-lg-9 \">

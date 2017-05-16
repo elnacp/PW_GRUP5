@@ -39,7 +39,6 @@ class BaseController{
         }
         $usuari = $app['session']->get('name');
         $repo = new UserTasks($app['db']);
-        $img = $repo->getActualProfilePic($usuari, null);
         $imgMesVistes = $repo->home1($log, $usuari);
         $content = $app['twig']->render('hello.twig',[
             'logejat' => true,

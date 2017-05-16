@@ -133,8 +133,6 @@ class DBController
                     ]);
                 }
 
-                ]
-              );
             }
         $response->setContent($content);
 
@@ -280,9 +278,9 @@ class DBController
     }
     public function publicProfile(Application $app, Request $request, $username){
         $opcio = htmlspecialchars($request->get('opcio'));
-        $response = new Response();
+        //f$response = new Response();
         $repo = new UserTasks($app['db']);
-        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        //$response->setStatusCode(Response::HTTP_NOT_FOUND);
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $s = $app['db']->fetchAssoc($sql, array($username));
         $id = $s['id'];
@@ -290,7 +288,7 @@ class DBController
 
         $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
         $dadesUsuari = $repo->dadesUsuari($username,$id);
-        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+       // $response->setStatusCode(Response::HTTP_NOT_FOUND);
 
         $content = $app['twig']->render('publicProfile.twig',[
             'logejat' => false,

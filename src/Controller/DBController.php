@@ -288,7 +288,6 @@ class DBController
         $opcio = htmlspecialchars($request->get('opcio'));
         //f$response = new Response();
         $repo = new UserTasks($app['db']);
-        $username = '';
         $log = false;
         if($app['session']->has('name')){
             $log = true;

@@ -58,7 +58,7 @@ class TaskController{
             'birthdate' => $usuari['birthdate'],
             'imagen' => $usuari['img_path'],
             'image'=>$usuari['img_path'],
-            'logejat' => true
+            'logejat' => true,
 
         ]);
         $response = new Response();

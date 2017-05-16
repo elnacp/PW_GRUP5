@@ -1,12 +1,13 @@
 // JavaScript Document
 "use strict";
 
+
+
 $("#files").change(function(){
     if(this.files && this.files[0]){
         var reader = new FileReader();
 
         reader.readAsDataURL(this.files[0]);
-        //reader.toDataURL("image/jpeg", 1.0);
         reader.onload = function(e){
             $("#newProfilePic").attr('src', e.target.result);
             $("#files").attr('value', e.target.result);
@@ -16,10 +17,10 @@ $("#files").change(function(){
 });
 
 function valNickname(nickname){
-    return (nickname.length > 20)
+    alert("entra");
+    return (nickname.length > 20);
+
 }
-
-
 
 function valAge(age){
     var fields = age.split('-');
@@ -40,30 +41,29 @@ function valAge(age){
     if(mm<10) {
         mm='0'+mm
     }
-
-    if(year.localeCompare(yyyy) == 1){
-        alert(year + "error, invalid date");
+    //miramos que no sea año futuro
+    if(year > yyyy){
+        alert(year + "error, invalid year");
         return false;
     }
 
-    if(year <= yyyy && (month.localeCompare(mm) <= 0) && (day.localeCompare(dd) == 1)){
-        alert(day + "error, invalid date");
+    //miramos que el día no sea futuro
+    if(year == yyyy && (month == mm) && (day > dd)){
+        alert(day + "error, invalid day");
         return false;
     }
 
-    if(year <= yyyy <= 0 && (month.localeCompare(mm) == 1) && (day.localeCompare(dd) <= 0)){
-        alert(month + "error, invalid date");
+    //miramos que el mes no sea futuro
+    if(year == yyyy  && (month > mm) && (day <= dd)){
+        alert(month + "error, invalid month");
         return false;
     }
 
-    if(year <= yyyy <= 0 && (month.localeCompare(mm) == 1) && (day.localeCompare(dd) == 1)){
-        alert(month + "error, invalid date");
-        return false;
-    }
+    /*if(year <= yyyy <= 0 && (month.localeCompare(mm) == 1) && (day.localeCompare(dd) == 1)){
+     alert(month + "error, invalid date");
+     return false;
+     }*/
     return true;
-
-
-
 
 }
 
@@ -88,10 +88,9 @@ function valPassword(password){
     }
     return valid;
 }
+$('#cambios').submit(function(event) {
 
-$('#registro').submit(function(event) {
-
-
+    alert("entra");
 
     var nickname = $('#New_nickname').val();
     var age = $('#New_edad').val();
@@ -129,6 +128,4 @@ $('#registro').submit(function(event) {
 
     }
 
-});/**
- * Created by elnacabotparedes on 27/4/17.
- */
+});

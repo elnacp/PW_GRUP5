@@ -19,11 +19,11 @@
                 <form action="/DBeditProfile" method="POST" enctype="multipart/form-data">
                     <div class="field-wrap">
                         <p class="titulo">Nombre de usuario<span class="req"></span><br></p>
-                        <input type="text" id="New_nickname" name="nickname" autocomplete="off" value="{{ username }}"/>
+                        <input type="text" id="New_nickname" name="nickname" autocomplete="off" value="{{ username }}" required/>
                     </div>
                     <div class="field-wrap" id="Edad">
                         <br>
-                        <p class="titulo">Fecha de Nacimiento<span class="req"></span><br></p>
+                        <p class="titulo">Fecha de Nacimiento<span class="req"  ></span><br></p>
                         <label>
                         </label>
                         <input type="date" id="New_edad" name="edad"  autocomplete="off" value="{{ birthdate }}"/>
@@ -33,7 +33,7 @@
                         <label>
                             Contraseña<span class="req"></span>
                         </label>
-                        <input type="password"  id="New_pass" name="password1"  autocomplete="off"/>
+                        <input type="password"  id="New_pass" name="password1"  autocomplete="off" />
                     </div>
                     <div class="field-wrap">
                         <label>
@@ -58,7 +58,7 @@
                         <!--<output id="registerImg" name="images"></output>-->
 
                     </div>
-                    <button type="submit" class="button button-block" id="comenzar"/>Aplicar cambios</button>
+                    <button type="submit" class="button button-block" id="comenzar"/>Comenzar</button>
                 </form>
             </div>
             <div id="login">

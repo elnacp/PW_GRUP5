@@ -34,16 +34,19 @@ window.onload = function() {
         'logejat': $('.logejat').attr('id')
     };*/
 
-    //console.log( $('.image_id').attr('id'));
 
+
+    //console.log( $('.image_id').attr('id'));
+    var logejat = $('.logejat').attr('id');
     $.ajax({
 
         type: "POST",
         url: '/post',
 
         success: function (response) {
-            console.log(response);
-            //totsPost = response;
+            //console.log(response);
+            totsPost = response;
+            var div = document.getElementById('')
 
             /*totsComentaris = response;
 

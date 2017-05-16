@@ -769,7 +769,7 @@ class UserTasks implements UserModel
         $a = array(
             'info' => array()
         );
-        $sql = "SELECT * FROM imatges ORDER  BY created_at";
+        $sql = "SELECT * FROM imatge ORDER  BY created_at";
         $d = $this->db->fetchAll($sql);
         foreach ($d as $dades) {
             $info = array();
@@ -784,10 +784,10 @@ class UserTasks implements UserModel
             $info['img_id'] = $dades['id'];
             $info['user_id'] = $dades['user_id'];
             $sql = "SELECT * FROM usuari WHERE id = ?";
-            $info['noves'] = $this->db->fetchAssoc($sql, array($dades['user_id']));
+            $dades = $this->db->fetchAssoc($sql, array($dades['user_id']));
             $info['autor'] = $dades['username'];
 
-            array_push(a['info'], $info);
+            array_push($a['info'], $info);
 
         }
 

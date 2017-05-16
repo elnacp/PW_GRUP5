@@ -1,6 +1,7 @@
 var totsPost = new Array();
 var postVisibles = new Array();
 var index = 0;
+var logejat;
 
 $(function () {
     $('.panel-google-plus > .panel-footer > .input-placeholder, .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > button[type="reset"]').on('click', function(event) {
@@ -37,7 +38,7 @@ window.onload = function() {
 
 
     //console.log( $('.image_id').attr('id'));
-    var logejat = $('.logejat').attr('id');
+
     $.ajax({
 
         type: "POST",
@@ -54,6 +55,7 @@ window.onload = function() {
 
 
             for (var i = 0; i < totsPost['info'].length && i < 5; i++) {
+
                 postVisibles.push(totsPost['info'][index]);
                 //console.log(postVisibles[index]['img_id']);
                 var div2 = document.createElement('div');
@@ -61,17 +63,22 @@ window.onload = function() {
                 var div3 = document.createElement('div');
                 div3.setAttribute("class", "panel-heading");
                 var h2 = document.createElement('h2');
+                var a1 = document.createElement('a');
                 var href2 = "/visualitzacioImatge/" + postVisibles[index]['img_id'];
-                h2.setAttribute("href", href2 );
-                h2.innerHTML = postVisibles[index]['titol'];
+                a1.setAttribute("href", href2 );
+                a1.innerHTML = postVisibles[index]['titol'];
+                h2.appendChild(a1);
                 div3.appendChild(h2);
                 var h3 = document.createElement('h3');
+                var a2 = document.createElement('a');
                 var href3 = "/perfil/" + postVisibles[index]['autor'];
-                h3.setAttribute("href", href3 );
+                a2.setAttribute("href", href3 );
+                a2.innerHTML = postVisibles[index]['autor'];
+                h3.appendChild(a2);
                 div3.appendChild(h3);
                 var h5 = document.createElement('h5');
                 var span = document.createElement('span');
-                span.innerHTML = "Publicat" + postVisibles[index]['publicat'] ;
+                span.innerHTML = "Publicat - " + postVisibles[index]['publicat'] ;
                 h5.appendChild(span);
                 div3.appendChild(h5);
                 var img = document.createElement('img');
@@ -79,19 +86,24 @@ window.onload = function() {
                 img.setAttribute("src",postVisibles[index]['img_perfil']);
                 img.setAttribute("alt", "User Image");
                 div3.appendChild(img);
-                div2.appendChild(div3);
+
 
                 var img_post = document.createElement('img');
                 img_post.setAttribute("class", "img-thumbnail img-responsive center-block" );
                 img_post.setAttribute("id", "imgPost");
                 img_post.setAttribute("src",postVisibles[index]['img_path']);
                 img_post.setAttribute("alt", "User Image");
-                div2.appendChild(img_post);
+                div3.appendChild(img_post);
+                div2.appendChild(div3);
 
-                div.appendChild(div2);
+
+
+
+                var div4 = document.createElement('div');
+                div4.setAttribute("class", "panel-footer");
 
                 var a = document.createElement('a');
-                if(logejat == true) {
+                if(logejat == 1) {
                     var href4 = "/likeHome/" + postVisibles[index]['img_id'] + "/"+postVisibles[index]['autor'];
                     a.setAttribute("href", href4);
                     //<a  href=" . $href1 . " class=\"[ btn btn-default ]\">Likes: +" . $likes . "</a>"
@@ -99,19 +111,56 @@ window.onload = function() {
                 }
                 a.setAttribute("class", "[ btn btn-default ]");
                 a.innerHTML = "Likes: + " +postVisibles[index]['likes'];
-                div.appendChild(a);
+                div4.appendChild(a);
                 var button = document.createElement('button');
                 button.innerHTML = "Visitas: +" +postVisibles[index]['visitas'];
                 button.setAttribute("class","[ btn btn-default ]" );
                 button.setAttribute("type", "button");
-                div.appendChild(button);
+                div4.appendChild(button);
+                //<div class=\"input-placeholder\">Escribe un comentario...</div>
+                var divaux = document.createElement('div');
+                divaux.setAttribute("class", "input-placeholder");
+                divaux.innerHTML = "Escribe un comentario...";
+                div4.appendChild(divaux);
+                div2.appendChild(div4);
 
-                /*<button type=\"button\" class=\"[ btn btn-default ]\">
-                 Visitas: +" . $visites . "</span>
+                if(logejat == 1) {
+                    var div5 = document.createElement('div');
+                    div5.setAttribute("class", "panel-google-plus-comment");
+                    var div6 = document.createElement('div');
+                    div6.setAttribute("class", "panel-google-plus-textarea");
+                    var form = document.createElement('form');
+                    var href = "/comentari/" + postVisibles[index]['img_id'] + "/" + postVisibles[index]['autor'];
+                    form.setAttribute("action", href);
+                    form.setAttribute("method", "POST");
+                    var textarea = document.createElement('textarea');
+                    textarea.setAttribute("rows", 4);
+                    textarea.setAttribute("name", "comentari");
+                    form.appendChild(textarea);
+                    var button = document.createElement('button');
+                    button.innerHTML = "Comentar";
+                    button.setAttribute("class", "[ btn btn-success disabled ]");
+                    button.setAttribute("type", "button");
+                    form.appendChild(button);
+                    div6.appendChild(form);
+                    var button = document.createElement('button');
+                    button.innerHTML = "Cancelar";
+                    button.setAttribute("class", "[ btn btn-default ]");
+                    button.setAttribute("type", "reset");
+                    div6.appendChild(button);
+                    div5.appendChild(div6);
+                    var div7 = document.createElement('div');
+                    div7.setAttribute("class", "clearfix");
+                    div5.appendChild(div7);
+                    div2.appendChild(div5);
 
-                 </button>
-                 <div class=\"input-placeholder\">Escribe un comentario...</div>
-                 </div>*/
+                }
+
+
+
+                div.appendChild(div2);
+
+
 
 
 

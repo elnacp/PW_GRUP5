@@ -771,26 +771,29 @@ class UserTasks implements UserModel
         );
         $sql = "SELECT * FROM imatge ORDER  BY created_at";
         $d = $this->db->fetchAll($sql);
-        foreach ($d as $dades) {
-            $info = array();
+            foreach ($d as $dades) {
+                $info = array();
 
-            $info['titol'] = $dades['title'];
-            $info['publicat'] = $dades['created_at'];
-            $info['img_path'] = $dades['img_path'];
-            $info['likes'] = $dades['likes'];
-            $info['visitas'] = $dades['visits'];
-            $info['privada'] = $dades['private'];
-            $info['size'] = $dades['sizeImage'];
-            $info['img_id'] = $dades['id'];
-            $info['user_id'] = $dades['user_id'];
-            $sql = "SELECT * FROM usuari WHERE id = ?";
-            $dades = $this->db->fetchAssoc($sql, array($dades['user_id']));
-            $info['autor'] = $dades['username'];
-            $info['img_perfil'] = $dades['img_path'];
+                $info['titol'] = $dades['title'];
+                $info['publicat'] = $dades['created_at'];
+                $info['img_path'] = $dades['img_path'];
+                $info['likes'] = $dades['likes'];
+                $info['visitas'] = $dades['visits'];
+                $info['privada'] = $dades['private'];
+                $info['size'] = $dades['sizeImage'];
+                $info['img_id'] = $dades['id'];
+                $info['user_id'] = $dades['user_id'];
+                $sql = "SELECT * FROM usuari WHERE id = ?";
+                $dades = $this->db->fetchAssoc($sql, array($dades['user_id']));
+                $info['autor'] = $dades['username'];
+                $info['img_perfil'] = $dades['img_path'];
 
-            array_push($a['info'], $info);
 
-        }
+
+
+                array_push($a['info'], $info);
+
+            }
 
        return $a;
     }

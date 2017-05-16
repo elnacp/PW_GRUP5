@@ -24,3 +24,12 @@ $(document).ready(function(){
     $(this).addClass("active");
 
 });
+
+$(document).ready(function(){
+   $("#delete").click(function(e){
+     if(!confirm('Are you sure?')){
+         e.preventDefault();
+         return false;
+     }
+   });
+});

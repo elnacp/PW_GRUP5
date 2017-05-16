@@ -138,7 +138,7 @@ class UserTasks implements UserModel
                 $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <h1>" . $s['title'] . "</h1>
                             <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"400\" height=\"300\">
-                            <li> <a href=" . $eliminar . "> Eliminar </a> </li>
+                            <li> <a href=" . $eliminar . " id=\"delete\" onclick= \"return confirm ('Are you sure?')\"> Eliminar </a> </li>
                             <li><a href=" . $editar . "> Editar </a> </li>
                         </div>";
             } else {
@@ -255,8 +255,9 @@ class UserTasks implements UserModel
                 $imgMesVistes = $imgMesVistes . "<div class=\"panel-google-plus-comment\">
                                                 <div class=\"panel-google-plus-textarea\">
                                                    <form action=" . $hrefComentari . " method=\"POST\">
-                                                    <textarea rows=\"4\" name=\"comentari\"></textarea>
-                                                    <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>
+                                                    <textarea rows=\"4\" name=\"comentari\" id=\"CommentBox\"></textarea>
+                                                    <br>
+                                                    <button type=\"submit\" class=\"[ btn btn-success disabled ]\" id=\"ButtonCom\">Comentar</button>
                                                    </form>
                                                    <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
                                                     
@@ -396,8 +397,8 @@ class UserTasks implements UserModel
         $exist = $this->db->fetchAll($sql, array($id, (int)$id_usuari));
 
         if (!$exist) {
-            $sql = "SELECT * FROM imatge WHERE id = ?";
-            $dades = $this->db->fetchAll($sql, array($id));
+            $sql1 = "SELECT * FROM imatge WHERE id = ?";
+            $dades = $this->db->fetchAssoc($sql1, array((int)$id));
             $titol = $dades['title'];
             $sql = "INSERT INTO comentari (user_id, image_id, comentari,titol, autor ) VALUES (?,?,?, ?, ?)";
             $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari, $titol, $username));
@@ -769,7 +770,7 @@ class UserTasks implements UserModel
         $a = array(
             'info' => array()
         );
-        $sql = "SELECT * FROM imatge ORDER  BY created_at";
+        $sql = "SELECT * FROM imatge ORDER  BY created_at DESC";
         $d = $this->db->fetchAll($sql);
             foreach ($d as $dades) {
                 $info = array();

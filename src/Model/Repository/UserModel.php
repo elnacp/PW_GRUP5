@@ -56,7 +56,7 @@ interface UserModel
 
     public function ultimesImatges($log, $usuari);
 
-    public function novaInfo($log, $usuari);
+    public function novaInfo();
 
     public function ultimsComentaris($id);
 }

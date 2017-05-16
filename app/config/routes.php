@@ -60,7 +60,11 @@ $app->get('/editarComment/{id}','SilexApp\\Controller\\ControllerComments::edita
 $app->post('/nouComentari/{id}', 'SilexApp\\Controller\\ControllerComments::nouComentari')->before($before);
 $app->get('/notificacions', 'SilexApp\\Controller\\ControllerComments::notificacionsUser')->before($before);
 $app->get('/visualitzada/{id}','SilexApp\\Controller\\ControllerComments::notificacioVisualitzada')->before($before);
+
+
+//AJAX
 $app->post('/afegir','SilexApp\\Controller\\ControllerComments::afegir' );
+$app->post('/post','SilexApp\\Controller\\ControllerComments::post');
 
 $app->post('/DBeditProfile', 'SilexApp\\Controller\\DBController::DBeditProfile')->before($before);
 $app->match('/DBlogin','SilexApp\\Controller\\DBController::DBlogin');

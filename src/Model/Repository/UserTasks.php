@@ -193,7 +193,6 @@ class UserTasks implements UserModel
     public function home1($log, $usuari)
     {
 
-
         $sql = "SELECT * FROM imatge  ORDER  BY visits DESC LIMIT 5";
         $stm = $this->db->fetchAll($sql);
         $c1 = 5;
@@ -385,6 +384,7 @@ class UserTasks implements UserModel
                 //echo("email" . $id_usuari);
             }
         } else {
+            $username = $trobat['username'];
             $sql = "SELECT id FROM usuari WHERE username = ?";
             $i = $this->db->fetchAssoc($sql, array($usuari_log));
             $id_usuari = $i['id'];
@@ -396,8 +396,11 @@ class UserTasks implements UserModel
         $exist = $this->db->fetchAll($sql, array($id, (int)$id_usuari));
 
         if (!$exist) {
-            $sql = "INSERT INTO comentari (user_id, image_id, comentari) VALUES (?,?,?)";
-            $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari));
+            $sql = "SELECT * FROM imatge WHERE id = ?";
+            $dades = $this->db->fetchAll($sql, array($id));
+            $titol = $dades['title'];
+            $sql = "INSERT INTO comentari (user_id, image_id, comentari,titol, autor ) VALUES (?,?,?, ?, ?)";
+            $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari, $titol, $username));
         } else {
 
             if (!$exist) {
@@ -405,8 +408,8 @@ class UserTasks implements UserModel
                 $s = $this->db->fetchAssoc($sql, array($id));
                 $titol1 = $s['title'];
 
-                $sql = "INSERT INTO comentari (user_id, image_id, comentari, titol) VALUES (?,?,?,?)";
-                $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari, $titol1));
+                $sql = "INSERT INTO comentari (user_id, image_id, comentari,titol, autor ) VALUES (?,?,?, ?, ?)";
+                $this->db->executeUpdate($sql, array($id_usuari, $id, $comentari, $titol1, $username));
             } else {
 
                 $message = "Ya has comentado 1 vez en esta imagen, elimina el comentario existente.";
@@ -761,98 +764,11 @@ class UserTasks implements UserModel
         return $imgMesVistes;
     }
 
-    public function novaInfo($log, $usuari){
-
-        $sql = "SELECT * FROM imatge ORDER  BY created_at ";
-        $stm = $this->db->fetchAll($sql);
-
-        $c1 = 5;
-        $imgMesVistes = "";
-        $nova_id = $this->id_seguent;
-        foreach ($stm as $s) {
-            if($s['id'] == $nova_id){
-                $id = $s['user_id'];
-                $sql1 = "SELECT * FROM usuari WHERE id = ?";
-                $stm1 = $this->db->fetchAssoc($sql1, array((int)$id));
-                $autor = $stm1['username'];
-                $profilePic = $stm1['img_path'];
-                $title = $s['title'];
-                $image = $s['img_path'];
-                $image = str_replace(" ", "_", $image);
-
-                $dia = $s['created_at'];
-                $sql2 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
-                $l = $this->db->fetchAssoc($sql2, array((int)$s['id']));
-                $likes = $l['total'];
-                $visites = $s['visits'];
-                $href = "/visualitzacioImatge/" . $s['id'];
-
-                //seguir el mateix exemple que el href anterior per a fer el perfil del usuari
-                $href1 = "/likeHome/" . $s['id'] . "/" . $usuari;
-                $hrefComentari = "/comentari/" . $s['id'] . "/" . $usuari;
-                $hrefPerfil = "/perfil/" .$autor;
-                $imgMesVistes = $imgMesVistes . "<div class=\"[ panel panel-default ] panel-google-plus\">
-
-                                            <div class=\"panel-heading\">                                         
-                                                <h2>
-                                                    <a href=" . $href . ">" . $title . " </a>
-                                                </h2>
-                                                <h3>
-                                                    <a href=" . $hrefPerfil . "> ".$autor. " </a>
-                                                </h3>
-                                                <h5><span>Publicat - </span> - <span>" . $dia . "</span> </h5>
-                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
-                                            </div>
-                                         
-                                            <!-- IMATGE -->
-                                             <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=" . $image . " alt=\"User Image\" />
-                                            <div class=\"panel-footer\">";
-
-                if ($log) {
-
-                    $imgMesVistes = $imgMesVistes . "<a  href=" . $href1 . " class=\"[ btn btn-default ]\">Likes: +" . $likes . "</a>";
-                } else {
-                    $imgMesVistes = $imgMesVistes . "<a class=\"[ btn btn-default ]\">Likes: +" . $likes . "</a>";
-                }
-                $imgMesVistes = $imgMesVistes . " <button type=\"button\" class=\"[ btn btn-default ]\">
-                                                     Visitas: +" . $visites . "</span>
-
-                                                </button>
-                                                <div class=\"input-placeholder\">Escribe un comentario...</div>
-                                            </div>";
-                if ($log) {
-                    $imgMesVistes = $imgMesVistes . "<div class=\"panel-google-plus-comment\">
-                                                <div class=\"panel-google-plus-textarea\">
-                                                   <form action=" . $hrefComentari . " method=\"POST\">
-                                                    <textarea rows=\"4\" name=\"comentari\"></textarea>
-                                                    <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>
-                                                   </form>
-                                                   <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
-                                                    
-                                                </div>
-                                                <div class=\"clearfix\"></div>
-                                                </div>";
-                }
+    public function novaInfo(){
+        $sql = "SELECT * FROM imatges ORDER  BY created_at";
 
 
-                $imgMesVistes = $imgMesVistes . "</div>";
-                if($c1 == 1){
-                    $id_seguent = $s['id'] + 1;
-                    $imgMesVistes = $imgMesVistes ."<br>
-                                                <div class=\"final\" val=\"'.$id_seguent.'\" ></div>";
 
-                }
-                $c1--;
-                $nova_id--;
-            }
-
-            //img - titol - autor - dia publicación - numero likes - número de visualizaciones
-        }
-        
-        $this->id_seguent = $id_seguent - 1;
-
-
-        return $imgMesVistes;
     }
 
 

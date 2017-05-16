@@ -45,22 +45,25 @@ window.onload = function() {
             var div = document.getElementById('contenidorComentaris');
 
             for (var i = 0; i < totsComentaris.length && i < 3; i++) {
+            /*<div class="panel-heading">*/
                 comentarisVisibles.push(totsComentaris[index]);
+                var contenidor = document.createElement('div');
+                contenidor.setAttribute("class", "panel-heading");
                 var titol = document.createElement('h2');
                 titol.innerHTML = comentarisVisibles[index]['autor'];
 
                 var p = document.createElement('p');
                 p.innerHTML = comentarisVisibles[index]['comentari'];
-                div.appendChild(titol);
-                div.appendChild(p);
+                contenidor.appendChild(titol);
+                contenidor.appendChild(p);
+                div.appendChild(contenidor);
                 index++;
             }
         }
     });
 
     $('#loadmore').click(function(){
-        console.log('hola');
-        console.log(index);
+
 
         if( totsComentaris.length == comentarisVisibles.length && comentarisVisibles.length != 0){
             alert('Tots carregats');
@@ -68,15 +71,18 @@ window.onload = function() {
         }else{
             var div = document.getElementById('contenidorComentaris');
             for( var i = 0; i < 3 && index < totsComentaris.length; i++){
-                console.log("helloooo");
+
                 comentarisVisibles.push(totsComentaris[index]);
+                var contenidor = document.createElement('div');
+                contenidor.setAttribute("class", "panel-heading");
                 var titol = document.createElement('h2');
                 titol.innerHTML = comentarisVisibles[index]['autor'];
 
                 var p = document.createElement('p');
                 p.innerHTML = comentarisVisibles[index]['comentari'];
-                div.appendChild(titol);
-                div.appendChild(p);
+                contenidor.appendChild(titol);
+                contenidor.appendChild(p);
+                div.appendChild(contenidor);
                 index++;
 
             }

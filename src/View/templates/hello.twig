@@ -7,7 +7,7 @@
 {% block content %}
     <br>
     <br>
-
+    <div class="logejat" id="{{ logejat }}"></div>
     <!--<h1> Hello Elna!</h1>-->
     {{ dades|raw}}
 
@@ -19,12 +19,26 @@
 
 
 
-    {{ data|raw }}
+    <div id="comentaris">
+        <!--<div class=\"[ panel panel-default ] panel-google-plus\">
 
+        <div class=\"panel-heading\">
+            <h2>
+                <a href=" . $href . ">" . $title . " </a>
+            </h2>
+            <h3>
+                <a href=" . $hrefPerfil . "> ".$autor. " </a>
+            </h3>
+            <h5><span>Publicat - </span> - <span>" . $dia . "</span> </h5>
+            <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
+        </div>
 
+        <!-- IMATGE -->
+    <!--<img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=" . $image . " alt=\"User Image\" />
+    <div class=\"panel-footer\">-->
+    </div>
 
-
-
+    <button id="loadmore">Loadmore</button>
     <script src={{ asset('/hello.js', 'js') }}></script>
 
 

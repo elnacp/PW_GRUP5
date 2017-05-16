@@ -111,6 +111,11 @@ class ControllerComments
 
     }
 
+    public function post(Application $app){
+        $repo = new UserTasks($app['db']);
+        $total = $repo->novaInfo();
+    }
+
 
 
 

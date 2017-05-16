@@ -1,5 +1,5 @@
-var totsComentaris = new Array();
-var comentarisVisibles = new Array();
+var totsPost = new Array();
+var postVisibles = new Array();
 var index = 0;
 
 $(function () {
@@ -27,39 +27,65 @@ $(function () {
 });
 
 
+/*
+window.onload = function() {
 
-$(function(){
-    $('.loadmore').click(function(){
+    var params = {
+        'id': $('.logejat').attr('id')
+    };
 
-        if( totsComentaris.length == comentarisVisibles.length && comentarisVisibles != 0){
-            alert('Tots carregats');
-            return;
-        }else{
-            for( var i = 0; i < 5 && index <= totsComentaris.length; i++){
-                comentarisVisibles.push(totsComentaris(index));
+    console.log( $('.image_id').attr('id'));
+
+    $.ajax({
+        data: params,
+        type: "POST",
+        url: '/post',
+
+        success: function (response) {
+            totsComentaris = response;
+
+            var div = document.getElementById('contenidorComentaris');
+
+            for (var i = 0; i < totsComentaris.length && i < 3; i++) {
+                comentarisVisibles.push(totsComentaris[index]);
+                var titol = document.createElement('h2');
+                titol.innerHTML = comentarisVisibles[index]['autor'];
+
+                var p = document.createElement('p');
+                p.innerHTML = comentarisVisibles[index]['comentari'];
+                div.appendChild(titol);
+                div.appendChild(p);
                 index++;
             }
         }
-        var params = {
-            'id': $('.image_id').attr('id')
-        };
+    });
 
-        $.ajax({
-            type: "POST",
-            url: '/afegir',
-            params: params,
-            success: function (response){
-                console.log(JSON.parse(response));
+    $('#loadmore').click(function(){
+        console.log('hola');
+        console.log(index);
+
+        if( totsComentaris.length == comentarisVisibles.length && comentarisVisibles.length != 0){
+            alert('Tots carregats');
+            return;
+        }else{
+            var div = document.getElementById('contenidorComentaris');
+            for( var i = 0; i < 3 && index < totsComentaris.length; i++){
+                console.log("helloooo");
+                comentarisVisibles.push(totsComentaris[index]);
+                var titol = document.createElement('h2');
+                titol.innerHTML = comentarisVisibles[index]['autor'];
+
+                var p = document.createElement('p');
+                p.innerHTML = comentarisVisibles[index]['comentari'];
+                div.appendChild(titol);
+                div.appendChild(p);
+                index++;
 
             }
-        });
 
-
+        }
     });
-});
 
-window.onload({
-
-});
+};*/
 
 

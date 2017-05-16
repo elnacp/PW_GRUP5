@@ -15,21 +15,21 @@ class TaskController{
         if($app['session']->has('name')){
             $log = true;
         }
-        $repo2 = new Ajax();
-        //$data = $repo2->ultimesImages($app);
+
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
+        $data = $repo->ultimesImatges($log, $usuari);
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
-                'dades' => $imgMesVistes
-                //'data' => $data
+                'dades' => $imgMesVistes,
+                'data' => $data
             ]);
         }else{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
-                'dades' => $imgMesVistes
-                //'data' => $data
+                'dades' => $imgMesVistes,
+                'data' => $data
             ]);
         }
         $response = new Response();

@@ -28,7 +28,7 @@ interface UserModel
 
     public function deleteImage($id);
 
-    public function editInformation($title, $path_name, $private, $id,$sizeImage);
+    public function editInformation($title, $path_name, $private, $id, $sizeImage);
 
     public function home1($log, $usuari);
 
@@ -53,4 +53,7 @@ interface UserModel
     public function visualitzada($id);
 
     public function getActualProfilePic($username, $img);
+
+    public function ultimesImatges($log, $usuari);
 }
+

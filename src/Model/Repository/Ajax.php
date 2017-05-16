@@ -1,33 +1,23 @@
 <?php
 
+
 namespace SilexApp\Model\Repository;
-
-
-use Doctrine\DBAL\Connection;
 use Silex\Application;
-use Doctrine\DBAL\Configuration;
 
 
-class Ajax{
+class feeds{
 
-    public function ultimesImatges($app, $from, $to)
+    public function query($from,$to)
     {
-
-        $query = "select * from imatge where id>$from and id<$to order by created_at ";
-        $result = $app['db']->fetchAll($query);
-        $data = '';
-        if($result>0)
-        {
-            $sql = "SELECT * FROM logejat";
-            $d = $app['db']->fetchAssoc($sql);
-            $id = $d['user_id'];
-            $sql = "SELECT username FROM usuari WHERE id = ?";
-            $r = $app['db']->fetchAssoc($sql, array($id));
-            $usuari = $r['username'];
-            foreach ( $result as $s){
+        $sql = "SELECT * FROM imatge ORDER  BY created_at DESC LIMIT 5";
+        $stm = $this->db->fetchAll($sql);
+        $c1 = 5;
+        $imgMesVistes = "";
+        foreach ($stm as $s) {
+            if($s['id'] == $from ) {
                 $id = $s['user_id'];
                 $sql1 = "SELECT * FROM usuari WHERE id = ?";
-                $stm1 = $app['db']->fetchAssoc($sql1, array((int)$id));
+                $stm1 = $this->db->fetchAssoc($sql1, array((int)$id));
                 $autor = $stm1['username'];
                 $profilePic = $stm1['img_path'];
                 $title = $s['title'];
@@ -36,45 +26,48 @@ class Ajax{
 
                 $dia = $s['created_at'];
                 $sql2 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
-                $l = $app['db']->fetchAssoc($sql2, array((int)$s['id']));
+                $l = $this->db->fetchAssoc($sql2, array((int)$s['id']));
                 $likes = $l['total'];
                 $visites = $s['visits'];
-                $href = "/visualitzacioImatge/".$s['id'];
+                $href = "/visualitzacioImatge/" . $s['id'];
 
+                //seguir el mateix exemple que el href anterior per a fer el perfil del usuari
+                $href1 = "/likeHome/" . $s['id'] . "/" . $usuari;
+                $hrefComentari = "/comentari/" . $s['id'] . "/" . $usuari;
+                $hrefPerfil = "/perfil/" . $autor;
+                $imgMesVistes = $imgMesVistes . "<div class=\"[ panel panel-default ] panel-google-plus\">
 
-
-                $href1 = "/likeHome/".$s['id']."/".$usuari;
-                $hrefComentari = "/comentari/".$s['id']."/".$usuari;
-
-
-                ////////////
-                $data = $data."<div class=\"[ panel panel-default ] panel-google-plus\">
                                             <div class=\"panel-heading\">                                         
                                                 <h2>
-                                                    <a href=".$href.">".$title." </a>
+                                                    <a href=" . $href . ">" . $title . " </a>
                                                 </h2>
-                                                <h3>".$autor."</h3>
-                                                <h5><span>Publicat - </span> - <span>".$dia."</span> </h5>
-                                                <img class=\"img-circle\" id=\"ProfileImg\" src=".$profilePic." alt=\"User Image\" />
+                                                <h3>
+                                                    <a href=" . $hrefPerfil . "> " . $autor . " </a>
+                                                </h3>
+                                                <h5><span>Publicat - </span> - <span>" . $dia . "</span> </h5>
+                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
                                             </div>
+                                         
                                             <!-- IMATGE -->
-                                             <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=".$image." alt=\"User Image\" />
+                                             <img class=\"img-thumbnail img-responsive center-block\"  id=\"imgPost\" src=" . $image . " alt=\"User Image\" />
                                             <div class=\"panel-footer\">";
-                if($app['session']->has('name')){
 
-                    $data.= $data."<a  href=".$href1." class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
-                }else{
-                    $data = $data."<a class=\"[ btn btn-default ]\">Likes: +".$likes."</a>";
+                if ($log) {
+
+                    $imgMesVistes = $imgMesVistes . "<a  href=" . $href1 . " class=\"[ btn btn-default ]\">Likes: +" . $likes . "</a>";
+                } else {
+                    $imgMesVistes = $imgMesVistes . "<a class=\"[ btn btn-default ]\">Likes: +" . $likes . "</a>";
                 }
-                $data = $data." <button type=\"button\" class=\"[ btn btn-default ]\">
-                                                     Visitas: +". $visites."</span>
+                $imgMesVistes = $imgMesVistes . " <button type=\"button\" class=\"[ btn btn-default ]\">
+                                                     Visitas: +" . $visites . "</span>
+
                                                 </button>
                                                 <div class=\"input-placeholder\">Escribe un comentario...</div>
                                             </div>";
-                if($app['session']->has('name')) {
-                    $data = $data."<div class=\"panel-google-plus-comment\">
+                if ($log) {
+                    $imgMesVistes = $imgMesVistes . "<div class=\"panel-google-plus-comment\">
                                                 <div class=\"panel-google-plus-textarea\">
-                                                   <form action=".$hrefComentari." method=\"POST\">
+                                                   <form action=" . $hrefComentari . " method=\"POST\">
                                                     <textarea rows=\"4\" name=\"comentari\"></textarea>
                                                     <button type=\"submit\" class=\"[ btn btn-success disabled ]\">Comentar</button>
                                                    </form>
@@ -84,30 +77,38 @@ class Ajax{
                                                 <div class=\"clearfix\"></div>
                                                 </div>";
                 }
+                if ($c1 == 1) {
+                    $id_seguent = $id + 1;
+                    $imgMesVistes = $imgMesVistes . "<br>
+                                                <div class=\"final\" val=\"'.$id_seguent.'\" ></div>
+                                                <button class=\"btn btnt-primary loadmore\" >Loadmore</button>";
+                }
 
-                $data = $data."</div>";
-
+                $imgMesVistes = $imgMesVistes . "</div>";
+                $c1--;
                 //img - titol - autor - dia publicación - numero likes - número de visualizaciones
             }
-            $data=$data.'<div class="final" val="'.$id.'" ></div>';
-            return $data;
         }
-
 
     }
 
-    public function main(Application $app)
+    public function main()
     {
-
-            $sql = "SELECT id FROM imatge ORDER BY id DESC LIMIT 1";
-            $d  = $app['db']->fetchAssoc($sql);
-            $id = $d['id'];
-            $next = $id - 5;
-            $data = $this->query($app,$id, $next);
+        if(isset($_POST['from']))
+        {
+            $from=$_POST['from'];
+            $to = $from-5;
+            $data = $this->query($from,$to);
+            echo $data;
+        }else
+        {
+            $data = $this->query(0,11);
             return $data;
-
+        }
     }
 
 }
 
+$obj = new Feeds();
+$data = $obj->main();
 ?>

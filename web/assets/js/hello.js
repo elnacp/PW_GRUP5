@@ -25,9 +25,22 @@ $(function () {
 
 
 $(function(){
-    $('loadmore').click(function(){
+    $('.loadmore').click(function(){
 
-        alert('hello');
+        var val = $('.final').attr('val');
+        $.post('../Ajax.php',{'from':val},function(data){
+            if(!isFinite(data))
+            {
+                $('.final').remove();
+                $(data).insertBefore('.loadmore');
+            }
+            else
+            {
+                $('<div class="well">No more feeds</div>').insertBefore('.loadmore');
+                $('.loadmore').remove();
+            }
+
+        });
     });
 });
 

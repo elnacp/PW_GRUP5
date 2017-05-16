@@ -49,7 +49,7 @@ class BaseController{
         $info = $aux->getUserInfo($usuari);
         list($name, $img) = explode("!=!", $info);
         $repo = new UserTasks($app['db']);
-        $imgMesVistes = $repo->home1($log, $usuari);
+        $imgMesVistes = $repo->home1($log, $usuari,"0");
         $content = $app['twig']->render('hello.twig',[
             'logejat' => true,
             'dades' => $imgMesVistes,
@@ -69,7 +69,7 @@ class BaseController{
         if($app['session']->has('name')){
             $log = true;
         }
-        $imgMesVistes = $repo->home1($log, NULL);
+        $imgMesVistes = $repo->home1($log, NULL, "0");
         $content = $app['twig']->render('hello.twig',[
             'logejat' => false,
             'dades' => $imgMesVistes,

@@ -58,7 +58,7 @@ class LikeController{
             $log = true;
         }
         $usuari =  $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log,$usuari);
+        $imgMesVistes = $repo->home1($log,$usuari,"likes");
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,

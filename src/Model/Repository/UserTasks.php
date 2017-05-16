@@ -209,7 +209,7 @@ class UserTasks implements UserModel
     }
 
 
-    public function home1($log, $usuari)
+    public function home1($log, $usuari, $action)
     {
 
 
@@ -272,6 +272,11 @@ class UserTasks implements UserModel
             $likes = $l['total'];
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/" . $s['id'];
+
+            if ($action == "likes"){
+                $profilePic = '/'.$profilePic;
+                $image = '/'.$image;
+            }
 
             //seguir el mateix exemple que el href anterior per a fer el perfil del usuari
             $href1 = "/likeHome/" . $s['id'] . "/" . $usuari;

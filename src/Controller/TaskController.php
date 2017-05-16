@@ -19,7 +19,7 @@ class TaskController{
         $repo2 = new Ajax();
         //$data = $repo2->ultimesImages($app);
         $usuari =  $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log,$usuari);
+        $imgMesVistes = $repo->home1($log,$usuari,"0");
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,

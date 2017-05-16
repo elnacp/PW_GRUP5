@@ -201,7 +201,7 @@ class DBController
             $log = true;
         }
         $usuari =  $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log,$usuari);
+        $imgMesVistes = $repo->home1($log,$usuari, "0");
 
 
             if ($ok) {
@@ -302,7 +302,6 @@ class DBController
         $log = false;
         if($app['session']->has('name')){
             $log = true;
-            $username = $app['session']->get('name');
         }
         //$response->setStatusCode(Response::HTTP_NOT_FOUND);
         $sql = "SELECT id FROM usuari WHERE username = ?";

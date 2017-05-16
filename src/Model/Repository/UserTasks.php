@@ -55,10 +55,18 @@ class UserTasks implements UserModel
 
     public function logejarUsuari($name)
     {
+
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array((string)$name));
-        $id = $stm['id'];
-        $sql = "INSERT INTO logejat ( user_id) VALUE ($id)";
+        if(!$stm){
+            $sql2 = "SELECT id FROM usuari WHERE email = ?";
+            $stm2 = $this->db->fetchAssoc($sql2, array((string)$name));
+            $id = $stm2['id'];
+        }else{
+            $id = $stm['id'];
+
+        }
+        $sql = "INSERT INTO logejat (user_id) VALUE ($id)";
         $this->db->query($sql);
     }
 
@@ -75,7 +83,7 @@ class UserTasks implements UserModel
 
     }
 
-    public function checkUser($username)
+    public function checkUser($username, $email)
     {
         $trobat = false;
         $sql = "SELECT * FROM usuari WHERE username = ?";
@@ -83,7 +91,14 @@ class UserTasks implements UserModel
         if ($user) {
             $trobat = true;
         } else {
-            $trobat = false;
+            $sql2 = "SELECT * FROM usuari WHERE email = ?";
+            $email = $this->db->fetchAssoc($sql2, array((string)$email));
+            if($email){
+                $trobat = true;
+            }else{
+                $trobat = false;
+
+            }
         }
         return $trobat;
 
@@ -108,7 +123,6 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM logejat LIMIT 1";
         $user_id = $this->db->fetchAssoc($sql);
         $id = $user_id['user_id'];
-        //var_dump($private);
         $this->db->insert('imatge', [
             'user_id' => $id,
             'title' => $title,
@@ -158,6 +172,7 @@ class UserTasks implements UserModel
 
     public function ActivateUser($nickname)
     {
+
         $active = 1;
 
         $trobat = false;
@@ -167,7 +182,13 @@ class UserTasks implements UserModel
             $sql = "UPDATE usuari SET active = ?  WHERE username = ?";
             $this->db->executeUpdate($sql, array($active, (string)$nickname));
             $trobat = true;
-        } else {
+
+            $sql2 = "SELECT id FROM usuari  WHERE username = ?";
+            $id = $this->db->executeUpdate($sql2, array((string) $nickname));
+            $sql3 = "DELETE FROM activation WHERE user_id = $id";
+            $this->db->exec($sql3);
+        }else{
+
             $trobat = false;
         }
         return $trobat;
@@ -190,7 +211,7 @@ class UserTasks implements UserModel
     }
 
 
-    public function home1($log, $usuari)
+    public function home1($log, $usuari, $action)
     {
 
         $sql = "SELECT * FROM imatge  ORDER  BY visits DESC LIMIT 5";
@@ -207,22 +228,62 @@ class UserTasks implements UserModel
             $stm1 = $this->db->fetchAssoc($sql1, array((int)$id));
             $autor = $stm1['username'];
             $profilePic = $stm1['img_path'];
-            $title = $s['title'];
             $image = $s['img_path'];
-            $image = str_replace(" ", "_", $image);
+            if($log){
+                $profilePic = '.'.$stm1['img_path'];
+                $image = '.'.$image;
+            }
+            $title = $s['title'];
 
-            $dia = $s['created_at'];
+
+            $birthdate = $s['created_at'];
+            list($yy, $mm, $daux) = explode("-", $birthdate);
+            list($dd, $taux) = explode(" ", $daux);
+            list($hh, $min, $ss) = explode(":", $taux);
+
+            if ((date("Y") == $yy) && (date("m") == $mm) && (date("d") == $dd)){
+                if (date("h") == $hh){
+                    $birthdate = date("i") - $min;
+                    $birthdate = 'Hace '.$birthdate.' minutos';
+                }
+                if(date("h")>$hh){
+                    $birthdate = date("h") - $hh;
+                    $birthdate = 'Hace '.$birthdate.' horas';
+                }
+            }
+
+            if((date("Y") == $yy) && (date("m") == $mm) && (date("d") > $dd)){
+                $birthdate = date("d") - $dd;
+                $birthdate = 'Hace '.$birthdate.' dias';
+            }
+            if((date("Y") == $yy) && (date("m") > $mm)){
+                $birthdate = date("d") - $dd;
+                if ($birthdate > 30){
+                    $birthdate = date("m") - $mm;
+                    $birthdate = 'Hace '.$birthdate.' meses';
+                }
+            }
+
+            if(date("Y")>$yy){
+                $birthdate = date("Y") - $yy;
+                $birthdate = 'Hace '.$birthdate.' años';
+            }
             $sql2 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
             $l = $this->db->fetchAssoc($sql2, array((int)$s['id']));
             $likes = $l['total'];
             $visites = $s['visits'];
             $href = "/visualitzacioImatge/" . $s['id'];
 
+            if ($action == "likes"){
+                $profilePic = '/'.$profilePic;
+                $image = '/'.$image;
+            }
+
             //seguir el mateix exemple que el href anterior per a fer el perfil del usuari
             $href1 = "/likeHome/" . $s['id'] . "/" . $usuari;
             $hrefComentari = "/comentari/" . $s['id'] . "/" . $usuari;
             $hrefPerfil = "/perfil/" .$autor;
-            $imgMesVistes = $imgMesVistes . "<div class=\"[ panel panel-default ] panel-google-plus\">
+            $imgMesVistes = $imgMesVistes . "<div id =\"Panel\"class=\"[ panel panel-default ] panel-google-plus center-block\">
 
                                             <div class=\"panel-heading\">                                         
                                                 <h2>
@@ -231,8 +292,8 @@ class UserTasks implements UserModel
                                                 <h3>
                                                     <a href=" . $hrefPerfil . "> ".$autor. " </a>
                                                 </h3>
-                                                <h5><span>Publicat - </span> - <span>" . $dia . "</span> </h5>
-                                                <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
+                                                <h5><span>Publicado - </span> <span>" . $birthdate . "</span> </h5>
+                                                <img class=\"img-circle img-responsive\" src=".$profilePic." alt=\"User Image\"  id=\"ProfileImg\"/>
                                             </div>
                                          
                                             <!-- IMATGE -->
@@ -428,10 +489,12 @@ class UserTasks implements UserModel
         $stm = $this->db->fetchAll($sql, array((int)$id));
         $dades = "";
 
+
         foreach ($stm as $s) {
+            $images = '.'.$s['img_path'];
             $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                            <h1> <a href=" . $s['title'] . "></a></h1>
-                           <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
+                           <img src=" . $images . " class=\"img-responsive\" width=\"100\" height=\"100\">
                        </div>";
         }
         return $dades;
@@ -477,7 +540,7 @@ class UserTasks implements UserModel
                            <h3>
                                 <a href=" . $href . "> ".$title    . " </a>
                                                 </h3>
-                           <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
+                           <img src=" . '.'.$s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
                        </div>";
         }
         return $dades;
@@ -606,8 +669,6 @@ class UserTasks implements UserModel
     }
 
 
-
-
     public function getActualProfilePic($username, $img){
         $sql = "SELECT img_path FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array((string)$username));
@@ -628,7 +689,8 @@ class UserTasks implements UserModel
     }
 
     public function dadesUsuari($username, $id)
-    {
+
+        {
             $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
             $s2 = $this->db->fetchAssoc($sql1, array($id));
             $s2 = implode('',$s2);
@@ -637,10 +699,9 @@ class UserTasks implements UserModel
             $s3 = implode('',$s3);
             $sql3 = "SELECT img_path FROM usuari WHERE id= ?";
             $s4 = $this->db->fetchAssoc($sql3, array($id));
-            $s4 = implode('',$s4);
+            //$s4 = implode('',$s4);
             $dades = "";
 
-        $visualitzacioImatge = "/perfil/" . $username;
         $dades = $dades .
             "<div class=\"panel-heading\">
                  <h3 class=\"panel-title\">$username</h3>
@@ -649,7 +710,7 @@ class UserTasks implements UserModel
             <div class=\"panel-body\">
             
                 <div class=\"col-md-3 col-lg-3 \" align=\"center\">
-                    <img src=". $s4 ." alt=\"User Pic\" name=\"img_path\" id=\"perfil\"  class=\"img-circle img-responsive\">
+                    <img src=". '.'.$s4['img_path'] ." alt=\"User Pic\" name=\"img_path\" id=\"perfil\"  class=\"img-circle img-responsive\">
                 </div>
             <div class=\"row\">
                  <div class=\" col-md-9 col-lg-9 \">
@@ -673,7 +734,27 @@ class UserTasks implements UserModel
                 </div>
             </div>";
 
-        return $dades;
+            return $dades;
+        }
+
+    public function getUserId($username){
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $stm = $this->db->fetchAssoc($sql, array((string)$username));
+        $id = $stm['id'];
+        if(!$stm){
+            $sql2 = "SELECT id FROM usuari WHERE email = ?";
+            $stm2 = $this->db->fetchAssoc($sql2, array((string)$username));
+            $id = $stm2['id'];
+        }
+        return $id;
+    }
+
+    public function createUserActivation($id, $code)
+    {
+        $this->db->insert('activation', [
+            'user_id' => $id,
+            'code' => $code
+        ]);
     }
 
     public function ultimesImatges($log, $usuari)
@@ -805,6 +886,30 @@ class UserTasks implements UserModel
         $total = $this->db->fetchAll($comentaris, array((int)$id));
         return $total;
     }
+
+    public function searchValidation($id, $code){
+        $trobat = false;
+        $sql = "SELECT * FROM activation WHERE code = ? and user_id = ?";
+        $user = $this->db->fetchAssoc($sql, array((string)$code, $id));
+        if($user){
+            $sql = "SELECT username FROM usuari WHERE id = ?";
+            $username = $this->db->fetchAssoc($sql, array((string)$id));
+            $this->ActivateUser($username['username']);
+            $trobat = true;
+
+        }else{
+            $trobat = false;
+        }
+        return $trobat;
+    }
+
+    public function getName($id){
+        $sql = "SELECT username FROM usuari WHERE id = ? ";
+        $user = $this->db->fetchAssoc($sql, array($id));
+        return $user['username'];
+    }
+
+
 
 
 

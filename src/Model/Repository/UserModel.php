@@ -12,7 +12,7 @@ interface UserModel
 
     public function validateUser($username, $password);
 
-    public function checkUser($username);
+    public function checkUser($username, $email);
 
     public function RegisterUser($nickname, $email, $birthdate, $password, $img);
 
@@ -30,7 +30,7 @@ interface UserModel
 
     public function editInformation($title, $path_name, $private, $id, $sizeImage);
 
-    public function home1($log, $usuari);
+    public function home1($log, $usuari, $action);
 
     public function incrementarVisites($id);
 
@@ -59,5 +59,14 @@ interface UserModel
     public function novaInfo();
 
     public function ultimsComentaris($id);
+
+    public function createUserActivation($id, $code);
+
+    public function searchValidation($id, $code);
+
+    public function getName($id);
+
+
+
 }
 

@@ -6,7 +6,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
-
+use SilexApp\Model\Repository\UpdateBaseService;
 class LikeController{
 
     public function likeImage(Application $app, $id, $usuari_log){
@@ -19,6 +19,7 @@ class LikeController{
         $sql = "SELECT * FROM imatge WHERE id = ?";
         $s = $app['db']->fetchAssoc($sql, array((int)$id));
         $autor = $s['user_id'];
+        $img = $s['img_path'];
         $sql1 = "SELECT username FROM usuari WHERE id = ?";
         $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
         $sql3 = "SELECT * FROM usuari WHERE id = ?";
@@ -30,6 +31,7 @@ class LikeController{
         $content = $app['twig']->render('imatgePublica.twig', [
                 'id' => $id,
                 'usuari_log' => $usuari,
+                'username' =>$usuari,
                 'logejat' => true,
                 'autor' => $s2['username'],
                 'title' => $s['title'],
@@ -37,7 +39,8 @@ class LikeController{
                 'visites' => $s['visits'],
                 'likes' => $likes,
                 'message' => null,
-                'imPerfil' => $s3['img_path']
+                'image' => $s3['img_path'],
+                'Imagen' => $img
 
             ]
         );
@@ -55,17 +58,24 @@ class LikeController{
             $log = true;
         }
         $usuari =  $app['session']->get('name');
-        $imgMesVistes = $repo->home1($log,$usuari);
+        $imgMesVistes = $repo->home1($log,$usuari,"likes");
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
                 'dades' => $imgMesVistes,
+                'username' => '',
+                'image' => null
 
             ]);
         }else{
+            $aux = new UpdateBaseService($app['db']);
+            $info = $aux->getUserInfo($app['session']->get('name'));
+            list($name, $img) = explode("!=!", $info);
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
                 'dades' => $imgMesVistes,
+                'username' => $usuari,
+                'image'=>'/.'.$img
 
             ]);
         }

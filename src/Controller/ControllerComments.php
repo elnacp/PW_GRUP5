@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
+use SilexApp\Model\Repository\UpdateBaseService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
@@ -14,15 +15,19 @@ class ControllerComments
 {
     public function eliminarComentari(Application $app, $id){
         $response = new Response();
-        $response = new Response();
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $repo = new UserTasks($app['db']);
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $ok = $repo->eliminarComentari($id);
         $dades = $repo->comentarisUser();
         $content = $app['twig']->render('userComments.twig', [
                 'logejat' => true,
                 'comentaris' => $dades,
-                'message' => $ok
+                'message' => $ok,
+                'username' => $name,
+                'image' => $img
 
             ]
         );
@@ -39,10 +44,15 @@ class ControllerComments
         $s = $app['db']->fetchAssoc($sql, array((int)$id));
         $dades = $s['comentari'];
         echo($dades);
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('editarComentari.twig', [
                 'logejat' => true,
                 'comentari' => $dades,
-                'id' => $id
+                'id' => $id,
+                'username' => $name,
+                'image' =>$img
             ]
         );
         $response->setContent($content);
@@ -55,10 +65,15 @@ class ControllerComments
         $repo = new UserTasks($app['db']);
         $ok= $repo->editarComentari($id);
         $dades = $repo->comentarisUser();
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('userComments.twig', [
                 'logejat' => true,
                 'comentaris' => $dades,
-                'message' => $ok
+                'message' => $ok,
+                'username'=>$name,
+                'image' => $img
 
             ]
         );
@@ -74,10 +89,14 @@ class ControllerComments
         $sql = "DELETE  FROM notificacionsUsuari";
         $app['db']->query($sql);
         $dades= $repo->notificacionsUser();
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('notificacionsUser.twig', [
                 'logejat' => true,
                 'notificacions' => $dades,
-
+                'username' => $name,
+                'image' => $img
             ]
         );
         $response->setContent($content);
@@ -92,9 +111,14 @@ class ControllerComments
         $app['db']->query($sql);
         $repo->visualitzada($id);
         $dades= $repo->notificacionsUser();
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('notificacionsUser.twig', [
                 'logejat' => true,
                 'notificacions' => $dades,
+                'username' => $name,
+                'image' => $img
 
             ]
         );

@@ -47,3 +47,12 @@
 }
 h2{color:#34ca78;}
 .margin10{margin-bottom:10px; margin-right:10px;}
+
+#ProfileImg{
+    max-width: 100px;
+}
+
+#imgPost{
+    max-height: 400px;
+    max-width: 300px;
+}

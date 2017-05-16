@@ -190,11 +190,12 @@ body {
 }
 
 #ProfileImg{
-    width: 100px;
+    width: 80px;
 }
 
 #imgPost{
-    width:30%;
+    width:400px;
+    height:300px;
 
 }
 
@@ -219,8 +220,15 @@ form{
     width:100%;
 }
 
-#ButtonCom{
-    //margin-left: 50%;
-    width:100%;
+#ButtonCom {
+/ / margin-left: 50 %;
+    width: 100%;
+}
+#Panel{
+    top: 25%;
+    left: 25%;
+
+    max-width: 500px;
+    display: block;
 }
 

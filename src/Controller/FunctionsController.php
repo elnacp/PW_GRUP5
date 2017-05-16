@@ -10,8 +10,6 @@ use SilexApp\Model\Repository\UserTasks;
 class FunctionsController{
 
 
-
-
     public function comentari(Application $app, $id, $usuari_log){
         $repo = new UserTasks($app['db']);
         $message = $repo->comentari($id, $usuari_log);

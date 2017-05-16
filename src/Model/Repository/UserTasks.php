@@ -432,10 +432,12 @@ class UserTasks implements UserModel
         $stm = $this->db->fetchAll($sql, array((int)$id));
         $dades = "";
 
+
         foreach ($stm as $s) {
+            $images = '.'.$s['img_path'];
             $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                            <h1> <a href=" . $s['title'] . "></a></h1>
-                           <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
+                           <img src=" . $images . " class=\"img-responsive\" width=\"100\" height=\"100\">
                        </div>";
         }
         return $dades;
@@ -481,7 +483,7 @@ class UserTasks implements UserModel
                            <h3>
                                 <a href=" . $href . "> ".$title    . " </a>
                                                 </h3>
-                           <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
+                           <img src=" . '.'.$s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
                        </div>";
         }
         return $dades;
@@ -610,8 +612,6 @@ class UserTasks implements UserModel
     }
 
 
-
-
     public function getActualProfilePic($username, $img){
         $sql = "SELECT img_path FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array((string)$username));
@@ -652,7 +652,7 @@ class UserTasks implements UserModel
             <div class=\"panel-body\">
             
                 <div class=\"col-md-3 col-lg-3 \" align=\"center\">
-                    <img src=". $s4['img_path'] ." alt=\"User Pic\" name=\"img_path\" id=\"perfil\"  class=\"img-circle img-responsive\">
+                    <img src=". '.'.$s4['img_path'] ." alt=\"User Pic\" name=\"img_path\" id=\"perfil\"  class=\"img-circle img-responsive\">
                 </div>
             <div class=\"row\">
                  <div class=\" col-md-9 col-lg-9 \">

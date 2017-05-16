@@ -5,7 +5,7 @@ namespace SilexApp\Model\Repository;
 use Silex\Application;
 
 
-class feeds{
+class Ajax{
 
     public function query($from,$to)
     {
@@ -97,6 +97,7 @@ class feeds{
         if(isset($_POST['from']))
         {
             $from=$_POST['from'];
+            echo($from);
             $to = $from-5;
             $data = $this->query($from,$to);
             echo $data;
@@ -109,6 +110,8 @@ class feeds{
 
 }
 
-$obj = new Feeds();
+
+$obj = new Ajax();
 $data = $obj->main();
+
 ?>

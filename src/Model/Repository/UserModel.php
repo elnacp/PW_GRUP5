@@ -55,5 +55,7 @@ interface UserModel
     public function getActualProfilePic($username, $img);
 
     public function ultimesImatges($log, $usuari);
+
+    public function novaInfo($log, $usuari);
 }
 

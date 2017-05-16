@@ -3,6 +3,7 @@ namespace SilexApp\Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
@@ -99,6 +100,20 @@ class ControllerComments
         );
         $response->setContent($content);
         return $response;
+    }
+
+    public function afegir(Application $app){
+        $repo = new UserTasks($app['db']);
+        $log = false;
+        if($app['session']->has('name')){
+            $log = true;
+        }
+
+        $usuari =  $app['session']->get('name');
+
+
+        return new JsonResponse($repo->ultimesImatges($log,$usuari));
+
     }
 
 

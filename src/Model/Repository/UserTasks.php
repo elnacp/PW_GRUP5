@@ -766,6 +766,7 @@ class UserTasks implements UserModel
 
     public function novaInfo(){
         $sql = "SELECT * FROM imatges ORDER  BY created_at";
+        $dades = 
 
 
 

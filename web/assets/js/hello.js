@@ -27,12 +27,12 @@ $(function () {
 });
 
 
-/*
+
 window.onload = function() {
 
-    var params = {
-        'id': $('.logejat').attr('id')
-    };
+    /*var params = {
+        'logejat': $('.logejat').attr('id')
+    };*/
 
     console.log( $('.image_id').attr('id'));
 
@@ -42,7 +42,9 @@ window.onload = function() {
         url: '/post',
 
         success: function (response) {
-            totsComentaris = response;
+            totsPost = response;
+
+            /*totsComentaris = response;
 
             var div = document.getElementById('contenidorComentaris');
 
@@ -56,7 +58,7 @@ window.onload = function() {
                 div.appendChild(titol);
                 div.appendChild(p);
                 index++;
-            }
+            }*/
         }
     });
 
@@ -64,13 +66,13 @@ window.onload = function() {
         console.log('hola');
         console.log(index);
 
-        if( totsComentaris.length == comentarisVisibles.length && comentarisVisibles.length != 0){
+        if( totsPost.length == postVisibles.length && postVisibles.length != 0){
             alert('Tots carregats');
             return;
         }else{
             var div = document.getElementById('contenidorComentaris');
-            for( var i = 0; i < 3 && index < totsComentaris.length; i++){
-                console.log("helloooo");
+            for( var i = 0; i < 3 && index < totsPost.length; i++){
+                /*console.log("helloooo");
                 comentarisVisibles.push(totsComentaris[index]);
                 var titol = document.createElement('h2');
                 titol.innerHTML = comentarisVisibles[index]['autor'];
@@ -79,13 +81,13 @@ window.onload = function() {
                 p.innerHTML = comentarisVisibles[index]['comentari'];
                 div.appendChild(titol);
                 div.appendChild(p);
-                index++;
+                index++;*/
 
             }
 
         }
     });
 
-};*/
+};
 
 

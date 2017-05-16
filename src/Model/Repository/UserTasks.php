@@ -764,12 +764,34 @@ class UserTasks implements UserModel
         return $imgMesVistes;
     }
 
-    public function novaInfo(){
+    public function novaInfo()
+    {
+        $a = array(
+            'info' => array()
+        );
         $sql = "SELECT * FROM imatges ORDER  BY created_at";
-        $dades = 
+        $d = $this->db->fetchAll($sql);
+        foreach ($d as $dades) {
+            $info = array();
 
+            $info['titol'] = $dades['title'];
+            $info['publicat'] = $dades['created_at'];
+            $info['img_path'] = $dades['img_path'];
+            $info['likes'] = $dades['likes'];
+            $info['visitas'] = $dades['visits'];
+            $info['privada'] = $dades['private'];
+            $info['size'] = $dades['sizeImage'];
+            $info['img_id'] = $dades['id'];
+            $info['user_id'] = $dades['user_id'];
+            $sql = "SELECT * FROM usuari WHERE id = ?";
+            $info['noves'] = $this->db->fetchAssoc($sql, array($dades['user_id']));
+            $info['autor'] = $dades['username'];
 
+            array_push(a['info'], $info);
 
+        }
+
+       return $a;
     }
 
 

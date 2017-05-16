@@ -149,8 +149,10 @@ body {
 }*/
 .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea {
     float: right;
-    width: calc(100% - 56px);
+    width: 100%;/*calc(100% - 56px);*/
 }
+
+
 .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > textarea {
     display: block;
     /*margin-left: 60px;
@@ -199,3 +201,17 @@ body {
 #post{
     width:100%;
 }
+
+form{
+    width:100%;
+}
+
+.comentariButton{
+    margin-left: 50%;
+    //margin-bottom:20%;
+}
+
+#comentariArea{
+    width:100%;
+}
+

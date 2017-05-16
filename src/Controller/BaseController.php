@@ -36,6 +36,7 @@ class BaseController{
         $log = false;
         if($app['session']->has('name')){
             $log = true;
+
         }
         $usuari = $app['session']->get('name');
         $repo = new UserTasks($app['db']);

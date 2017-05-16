@@ -180,6 +180,39 @@ class TaskController{
             $sql = "SELECT * FROM imatge WHERE id = ?";
             $s = $app['db']->fetchAssoc($sql, array((int)$id));
             $autor = $s['user_id'];
+            $birthdate = $s['created_at'];
+            list($yy, $mm, $daux) = explode("-", $birthdate);
+            list($dd, $taux) = explode(" ", $daux);
+            list($hh, $min, $ss) = explode(":", $taux);
+
+            if ((date("Y") == $yy) && (date("m") == $mm) && (date("d") == $dd)){
+                if (date("h") == $hh){
+                    $birthdate = date("i") - $min;
+                    $birthdate = 'Hace '.$birthdate.' minutos';
+                }
+                if(date("h")>$hh){
+                    $birthdate = date("h") - $hh;
+                    $birthdate = 'Hace '.$birthdate.' horas';
+                }
+            }
+
+            if((date("Y") == $yy) && (date("m") == $mm) && (date("d") > $dd)){
+                $birthdate = date("d") - $dd;
+                $birthdate = 'Hace '.$birthdate.' dias';
+            }
+            if((date("Y") == $yy) && (date("m") > $mm)){
+                $birthdate = date("d") - $dd;
+                if ($birthdate > 30){
+                    $birthdate = date("m") - $mm;
+                    $birthdate = 'Hace '.$birthdate.' meses';
+                }
+            }
+
+            if(date("Y")>$yy){
+                $birthdate = date("Y") - $yy;
+                $birthdate = 'Hace '.$birthdate.' años';
+            }
+
             $image= '.'.$s['img_path'];
             $sql1 = "SELECT username FROM usuari WHERE id = ?";
             $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
@@ -195,7 +228,7 @@ class TaskController{
                     'logejat' => $logejat,
                     'autor' => $s2['username'],
                     'title' => $s['title'],
-                    'dia' => date("Y-m-d H:i:s"),
+                    'dia' => $birthdate,
                     'visites' => $s['visits'],
                     'likes' => $likes,
                     'message' => null,

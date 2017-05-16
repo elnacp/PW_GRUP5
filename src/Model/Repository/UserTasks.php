@@ -221,7 +221,38 @@ class UserTasks implements UserModel
             $title = $s['title'];
 
 
-            $dia = $s['created_at'];
+            $birthdate = $s['created_at'];
+            list($yy, $mm, $daux) = explode("-", $birthdate);
+            list($dd, $taux) = explode(" ", $daux);
+            list($hh, $min, $ss) = explode(":", $taux);
+
+            if ((date("Y") == $yy) && (date("m") == $mm) && (date("d") == $dd)){
+                if (date("h") == $hh){
+                    $birthdate = date("i") - $min;
+                    $birthdate = 'Hace '.$birthdate.' minutos';
+                }
+                if(date("h")>$hh){
+                    $birthdate = date("h") - $hh;
+                    $birthdate = 'Hace '.$birthdate.' horas';
+                }
+            }
+
+            if((date("Y") == $yy) && (date("m") == $mm) && (date("d") > $dd)){
+                $birthdate = date("d") - $dd;
+                $birthdate = 'Hace '.$birthdate.' dias';
+            }
+            if((date("Y") == $yy) && (date("m") > $mm)){
+                $birthdate = date("d") - $dd;
+                if ($birthdate > 30){
+                    $birthdate = date("m") - $mm;
+                    $birthdate = 'Hace '.$birthdate.' meses';
+                }
+            }
+
+            if(date("Y")>$yy){
+                $birthdate = date("Y") - $yy;
+                $birthdate = 'Hace '.$birthdate.' años';
+            }
             $sql2 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
             $l = $this->db->fetchAssoc($sql2, array((int)$s['id']));
             $likes = $l['total'];
@@ -241,7 +272,7 @@ class UserTasks implements UserModel
                                                 <h3>
                                                     <a href=" . $hrefPerfil . "> ".$autor. " </a>
                                                 </h3>
-                                                <h5><span>Publicat - </span> - <span>" . $dia . "</span> </h5>
+                                                <h5><span>Publicado - </span> - <span>" . $birthdate . "</span> </h5>
                                                 <img class=\"img-circle img-responsive\" src=".$profilePic." alt=\"User Image\"  id=\"ProfileImg\"/>
                                             </div>
                                          

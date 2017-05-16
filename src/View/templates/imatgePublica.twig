@@ -11,7 +11,7 @@
 
 
     <div class="[ panel panel-default ] panel-google-plus">
-
+        <div class="image_id" id="{{ id }}"></div>
         <div class="panel-heading">
             <img class="[ img-circle pull-left ]" src="{{ imPerfil }}" alt="profile" />
             <h3>{{ autor }}</h3>
@@ -32,7 +32,7 @@
         <div class="panel-google-plus-comment">
             <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
             <div class="panel-google-plus-textarea">
-                <form action="/comentari/{{ id }}/{{ usuari_log }}" method="POST">
+                <form action="/comentari/" method="POST">
                     <textarea rows="4" name="comentari"></textarea>
                     <button type="submit"  class="[ btn btn-success disabled ]"> Comentar</button>
                 </form>
@@ -58,7 +58,12 @@
     {% endif %}
 
     <!-- COMENTARIS -->
-    <div class="[ panel panel-default ] panel-google-plus">
+
+    <div class="[ panel panel-default ] panel-google-plus " id="contenidorComentaris">
+
+
+    </div>
+    <!--<div class="[ panel panel-default ] panel-google-plus">
         <div class="panel-heading">
 
             <h2> COMENTARISTA </h2>
@@ -72,10 +77,15 @@
 
         </div>
 
-    </div>
+    </div>-->
+    <button id="loadmore">Loadmore</button>
 
 
 
-    <script src={{ asset('/hello.js', 'js') }}></script>
+
+
+
+    <script src={{ asset('/imatgePublica.js', 'js') }}></script>
+
 
 {% endblock %}

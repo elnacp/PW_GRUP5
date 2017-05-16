@@ -1,3 +1,7 @@
+var totsComentaris = new Array();
+var comentarisVisibles = new Array();
+var index = 0;
+
 $(function () {
     $('.panel-google-plus > .panel-footer > .input-placeholder, .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > button[type="reset"]').on('click', function(event) {
         var $panel = $(this).closest('.panel-google-plus');
@@ -27,27 +31,35 @@ $(function () {
 $(function(){
     $('.loadmore').click(function(){
 
-        var val = $('.final').attr('val');
+        if( totsComentaris.length == comentarisVisibles.length && comentarisVisibles != 0){
+            alert('Tots carregats');
+            return;
+        }else{
+            for( var i = 0; i < 5 && index <= totsComentaris.length; i++){
+                comentarisVisibles.push(totsComentaris(index));
+                index++;
+            }
+        }
+        var params = {
+            'id': $('.image_id').attr('id')
+        };
+
         $.ajax({
             type: "POST",
             url: '/afegir',
-
+            params: params,
             success: function (response){
-                if(!isFinite(response))
-                {
-                    $('.final').remove();
-                    $(response).insertBefore('.loadmore');
-                }
-                else
-                {
-                    $('<div class="well">No more feeds</div>').insertBefore('.loadmore');
-                    $('.loadmore').remove();
-                }//console.log(response);
+                console.log(JSON.parse(response));
 
             }
         });
+
+
     });
 });
 
+window.onload({
+
+});
 
 

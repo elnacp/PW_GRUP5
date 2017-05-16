@@ -104,15 +104,10 @@ class ControllerComments
 
     public function afegir(Application $app){
         $repo = new UserTasks($app['db']);
-        $log = false;
-        if($app['session']->has('name')){
-            $log = true;
-        }
+        $id = $_POST['id'];
+        $total =$repo->ultimsComentaris($id);
 
-        $usuari =  $app['session']->get('name');
-
-
-        return new JsonResponse($repo->ultimesImatges($log,$usuari));
+        return new JsonResponse($total);
 
     }
 

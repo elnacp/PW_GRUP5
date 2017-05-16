@@ -18,18 +18,18 @@ class TaskController{
 
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
-        $data = $repo->ultimesImatges($log, $usuari);
+        //$data = $repo->ultimesImatges($log, $usuari);
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
                 'dades' => $imgMesVistes,
-                'data' => $data
+                //'data' => $data
             ]);
         }else{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
                 'dades' => $imgMesVistes,
-                'data' => $data
+                //'data' => $data
             ]);
         }
         $response = new Response();
@@ -196,6 +196,7 @@ class TaskController{
 
                 ]
             );
+
             $response->setContent($content);
             return $response;
         }

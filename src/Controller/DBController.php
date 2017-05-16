@@ -172,7 +172,7 @@ class DBController
                 $size = 100;
             }
         $repo = new UserTasks($app['db']);
-        $ok = $repo->DBnewPost($title, $img, $private);
+        $ok = $repo->DBnewPost($title, $img, $private, $size);
         $response = new Response();
         $repo = new UserTasks($app['db']);
         $log = false;

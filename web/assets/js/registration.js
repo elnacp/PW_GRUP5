@@ -136,3 +136,46 @@ $('#registro').submit(function(event) {
 
 });
 
+function imageGran() {
+    /*if (document.getElementById("imgPetita")) {
+        eliminarElemento("imgPetita");
+    }*/
+    if (document.getElementById("imgGran")) {
+
+    }else{
+        var imagen = document.createElement("img");
+        imagen.setAttribute("src", "~/imagenes/libro.jpg");
+        imagen.setAttribute("width", "400");
+        imagen.setAttribute("height", "300");
+        imagen.setAttribute("id", "imgGran");
+        var div = document.getElementById("gran");
+        div.appendChild(imagen);
+    }
+}
+
+function imagePetita() {
+    /*if (document.getElementById("imgGran")) {
+        eliminarElemento("imgGran");
+    }*/
+    if (document.getElementById("imgPetita")) {
+    }else{
+        var imagen = document.createElement("img");
+        imagen.setAttribute("src", "~/imagenes/libro.jpg");
+        imagen.setAttribute("width", "100");
+        imagen.setAttribute("height", "100");
+        imagen.setAttribute("id", "imgPetita");
+        var div = document.getElementById("petita");
+        div.appendChild(imagen);
+    }
+}
+
+function eliminarElemento(id){
+    var imagen = document.getElementById(id);
+    if (!imagen){
+        alert("El elemento selecionado no existe");
+    } else {
+        var padre = imagen.parentNode;
+        padre.removeChild(imagen);
+    }
+}
+

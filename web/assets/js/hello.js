@@ -24,13 +24,11 @@ $(function () {
 
 
 
-$(document).ready(function(){
-        $("a").click(function(){
-            $.ajax({url: "demo_test.txt",
-                success: function(result){
-                    $("#div1").html(result);
-            }});
-        });
+$(function(){
+    $('loadmore').click(function(){
+
+        alert('hello');
+    });
 });
 
 

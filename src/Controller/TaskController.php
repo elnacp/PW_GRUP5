@@ -6,29 +6,32 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
+use SilexApp\Model\Repository\Ajax;
 
 class TaskController{
     public function indexAction(Application $app){
-        $ultimesImg = "";
         $repo = new UserTasks($app['db']);
         $log = false;
         if($app['session']->has('name')){
             $log = true;
         }
-
+        $repo2 = new Ajax();
+        //$data = $repo2->ultimesImages($app);
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
-                'dades' => $imgMesVistes,
-                'imagen' => null
+
+                'dades' => $imgMesVistes
+                //'data' => $data
             ]);
         }else{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
-                'dades' => $imgMesVistes,
-                'imagen' => null
+
+                'dades' => $imgMesVistes
+                //'data' => $data
             ]);
         }
         $response = new Response();
@@ -125,9 +128,9 @@ class TaskController{
             'logejat' => true,
             'titol' => $imatge['title'],
             'privada' => $estat,
-            'id' => $id,
-            'imagen' => null
 
+            'sizeImage'=>$imatge['sizeImage'],
+            'id' => $id
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -186,6 +189,7 @@ class TaskController{
             $sql4 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
             $l = $app['db']->fetchAssoc($sql4, array((int)$s['id']));
             $likes = $l['total'];
+            var_dump($s3['img_path']);
             $content = $app['twig']->render('imatgePublica.twig', [
                     'id' => $id,
                     'usuari_log' => $usuari,
@@ -213,7 +217,10 @@ class TaskController{
 
 
 
+    //public function publicProfile(Application $app, Request $request ,$username){
 
+
+    //}
 
 }
 

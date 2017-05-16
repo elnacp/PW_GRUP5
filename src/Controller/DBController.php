@@ -133,29 +133,22 @@ class DBController
                     ]);
                 }
 
-        } else {
-            $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
-            $content = $app['twig']->render('error.twig', [
-                    'message' => 'El usuario ya existe',
-                    'logejat' => false,
-                    //'imagen' => null
                 ]
-            );
-        }
+              );
+            }
         $response->setContent($content);
 
         return $response;
-
-
     }
 
     public function DBnewPost(Application $app, Request $request)
     {
         $title = htmlspecialchars($request->get('title'));
         $privada = htmlspecialchars($request->get('privada'));
-
+        $size = htmlspecialchars($request->get('size'));
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
+        //var_dump($size);
         $response = new Response();
 
         $repo = new UserTasks($app['db']);
@@ -181,17 +174,22 @@ class DBController
             } else {
                 $private = 0;
             }
-
-
-            $ok = $repo->DBnewPost($title, $img, $private);
-            $repo = new UserTasks($app['db']);
-            if($app['session']->has('name')){
-                $log = true;
+            if($size === "gran"){
+                $size = 400;
+            }else{
+                $size = 100;
             }
+        $repo = new UserTasks($app['db']);
+        $ok = $repo->DBnewPost($title, $img, $private);
+        $response = new Response();
+        $repo = new UserTasks($app['db']);
+        $log = false;
+        if($app['session']->has('name')){
+            $log = true;
+        }
+        $usuari =  $app['session']->get('name');
+        $imgMesVistes = $repo->home1($log,$usuari);
 
-            $usuari =  $app['session']->get('name');
-            $imagen = $repo->getActualPostImg($usuari, null);
-            $imgMesVistes = $repo->home1($log,$usuari);
 
             if ($ok) {
                 $content = $app['twig']->render('hello.twig', [
@@ -266,11 +264,11 @@ class DBController
             'logejat' => true,
             'dades' => $dades,
             'message' => 'Se ha editado correctamente!',
-            //'imagen' => null
 
 
 
 
+            'message' => 'Se ha editado correctamente!'
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -280,5 +278,31 @@ class DBController
 
 
     }
+    public function publicProfile(Application $app, Request $request, $username){
+        $opcio = htmlspecialchars($request->get('opcio'));
+        $response = new Response();
+        $repo = new UserTasks($app['db']);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $sql = "SELECT id FROM usuari WHERE username = ?";
+        $s = $app['db']->fetchAssoc($sql, array($username));
+        $id = $s['id'];
+        $repo->imatgesUsuari($id);
+
+        $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
+        $dadesUsuari = $repo->dadesUsuari($username,$id);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+        $content = $app['twig']->render('publicProfile.twig',[
+            'logejat' => false,
+            'imatgesPublic' =>$imatgesPublic,
+            'dadesUsuari' =>$dadesUsuari
+        ]);
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+    }
+
 
 }

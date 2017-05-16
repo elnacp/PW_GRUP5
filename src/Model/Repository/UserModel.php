@@ -20,7 +20,7 @@ interface UserModel
 
     public function validateEditProfile($name, $birth, $pass1, $img1);
 
-    public function DBnewPost($title, $path_name, $private);
+    public function DBnewPost($title, $path_name, $private, $sizeImage);
 
     public function dadesImatges();
 
@@ -28,7 +28,7 @@ interface UserModel
 
     public function deleteImage($id);
 
-    public function editInformation($title, $path_name, $private, $id);
+    public function editInformation($title, $path_name, $private, $id,$sizeImage);
 
     public function home1($log, $usuari);
 
@@ -59,5 +59,6 @@ interface UserModel
     public function searchValidation($id, $code);
 
     public function getName($id);
+
 
 }

@@ -6,6 +6,8 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
+use SilexApp\Model\Repository\UpdateBaseService;
+
 
 class FunctionsController{
 
@@ -33,6 +35,7 @@ class FunctionsController{
         $content = $app['twig']->render('imatgePublica.twig', [
                 'id' => $id,
                 'usuari_log' => $usuari,
+                'username' => $usuari,
                 'logejat' => true,
                 'autor' => $s2['username'],
                 'title' => $s['title'],
@@ -40,7 +43,7 @@ class FunctionsController{
                 'visites' => $s['visits'],
                 'likes' => $likes,
                 'message' => $message,
-                'imagen' => $s3['img_path'],
+                'image' => $s3['img_path'],
                 'Imagen' => $autor = $s['img_path']
 
             ]
@@ -55,12 +58,16 @@ class FunctionsController{
         $repo = new UserTasks($app['db']);
         $titols_img[] = "";
         $dades = $repo->comentarisUser();
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('userComments.twig', [
                 'logejat' => true,
                 'comentaris' => $dades,
                 'message' => null,
-                'imagen' => null,
-                'Imagen'=>null
+                'image' => $img,
+                'Imagen'=>null,
+                'username' =>$name
             ]
         );
         $response->setContent($content);

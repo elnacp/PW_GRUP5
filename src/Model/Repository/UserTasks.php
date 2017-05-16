@@ -213,7 +213,6 @@ class UserTasks implements UserModel
             $autor = $stm1['username'];
             $profilePic = $stm1['img_path'];
             $image = $s['img_path'];
-            $image = str_replace(" ", "_", $image);
             if($log){
                 $profilePic = '.'.$stm1['img_path'];
                 $image = '.'.$image;
@@ -272,7 +271,7 @@ class UserTasks implements UserModel
                                                 <h3>
                                                     <a href=" . $hrefPerfil . "> ".$autor. " </a>
                                                 </h3>
-                                                <h5><span>Publicado - </span> - <span>" . $birthdate . "</span> </h5>
+                                                <h5><span>Publicado - </span> <span>" . $birthdate . "</span> </h5>
                                                 <img class=\"img-circle img-responsive\" src=".$profilePic." alt=\"User Image\"  id=\"ProfileImg\"/>
                                             </div>
                                          
@@ -661,7 +660,8 @@ class UserTasks implements UserModel
         }
         return $img;
     }
-        public function dadesUsuari($username, $id)
+
+    public function dadesUsuari($username, $id)
         {
             $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
             $s2 = $this->db->fetchAssoc($sql1, array($id));
@@ -674,7 +674,6 @@ class UserTasks implements UserModel
             //$s4 = implode('',$s4);
             $dades = "";
 
-        $visualitzacioImatge = "/perfil/" . $username;
         $dades = $dades .
             "<div class=\"panel-heading\">
                  <h3 class=\"panel-title\">$username</h3>
@@ -709,6 +708,7 @@ class UserTasks implements UserModel
 
             return $dades;
         }
+
     public function getUserId($username){
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $stm = $this->db->fetchAssoc($sql, array((string)$username));
@@ -731,7 +731,6 @@ class UserTasks implements UserModel
             $sql = "SELECT username FROM usuari WHERE id = ?";
             $username = $this->db->fetchAssoc($sql, array((string)$id));
             $this->ActivateUser($username['username']);
-
             $trobat = true;
 
         }else{
@@ -745,6 +744,8 @@ class UserTasks implements UserModel
         $user = $this->db->fetchAssoc($sql, array($id));
         return $user['username'];
     }
+
+
 
 
 

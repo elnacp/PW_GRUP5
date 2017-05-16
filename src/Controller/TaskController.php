@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
 use SilexApp\Model\Repository\Ajax;
+use SilexApp\Model\Repository\UpdateBaseService;
 
 class TaskController{
     public function indexAction(Application $app){
@@ -22,14 +23,19 @@ class TaskController{
         if(!$app['session']->has('name')) {
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
-
+                'username' => '',
+                'image' => null,
                 'dades' => $imgMesVistes
                 //'data' => $data
             ]);
         }else{
+            $aux = new UpdateBaseService($app['db']);
+            $info = $aux->getUserInfo($app['session']->get('name'));
+            list($name, $img) = explode("!=!", $info);
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
-
+                'username' => $usuari,
+                'image' => $img,
                 'dades' => $imgMesVistes
                 //'data' => $data
             ]);
@@ -50,9 +56,8 @@ class TaskController{
         $content = $app['twig']->render('editProfile.twig', [
             'username' => $usuari['username'],
             'birthdate' => $usuari['birthdate'],
-
             'imagen' => $usuari['img_path'],
-
+            'image'=>$usuari['img_path'],
             'logejat' => true
 
         ]);
@@ -62,10 +67,13 @@ class TaskController{
         $response->setContent($content);
         return $response;
     }
+
     public function registerUser(Application $app){
         $content = $app['twig']->render('registerUser.twig',[
             'logejat' => false,
-            'imagen' => null
+            'imagen' => null,
+            'username' => '',
+            'image' => null
         ] );
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -73,11 +81,14 @@ class TaskController{
         $response->setContent($content);
         return $response;
     }
+
     public function LogIn(Application $app){
         $content = $app['twig']->render('LogIn.twig',[
             'logejat' => false,
             'message' => null,
-            'imagen' => null
+            'imagen' => null,
+            'username' => '',
+            'image' => null
         ] );
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -86,10 +97,14 @@ class TaskController{
         return $response;
     }
     public function newPost(Application $app){
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('newPost.twig', [
             'logejat' => true,
             'message' => null,
-            'imagen' => null
+            'image' => $img,
+            'username' => $name
 
         ]);
         $response = new Response();
@@ -101,12 +116,15 @@ class TaskController{
     public function galeria(Application $app){
         $repo = new UserTasks($app['db']);
         $dades = $repo->dadesImatges();
-
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
             'message' => NULL,
-            'imagen'=> null
+            'image'=> $img,
+            'username' => $name
 
         ]);
         $response = new Response();
@@ -124,13 +142,17 @@ class TaskController{
         if($imatge['private'] == 1){
             $estat = "checked";
         }
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('editarImatge.twig', [
             'logejat' => true,
             'titol' => $imatge['title'],
             'privada' => $estat,
-
+            'username' =>$name,
             'sizeImage'=>$imatge['sizeImage'],
-            'id' => $id
+            'id' => $id,
+            'image' => $img
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -145,10 +167,15 @@ class TaskController{
         $repo = new UserTasks($app['db']);
         $repo->deleteImage($id);
         $dades = $repo->dadesImatges();
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
             'message' => 'Se ha eliminado correctamente!',
+            'username' => $name,
+            'image' => $img
 
         ]);
         $response = new Response();
@@ -163,14 +190,21 @@ class TaskController{
         $repo = new UserTasks($app['db']);
         $privada = $repo->incrementarVisites($id);
         $logejat = false;
+        $name = '';
+        $img = null;
         if($app['session']->has('name')){
             $logejat = true;
+            $aux = new UpdateBaseService($app['db']);
+            $info = $aux->getUserInfo($app['session']->get('name'));
+            list($name, $img) = explode("!=!", $info);
         }
         if($privada == 1){
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $content = $app['twig']->render('error.twig', [
                     'message' => ' Imagen privada',
-                    'logejat' => $logejat
+                    'logejat' => $logejat,
+                    'username' => $name,
+                    'image' => $img
                 ]
             );
             $response->setContent($content);
@@ -225,6 +259,8 @@ class TaskController{
             $content = $app['twig']->render('imatgePublica.twig', [
                     'id' => $id,
                     'usuari_log' => $usuari,
+                    'username' =>$usuari,
+                    'image' =>'.'.$s3['img_path'],
                     'logejat' => $logejat,
                     'autor' => $s2['username'],
                     'title' => $s['title'],

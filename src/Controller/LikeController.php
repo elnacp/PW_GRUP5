@@ -31,6 +31,7 @@ class LikeController{
         $content = $app['twig']->render('imatgePublica.twig', [
                 'id' => $id,
                 'usuari_log' => $usuari,
+                'username' =>$usuari,
                 'logejat' => true,
                 'autor' => $s2['username'],
                 'title' => $s['title'],
@@ -38,7 +39,7 @@ class LikeController{
                 'visites' => $s['visits'],
                 'likes' => $likes,
                 'message' => null,
-                //'imagen' => $s3['img_path'],
+                'image' => $s3['img_path'],
                 'Imagen' => $img
 
             ]
@@ -62,14 +63,16 @@ class LikeController{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => false,
                 'dades' => $imgMesVistes,
-                //'imagen' => null
+                'username' => '',
+                'image' => null
 
             ]);
         }else{
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
                 'dades' => $imgMesVistes,
-               // 'imagen'=>null
+                'username' => $usuari,
+                'image'=>null
 
             ]);
         }

@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+
 class ActivationUser{
 
     public function validateUser(Application $app, $code,$id, Request $request){
@@ -31,7 +32,8 @@ class ActivationUser{
             $content = $app['twig']->render('LogIn.twig', [
                     'message' => 'User not found',
                     'logejat' => false,
-                    //'imagen' =>null
+                    'image' =>null,
+                    'username' =>null
                 ]
             );
             $response->setContent($content);

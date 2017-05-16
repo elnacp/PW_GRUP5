@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use SilexApp\Model\Repository\EmailSender;
+use SilexApp\Model\Repository\UpdateBaseService;
+
 
 
 class DBController
@@ -28,7 +30,8 @@ class DBController
             $content = $app['twig']->render('LogIn.twig', [
                     'message' => 'User not found',
                     'logejat' => false,
-                    //'imagen' =>null
+                    'username' => '',
+                    'image' =>null
                 ]
             );
             $response->setContent($content);
@@ -64,9 +67,6 @@ class DBController
         /** @var UploadedFile $img */
         $img = $request->files->get('newProfileImg');
 
-        //$pass2 = htmlspecialchars($_POST['password2']);
-        //$path = htmlspecialchars($_POST['files[]']);
-
         $repo = new UserTasks($app['db']);
         if ($img != NULL){
             $repo->deleteActualPic($name);
@@ -82,7 +82,7 @@ class DBController
                 'logejat' => true,
                 'username' => $name,
                 'birthdate' =>$birth,
-                'imagen' =>$img
+                'image' =>$img
             ]
         );
         $response->setContent($content);
@@ -119,7 +119,9 @@ class DBController
                     $response->setStatusCode(Response::HTTP_OK);
                     $content = $app['twig']->render('error.twig', [
                         'message' => 'Email Enviado correctamente',
-                        'logejat' => false
+                        'logejat' => false,
+                        'username' => '',
+                        'image' => null
 
                     ]);
 
@@ -128,7 +130,9 @@ class DBController
                     $response->setStatusCode(Response::HTTP_BAD_REQUEST);
                     $content = $app['twig']->render('error.twig', [
                         'message' => 'No se ha podido enviar el email',
-                        'logejat' => false
+                        'logejat' => false,
+                        'username' => '',
+                        'image' => null
 
                     ]);
                 }
@@ -156,9 +160,9 @@ class DBController
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $content = $app['twig']->render('newPost.twig', [
                     'message' => 'IMAGE NOT FOUND',
-                    'logejat' => false,
+                    'logejat' => true,
                     'username' => $usuari,
-                    //'imagen' => $img
+                    'image' => $img->getPathname()
                 ]
             );
             $response->setContent($content);
@@ -193,7 +197,8 @@ class DBController
                 $content = $app['twig']->render('hello.twig', [
                         'logejat' => true,
                         'dades' => $imgMesVistes,
-                        'imagen' => $imagen,
+                        'image' => $img,
+                        'username' => $usuari
                     ]
                 );
             }
@@ -216,7 +221,8 @@ class DBController
             $content = $app['twig']->render('error.twig', [
                     'message' => 'usuario activado correctamente' . $nickname,
                     'logejat' => false,
-                    //'imagen' => null
+                    'username' => '',
+                    'image' => null
 
                 ]
             );
@@ -226,7 +232,8 @@ class DBController
             $content = $app['twig']->render('error.twig', [
                     'message' => 'No se ha podido validar el usuario ' . $nickname,
                     'logejat' => false,
-                    //'imagen' => null
+                    'username' => '',
+                    'imagen' => null
                 ]
             );
 
@@ -258,16 +265,17 @@ class DBController
         }
         $repo->editInformation($title, $img, $private, $id);
         $dades = $repo->dadesImatges();
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
             'message' => 'Se ha editado correctamente!',
-
-
-
-
-            'message' => 'Se ha editado correctamente!'
+            'username' => $name,
+            'image' => $img
         ]);
+
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
@@ -280,6 +288,12 @@ class DBController
         $opcio = htmlspecialchars($request->get('opcio'));
         //f$response = new Response();
         $repo = new UserTasks($app['db']);
+        $username = '';
+        $log = false;
+        if($app['session']->has('name')){
+            $log = true;
+            $username = $app['session']->get('name');
+        }
         //$response->setStatusCode(Response::HTTP_NOT_FOUND);
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $s = $app['db']->fetchAssoc($sql, array($username));
@@ -289,11 +303,15 @@ class DBController
         $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
         $dadesUsuari = $repo->dadesUsuari($username,$id);
        // $response->setStatusCode(Response::HTTP_NOT_FOUND);
-
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('publicProfile.twig',[
-            'logejat' => false,
+            'logejat' => $log,
             'imatgesPublic' =>$imatgesPublic,
-            'dadesUsuari' =>$dadesUsuari
+            'dadesUsuari' =>$dadesUsuari,
+            'username' => $username,
+            'image' => '.'.$img
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

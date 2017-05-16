@@ -14,7 +14,9 @@
 
         <div class="panel-heading">
             <img class="[ img-circle pull-left ]" src="{{ imgPerfil }}" alt="profile" id="ProfileImg"/>
-            <h3>{{ autor }}</h3>
+            <h3>
+                <a href="/perfil/{{ usuari_log }}"> {{ usuari_log }} </a>
+            </h3>
             <h2>{{ title }}</h2>
             <h5><span>Publicat</span> - <span>{{ dia }}</span> </h5>
         </div>

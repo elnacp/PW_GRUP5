@@ -188,14 +188,24 @@ body {
 }
 
 #ProfileImg{
-    width: 100px;
+    width: 80px;
 }
 
 #imgPost{
-    width:30%;
+    width:400px;
+    height:300px;
 
 }
 
 #post{
     width:100%;
 }
+
+#Panel{
+    top: 25%;
+    left: 25%;
+
+    max-width: 500px;
+    display: block;
+}
+

@@ -6,7 +6,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
-
+use SilexApp\Model\Repository\UpdateBaseService;
 class LikeController{
 
     public function likeImage(Application $app, $id, $usuari_log){
@@ -68,11 +68,14 @@ class LikeController{
 
             ]);
         }else{
+            $aux = new UpdateBaseService($app['db']);
+            $info = $aux->getUserInfo($app['session']->get('name'));
+            list($name, $img) = explode("!=!", $info);
             $content = $app['twig']->render('hello.twig', [
                 'logejat' => true,
                 'dades' => $imgMesVistes,
                 'username' => $usuari,
-                'image'=>null
+                'image'=>'/.'.$img
 
             ]);
         }

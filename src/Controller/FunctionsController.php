@@ -43,9 +43,10 @@ class FunctionsController{
                 'visites' => $s['visits'],
                 'likes' => $likes,
                 'message' => $message,
-                'image' => $s3['img_path'],
-                'Imagen' => $autor = $s['img_path']
-
+                'image' => '/.'.$s3['img_path'],
+                'Imagen' => $autor = '/.'.$s['img_path'],
+                'imgPerfil' =>'/.'.$s3['img_path'],
+                'imgPost' => '/.'.$s['img_path']
             ]
         );
         $response->setContent($content);

@@ -144,10 +144,13 @@ class UserTasks implements UserModel
         $sql = "SELECT * FROM usuari WHERE username = ?";
         $user = $this->db->fetchAssoc($sql, array((string)$nickname));
         if($user){
-
             $sql = "UPDATE usuari SET active = ?  WHERE username = ?";
             $this->db->executeUpdate($sql, array($active, (string) $nickname));
             $trobat = true;
+            $sql2 = "SELECT id FROM usuari  WHERE username = ?";
+            $id = $this->db->executeUpdate($sql2, array((string) $nickname));
+            $sql3 = "DELETE FROM activation WHERE user_id = $id";
+            $this->db->exec($sql3);
         }else{
             $trobat = false;
         }
@@ -559,5 +562,6 @@ class UserTasks implements UserModel
         $user = $this->db->fetchAssoc($sql, array($id));
         return $user['username'];
     }
+
 
 }

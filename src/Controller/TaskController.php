@@ -15,7 +15,6 @@ class TaskController{
         if($app['session']->has('name')){
             $log = true;
         }
-
         $usuari =  $app['session']->get('name');
         $imgMesVistes = $repo->home1($log,$usuari);
         //$data = $repo->ultimesImatges($log, $usuari);

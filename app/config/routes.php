@@ -75,5 +75,3 @@ $app->post('/DBRegister','SilexApp\\Controller\\ProfileController::DBRegister');
 $app->post('/DBnewPost','SilexApp\\Controller\\DBController::DBnewPost');
 $app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\BaseController::DBeditImage');
 $app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
-
-

@@ -81,7 +81,7 @@ class UserTasks implements UserModel
 
     }
 
-    public function checkUser($username)
+    public function checkUser($username, $email)
     {
         $trobat = false;
         $sql = "SELECT * FROM usuari WHERE username = ?";
@@ -89,7 +89,14 @@ class UserTasks implements UserModel
         if ($user) {
             $trobat = true;
         } else {
-            $trobat = false;
+            $sql2 = "SELECT * FROM usuari WHERE email = ?";
+            $email = $this->db->fetchAssoc($sql2, array((string)$email));
+            if($email){
+                $trobat = true;
+            }else{
+                $trobat = false;
+
+            }
         }
         return $trobat;
 

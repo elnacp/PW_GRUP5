@@ -108,7 +108,7 @@ class DBController
         }
 
         $repo = new UserTasks($app['db']);
-        $exists = $repo->checkUser($nickname);
+        $exists = $repo->checkUser($nickname, $email);
         $response = new Response();
 
 
@@ -139,7 +139,16 @@ class DBController
                     ]);
                 }
 
-            }
+        }else{
+            $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+            $content = $app['twig']->render('error.twig', [
+                'message' => 'Este email ya ha sido registrado',
+                'logejat' => false,
+                'username' => '',
+                'image' => null
+
+            ]);
+        }
         $response->setContent($content);
 
         return $response;

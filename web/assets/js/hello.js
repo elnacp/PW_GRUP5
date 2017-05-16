@@ -1,7 +1,8 @@
 var totsPost = new Array();
 var postVisibles = new Array();
 var index = 0;
-var logejat;
+
+
 
 $(function () {
     $('.panel-google-plus > .panel-footer > .input-placeholder, .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > button[type="reset"]').on('click', function(event) {
@@ -28,7 +29,6 @@ $(function () {
 });
 
 
-
 window.onload = function() {
 
     /*var params = {
@@ -49,8 +49,11 @@ window.onload = function() {
         success: function (response) {
             console.log(response);
             totsPost = response;
+            var logejat = $('.logejat').attr('id');
+            console.log("logejat" +logejat);
 
-            var div = document.getElementById('comentaris');
+            //var div = document.getElementById('comentaris');
+
 
 
 
@@ -93,10 +96,9 @@ window.onload = function() {
                 img_post.setAttribute("id", "imgPost");
                 img_post.setAttribute("src",postVisibles[index]['img_path']);
                 img_post.setAttribute("alt", "User Image");
-                div3.appendChild(img_post);
+
                 div2.appendChild(div3);
-
-
+                div2.appendChild(img_post);
 
 
                 var div4 = document.createElement('div');
@@ -109,6 +111,7 @@ window.onload = function() {
                     //<a  href=" . $href1 . " class=\"[ btn btn-default ]\">Likes: +" . $likes . "</a>"
 
                 }
+
                 a.setAttribute("class", "[ btn btn-default ]");
                 a.innerHTML = "Likes: + " +postVisibles[index]['likes'];
                 div4.appendChild(a);
@@ -125,6 +128,8 @@ window.onload = function() {
                 div2.appendChild(div4);
 
                 if(logejat == 1) {
+                    console.log("ENTRA");
+
                     var div5 = document.createElement('div');
                     div5.setAttribute("class", "panel-google-plus-comment");
                     var div6 = document.createElement('div');
@@ -158,7 +163,7 @@ window.onload = function() {
 
 
 
-                div.appendChild(div2);
+                $(div2).insertBefore("#loadmore");
 
 
 
@@ -187,6 +192,7 @@ window.onload = function() {
 
         }
     });
+
 
 };
 

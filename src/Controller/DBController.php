@@ -143,6 +143,7 @@ class DBController
         $img = $request->files->get('ProfileImg');
         //llamar al resize image
         //var_dump($size);
+        var_dump($img);
         $response = new Response();
 
         $repo = new UserTasks($app['db']);
@@ -160,24 +161,27 @@ class DBController
             $response->setContent($content);
             return $response;
         }else{
-            list($ancho, $alto) = getimagesize($img);
-            $path = $img->getPathname();
+
+            move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
+            $path_img = './assets/uploads/' . $title . '.jpeg';
+            $path_direct = './assets/uploads/';
             $resize = new resampleService();
-            $newImages4 = $resize->resizeImage($title,$alto,$ancho,$title, 400, 300);
-            $newImages1 = $resize->resizeImage($title,$alto,$ancho,$title, 100, 100);
+            //$resize->resizeImage($img->getPathname(),$path_direct.$title,400,300);
+            //$resize->resizeImage($img->getPathname(),$path_direct.$title,100,100);
+            //move_uploaded_file($newImages4, './assets/uploads/' . $title . "400" . date("m-d-y") .date("h:i:sa") . ".jpg");
+            //move_uploaded_file($newImages1, './assets/uploads/' . $title . "100" . date("m-d-y") .date("h:i:sa") . ".jpg");
 
-            if ($newImages1 && $newImages4){
-                move_uploaded_file($newImages4, './assets/uploads/' . $title . "400" . date("m-d-y") .date("h:i:sa") . ".jpg");
-                move_uploaded_file($newImages1, './assets/uploads/' . $title . "100" . date("m-d-y") .date("h:i:sa") . ".jpg");
-                if ($size === "gran"){
-                    $img = './assets/uploads/' . $title . "400" . date("m-d-y") .date("h:i:sa") . ".jpg";
-                    $size = 400;
-                }else{
-                    $img = './assets/uploads/' . $title . "100" . date("m-d-y") .date("h:i:sa") . ".jpg";
-                    $size = 100;
-                }
-
+            if ($size === "gran"){
+                $direccioImg = './assets/uploads';
+                $resize->resizeImage($path_img,$direccioImg,400,300);
+                $size = 400;
+            }else{
+                $direccioImg = './assets/uploads';
+                $resize->resizeImage($path_img,$direccioImg,100,100);
+                $size = 100;
             }
+
+
             if ($privada === "on") {
                 $private = 1;
             } else {

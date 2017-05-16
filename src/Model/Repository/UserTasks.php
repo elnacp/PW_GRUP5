@@ -644,7 +644,7 @@ class UserTasks implements UserModel
                     <img src=". $s4 ." alt=\"User Pic\" name=\"img_path\" id=\"perfil\"  class=\"img-circle img-responsive\">
                 </div>
             <div class=\"row\">
-                 <div class=\" col-md-9 col-lg-9 \">
+                 <div class=\" tabla \">
                     <table class=\"profileTable\">
                         <tbody>
                         <tr>

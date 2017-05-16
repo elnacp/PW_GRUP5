@@ -2,7 +2,7 @@
 {% block title %} Home {% endblock %}
 {% block head %}
     {{ parent() }}
-    <link rel="stylesheet" href={{ asset('/hello.css', 'css') }}>
+    <link rel="stylesheet" href={{ asset('/userProfile.css', 'css') }}>
 {% endblock %}
 {% block content %}
     <br>
@@ -11,7 +11,8 @@
     <div class="panel panel-info">
         {{  dadesUsuari| raw }}
 
-    <p>Odernar per:</p>
+        <div class="formulari" id="ordenar">
+        <p>Odernar per:</p>
         <form method="get" id="sleccio">
             <input class="radio" type="radio" id="creacio" name="opcio" value="1" >Creacio</input><br>
             <input class="radio" type="radio" id="likes" name="opcio" value="2" >Likes</input><br>
@@ -24,11 +25,8 @@
             </div>
 
         </div>
-
+    </div>
     </div>
 
-
-    <script src={{ asset('/usuariPublic.js', 'js') }}></script>
-
-
+    <script src={{ asset('/userProfile.css', 'css') }}></script>
 {% endblock %}

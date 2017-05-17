@@ -90,15 +90,25 @@ class FunctionsController{
         $s = $app['db']->fetchAssoc($sql, array($username));
         $id = $s['id'];
         $repo->imatgesUsuari($id);
-
+        $log = false;
         $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
         $dadesUsuari = $repo->dadesUsuari($username,$id);
         $response->setStatusCode(Response::HTTP_NOT_FOUND);
-
+        $name = '';
+        $img = null;
+        if ($app['session']->has('name')){
+            $log = true;
+            $aux = new UpdateBaseService($app['db']);
+            $info = $aux->getUserInfo($app['session']->get('name'));
+            list($name, $img) = explode("!=!", $info);
+            $img = '.'.$img;
+        }
         $content = $app['twig']->render('publicProfile.twig',[
-            'logejat' => false,
+            'logejat' => $log,
             'imatgesPublic' =>$imatgesPublic,
-            'dadesUsuari' =>$dadesUsuari
+            'dadesUsuari' =>$dadesUsuari,
+            'image' =>$img,
+            'username'=>$name
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

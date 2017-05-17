@@ -95,11 +95,14 @@ class DBController
             $usuari =  $app['session']->get('name');
             $img = $repo ->getActualProfilePic($usuari, null);
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            $aux = new UpdateBaseService($app['db']);
+            $info = $aux->getUserInfo($app['session']->get('name'));
+            list($name, $img2) = explode("!=!", $info);
             $content = $app['twig']->render('newPost.twig', [
                     'message' => 'IMAGE NOT FOUND',
                     'logejat' => true,
                     'username' => $usuari,
-                    'image' => $img->getPathname()
+                    'image' => $img2
                 ]
             );
             $response->setContent($content);

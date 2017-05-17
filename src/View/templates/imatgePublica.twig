@@ -35,7 +35,7 @@
         <div class="panel-google-plus-comment">
             <img class="img-circle" src="https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46" alt="User Image" />
             <div class="panel-google-plus-textarea">
-                <form action="/comentari/" method="POST">
+                <form action="/comentari/{{ id }}/{{ usuari_log }}" method="POST">
                     <textarea rows="4" name="comentari"></textarea>
                     <button type="submit"  class="[ btn btn-success disabled ]"> Comentar</button>
                 </form>

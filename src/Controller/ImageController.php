@@ -139,7 +139,7 @@ class ImageController{
                     'id' => $id,
                     'usuari_log' => $usuari,
                     'username' => $usuari,
-                    'image' => '.' . $img,
+                    'image' => '.' . $s3['img_path'],
                     'logejat' => $logejat,
                     'autor' => $s2['username'],
                     'title' => $s['title'],

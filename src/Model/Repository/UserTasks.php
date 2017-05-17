@@ -282,20 +282,28 @@ class UserTasks implements UserModel
 
 
             $birthdate = $s['created_at'];
+
             list($yy, $mm, $daux) = explode("-", $birthdate);
             list($dd, $taux) = explode(" ", $daux);
             list($hh, $min, $ss) = explode(":", $taux);
 
+
             if ((date("Y") == $yy) && (date("m") == $mm) && (date("d") == $dd)){
-                if (date("h") == $hh){
+
+                if (date("H") == $hh){
+
                     $birthdate = date("i") - $min;
                     $birthdate = 'Hace '.$birthdate.' minutos';
+
                 }
-                if(date("h")>$hh){
-                    $birthdate = date("h") - $hh;
+                if(date("H")>$hh){
+                    $birthdate = date("H") - $hh;
                     $birthdate = 'Hace '.$birthdate.' horas';
                 }
+
+
             }
+
 
             if((date("Y") == $yy) && (date("m") == $mm) && (date("d") > $dd)){
                 $birthdate = date("d") - $dd;
@@ -313,6 +321,8 @@ class UserTasks implements UserModel
                 $birthdate = date("Y") - $yy;
                 $birthdate = 'Hace '.$birthdate.' años';
             }
+
+
             $sql2 = "SELECT count(*) as total FROM likes WHERE image_id = ?";
             $l = $this->db->fetchAssoc($sql2, array((int)$s['id']));
             $likes = $l['total'];
@@ -883,12 +893,12 @@ class UserTasks implements UserModel
                 list($hh, $min, $ss) = explode(":", $taux);
 
                 if ((date("Y") == $yy) && (date("m") == $mm) && (date("d") == $dd)){
-                    if (date("h") == $hh){
+                    if (date("H") == $hh){
                         $birthdate = date("i") - $min;
                         $birthdate = 'Hace '.$birthdate.' minutos';
                     }
-                    if(date("h")>$hh){
-                        $birthdate = date("h") - $hh;
+                    if(date("H")>$hh){
+                        $birthdate = date("H") - $hh;
                         $birthdate = 'Hace '.$birthdate.' horas';
                     }
                 }

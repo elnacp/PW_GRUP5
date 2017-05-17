@@ -296,12 +296,5 @@ class TaskController{
     }
 
 
-
-
-    //public function publicProfile(Application $app, Request $request ,$username){
-
-
-    //}
-
 }
 

@@ -69,3 +69,12 @@
 body {
     background-color: #e8e8e8;
 }
+#infoUser{
+    margin-top:10%;
+}
+#ordenar li{
+    display: inline-block;
+    width: 50%;
+    white-space: normal;
+}
+

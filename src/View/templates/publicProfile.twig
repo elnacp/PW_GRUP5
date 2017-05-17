@@ -10,8 +10,8 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-                <div class="panel panel-info">
-                    <div class="panel-heading">
+                <div class="panel panel-info" id="infoUser">
+                    <div class="panel-heading" >
                         <h3 class="panel-title"> {{ dadesUsuari.username }}</h3>
                     </div>
                     <div class="panel-body">
@@ -42,20 +42,30 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
     <div class="panel panel-info">
 
-
-        <div class="formulari" id="ordenar">
+        <div class="formulari center-block" id="ordenar">
             <p>Odernar per:</p>
             <form method="get" id="sleccio">
-                <input class="radio" type="radio" id="creacio" name="opcio" value="1" ></input>
-                <label for="male">Creacio</label>
-                <input class="radio" type="radio" id="likes" name="opcio" value="2" ></input>
-                <label for="male">Likes</label>
-                <input class="radio" type="radio" id="comentaris" name="opcio" value="3" ></input>
-                <label for="male">Comentaris</label>
-                <input class="radio" type="radio" id="visualitzacions" name="opcio" value="4"></input>
-                <label for="male">Visualitzacions</label><br>
+                <ul><li>
+                        <label for="male">Creacio</label>
+                        <input class="radio" type="radio" id="creacio" name="opcio" value="1" ></input>
+                    </li>
+                    <li>
+                        <label for="male">Likes</label>
+                        <input class="radio" type="radio" id="likes" name="opcio" value="2" ></input>
+                    </li>
+                    <li>
+                        <label for="male">Comentaris</label>
+                        <input class="radio" type="radio" id="comentaris" name="opcio" value="3" ></input>
+                    </li>
+                    <li>
+                        <label for="male">Visualitzacions</label><br>
+                        <input class="radio" type="radio" id="visualitzacions" name="opcio" value="4"></input>
+                    </li>
+                </ul>
                 <button type="submit" class="button button-block" />Ordenar</button>
             </form>
             <div class="imatges">
@@ -64,6 +74,6 @@
 
         </div>
     </div>
-    </div>
+    <br>
 
 {% endblock %}

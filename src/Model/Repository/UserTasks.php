@@ -691,53 +691,27 @@ class UserTasks implements UserModel
     }
 
     public function dadesUsuari($username, $id)
+    {
+        $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
+        $s2 = $this->db->fetchAssoc($sql1, array($id));
+        $s2 = implode('',$s2);
+        $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
+        $s3 = $this->db->fetchAssoc($sql2, array($id));
+        $s3 = implode('',$s3);
+        $sql3 = "SELECT img_path FROM usuari WHERE id= ?";
+        $s4 = $this->db->fetchAssoc($sql3, array($id));
+        $s4 = implode('',$s4);
+        $dades = "";
 
-        {
-            $sql1 = "SELECT COUNT(user_id) FROM imatge WHERE user_id = ?";
-            $s2 = $this->db->fetchAssoc($sql1, array($id));
-            $s2 = implode('',$s2);
-            $sql2 = "SELECT COUNT(user_id) FROM  comentari WHERE user_id = ?";
-            $s3 = $this->db->fetchAssoc($sql2, array($id));
-            $s3 = implode('',$s3);
-            $sql3 = "SELECT img_path FROM usuari WHERE id= ?";
-            $s4 = $this->db->fetchAssoc($sql3, array($id));
-            //$s4 = implode('',$s4);
-            $dades = "";
+        $a = array();
+        $a['username'] = $username;
+        $a['publicades'] = $s2;
+        $a['comentaris'] = $s3;
+        $a['path'] = '.'.$s4;
 
-        $dades = $dades .
-            "<div class=\"panel-heading\">
-                 <h3 class=\"panel-title\">$username</h3>
-            </div>
-            
-            <div class=\"panel-body\">
-            
-                <div class=\"col-md-3 col-lg-3 \" align=\"center\">
-                    <img src=". '.'.$s4['img_path'] ." alt=\"User Pic\" name=\"img_path\" id=\"perfil\"  class=\"img-circle img-responsive\">
-                </div>
-            <div class=\"row\">
-                 <div class=\" col-md-9 col-lg-9 \">
-                    <table class=\"profileTable\">
-                        <tbody>
-                        <tr>
-                            <td>Nom d'usuari:</td>
-                            <td>$username</td>
-                        </tr>
-                        <tr>
-                            <td>Imatges Publicades:</td>
-                            <td>$s2</td>
-                        </tr>
-                        <tr>
-                            <td>Comentaris Realitzats:</td>
-                            <td>$s3</td>
-                        </tr>
-    
-                        </tbody>
-                    </table>
-                </div>
-            </div>";
+        return $a;
 
-            return $dades;
-        }
+    }
 
     public function getUserId($username){
         $sql = "SELECT id FROM usuari WHERE username = ?";

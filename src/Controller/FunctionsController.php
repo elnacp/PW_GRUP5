@@ -83,13 +83,9 @@ class FunctionsController{
 
     public function publicProfile(Application $app, Request $request, $username){
         $opcio = htmlspecialchars($request->get('opcio'));
-        //f$response = new Response();
+        $response = new Response();
         $repo = new UserTasks($app['db']);
-        $log = false;
-        if($app['session']->has('name')){
-            $log = true;
-        }
-        //$response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $sql = "SELECT id FROM usuari WHERE username = ?";
         $s = $app['db']->fetchAssoc($sql, array($username));
         $id = $s['id'];
@@ -97,16 +93,12 @@ class FunctionsController{
 
         $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
         $dadesUsuari = $repo->dadesUsuari($username,$id);
-        // $response->setStatusCode(Response::HTTP_NOT_FOUND);
-        $aux = new UpdateBaseService($app['db']);
-        $info = $aux->getUserInfo($app['session']->get('name'));
-        list($name, $img) = explode("!=!", $info);
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
         $content = $app['twig']->render('publicProfile.twig',[
-            'logejat' => $log,
+            'logejat' => false,
             'imatgesPublic' =>$imatgesPublic,
-            'dadesUsuari' =>$dadesUsuari,
-            'username' => $name,
-            'image' => '.'.$img
+            'dadesUsuari' =>$dadesUsuari
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

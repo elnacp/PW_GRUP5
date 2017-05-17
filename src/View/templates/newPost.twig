@@ -34,25 +34,32 @@
                         <output id="list"></output>
                         <output id="registerImg" name="images"></output>
                         <label>400x300</label>
-                            <input class="radio_btn" type="radio" id="imageGran" name="size" value="gran" checked="checked" ></input>
-                        <label>100x100</label>
-                            <input class="radio_btn" type="radio" id="imagePetita" name="size" value="petita" ></input>
-                        <br>
-                        <label>
-                            Privada
-                        </label>
-                        <span class="checkbox">
-                            <input  type="checkbox" name="privada" ></input>
+                        <span>
+                           <input class="radio_btn" type="radio" id="imageGran" name="size1" value="gran" checked="checked" ></input>
                         </span>
                         <br>
                         <br>
-                    </div>
-                    <button type="submit" class="button button-block" />Publicar</button>
-                </form>
-            </div>
-            <div id="login">
-            </div>
-        </div><!-- tab-content -->
+                        <label>100x100</label>
+                        <span>
+                            <input class="radio_btn" type="radio" id="imagePetita" name="size2" value="petita" ></input>
+                        </span>
+
+                    <br><br>
+                    <label>
+                        Privada
+                    </label>
+                    <span class="checkbox">
+                        <input  type="checkbox" name="privada" ></input>
+                    </span>
+                    <br>
+                    <br>
+                </div>
+                <button type="submit" class="button button-block" />Publicar</button>
+            </form>
+        </div>
+        <div id="login">
+        </div>
+    </div><!-- tab-content -->
     </div> <!-- /form -->
     {% if  message %}
         <div class="form" id="Rl">

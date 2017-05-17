@@ -39,46 +39,30 @@ function archivo(evt) {
 
 document.getElementById('files').addEventListener('change', archivo, false);
 
+$('#imageGran').oncheck = function(){
+    console.log("click");
+    $('#imageGran').attr("checked","checked");
+    $('#imagePetita').attr("checked"," ");
 
-function imageGran() {
-    if (document.getElementById("imgPetita")) {
-        eliminarElemento("imgPetita");
-    }
-    if (document.getElementById("imgGran")) {
+};
+$('#imagePetita').onclick = function(){
+    console.log("clack");
+    $('#imagePetita').attr("checked","checked");
+    $('#imageGran').attr("checked"," ");
 
-    }else{
-        var imagen = document.createElement("img");
-        imagen.setAttribute("src", "~/imagenes/libro.jpg");
-        imagen.setAttribute("width", "400");
-        imagen.setAttribute("height", "300");
-        imagen.setAttribute("id", "imgGran");
-        var div = document.getElementById("gran");
-        div.appendChild(imagen);
-    }
-}
+};
 
-function imagePetita() {
-    if (document.getElementById("imgGran")) {
-        eliminarElemento("imgGran");
-    }
-    if (document.getElementById("imgPetita")) {
-    }else{
-        var imagen = document.createElement("img");
-        imagen.setAttribute("src", "~/imagenes/libro.jpg");
-        imagen.setAttribute("width", "100");
-        imagen.setAttribute("height", "100");
-        imagen.setAttribute("id", "imgPetita");
-        var div = document.getElementById("petita");
-        div.appendChild(imagen);
-    }
-}
+$(document).ready(function(){
+    $('input[name="size1"]').change(function(){
+        if($('#imageGran').prop('checked')){
+            document.getElementById("imagePetita").checked = false;        }
+    });
+});
 
-function eliminarElemento(id){
-    var imagen = document.getElementById(id);
-    if (!imagen){
-        alert("El elemento selecionado no existe");
-    } else {
-        var padre = imagen.parentNode;
-        padre.removeChild(imagen);
-    }
-}
+$(document).ready(function(){
+    $('input[name="size2"]').change(function(){
+        if($('#imagePetita').prop('checked')){
+            document.getElementById("imageGran").checked = false;
+        }
+    });
+});

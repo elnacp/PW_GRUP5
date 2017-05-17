@@ -90,12 +90,12 @@ class ImageController{
             list($hh, $min, $ss) = explode(":", $taux);
 
             if ((date("Y") == $yy) && (date("m") == $mm) && (date("d") == $dd)) {
-                if (date("h") == $hh) {
+                if (date("H") == $hh) {
                     $birthdate = date("i") - $min;
                     $birthdate = 'Hace ' . $birthdate . ' minutos';
                 }
-                if (date("h") > $hh) {
-                    $birthdate = date("h") - $hh;
+                if (date("H") > $hh) {
+                    $birthdate = date("H") - $hh;
                     $birthdate = 'Hace ' . $birthdate . ' horas';
                 }
             }

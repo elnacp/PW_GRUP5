@@ -64,7 +64,7 @@ $app->get('/comentaris','SilexApp\\Controller\\FunctionsController::comentarisUs
 $app->get('/perfil/{username}', 'SilexApp\\Controller\\FunctionsController::publicProfile');
 //CONTROLLER COMMENTS
 $app->get('/eliminarComment/{id}','SilexApp\\Controller\\ControllerComments::eliminarComentari')->before($before);
-$app->get('/editarComment/{id}','SilexApp\\Controller\\ControlComments::editarComentari')->before($before);
+$app->get('/editarComment/{id}','SilexApp\\Controller\\ControllerComments::editarComentari')->before($before);
 $app->post('/nouComentari/{id}', 'SilexApp\\Controller\\ControllerComments::nouComentari')->before($before);
 $app->get('/notificacions', 'SilexApp\\Controller\\ControllerComments::notificacionsUser')->before($before);
 $app->get('/visualitzada/{id}','SilexApp\\Controller\\ControllerComments::notificacioVisualitzada')->before($before);

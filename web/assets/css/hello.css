@@ -225,4 +225,26 @@ form{
     width: 100%;
 }
 
+.lastEntry{
+    font-weight: 600;
+    color:white;
+    margin-left: 5%;
+}
 
+.popEntry{
+    font-weight: 600;
+    color:white;
+    margin-left: 5%;
+}
+
+#lastEntryPan{
+    background-color: #5bc0de;
+}
+
+#popEntryPan{
+    background-color: #aaaaff;
+}
+
+@media (max-width: 300px){
+
+}

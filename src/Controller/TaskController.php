@@ -199,12 +199,14 @@ class TaskController{
         $logejat = false;
         $name = '';
         $img = null;
+
         if($app['session']->has('name')){
             $logejat = true;
             $aux = new UpdateBaseService($app['db']);
             $info = $aux->getUserInfo($app['session']->get('name'));
             list($name, $img) = explode("!=!", $info);
         }
+
         if($privada == 1){
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $content = $app['twig']->render('error.twig', [

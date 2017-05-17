@@ -80,7 +80,7 @@ window.onload = function() {
                 div3.appendChild(h3);
                 var h5 = document.createElement('h5');
                 var span = document.createElement('span');
-                span.innerHTML = "Publicat - " + postVisibles[index]['publicat'];
+                span.innerHTML = "Publicado - " + postVisibles[index]['publicat'];
                 h5.appendChild(span);
                 div3.appendChild(h5);
                 var img = document.createElement('img');
@@ -140,8 +140,10 @@ window.onload = function() {
                 var br = document.createElement('br');
                 var button = document.createElement('button');
                 button.innerHTML = "Comentar";
-                button.setAttribute("class", "comentariButton center-block");
+                //<button type="submit" class="[ btn btn-success disabled ]" id="ButtonCom">Comentar</button>
+                button.setAttribute("class", "[ btn btn-success disabled ]");
                 button.setAttribute("type", "submit");
+                button.setAttribute("id","ButtonCom");
 
                 form.appendChild(textarea);
                 form.appendChild(br);
@@ -194,11 +196,12 @@ window.onload = function() {
                 div3.appendChild(h3);
                 var h5 = document.createElement('h5');
                 var span = document.createElement('span');
-                span.innerHTML = "Publicat - " + postVisibles[index]['publicat'];
+                span.innerHTML = "Publicado - " + postVisibles[index]['publicat'];
                 h5.appendChild(span);
                 div3.appendChild(h5);
                 var img = document.createElement('img');
                 img.setAttribute("class", "img-circle");
+                img.setAttribute("id", "ProfileImg");
                 img.setAttribute("src", postVisibles[index]['img_perfil']);
                 img.setAttribute("alt", "User Image");
                 div3.appendChild(img);
@@ -253,8 +256,9 @@ window.onload = function() {
                 var br = document.createElement('br');
                 var button = document.createElement('button');
                 button.innerHTML = "Comentar";
-                button.setAttribute("class", "comentariButton center-block");
+                button.setAttribute("class", "[ btn btn-success disabled ]");
                 button.setAttribute("type", "submit");
+                button.setAttribute("id","ButtonCom");
 
                 form.appendChild(textarea);
                 form.appendChild(br);

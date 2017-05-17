@@ -218,8 +218,8 @@ class UserTasks implements UserModel
         $stm = $this->db->fetchAll($sql);
         $c1 = 5;
         $c2 = 5;
-        $imgMesVistes = "<div class=\"[ panel panel-default ] panel-google-plus\">
-                             <h2> Imagenes más vistas: </h2>
+        $imgMesVistes = "<div class=\"[ panel panel-default ] panel-google-plus\" id=\"popEntryPan\">
+                             <h2 class=\"popEntry\"> Imagenes más vistas: </h2>
                         </div>";
         foreach ($stm as $s) {
 
@@ -795,7 +795,7 @@ class UserTasks implements UserModel
                                                 <h3>
                                                     <a href=" . $hrefPerfil . "> ".$autor. " </a>
                                                 </h3>
-                                                <h5><span>Publicat - </span> - <span>" . $dia . "</span> </h5>
+                                                <h5><span>Publicado - </span> - <span>" . $dia . "</span> </h5>
                                                 <img class=\"img-circle\" src=\"https://lh3.googleusercontent.com/uFp_tsTJboUY7kue5XAsGA=s46\" alt=\"User Image\" />
                                             </div>
                                          

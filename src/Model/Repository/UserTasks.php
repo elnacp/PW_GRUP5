@@ -225,7 +225,23 @@ class UserTasks implements UserModel
         $sql2 = "SELECT img_path FROM imatge WHERE id = $id";
         $aux = $this->db->fetchAssoc($sql2);
 
+        $sql3 = "SELECT sizeImage FROM imatge WHERE id = $id";
+        $aux2 = $this->db->fetchAssoc($sql3);
+
+        $img_antiga = $aux['img_path'];
+
+        if($aux2['sizeImage'] == 400){
+            list($p1,$p2) = explode("400", $img_antiga);
+
+        }else{
+            list($p1,$p2) = explode("100", $img_antiga);
+        }
+
+        $img_antiga = $p1.'Original'.$p2;
+
         unlink($aux['img_path']);
+        unlink($img_antiga);
+
         $sql = "DELETE  FROM imatge WHERE id = $id";
         $this->db->exec($sql);
 

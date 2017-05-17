@@ -48,7 +48,6 @@ class ImageController{
         $dades = $repo->dadesImatges("eliminado");
         $aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));
-        list($name, $img) = explode("!=!", $info);
         $url = '/galeria';
         return new RedirectResponse($url);
     }

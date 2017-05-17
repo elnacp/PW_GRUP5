@@ -93,7 +93,18 @@ class BaseController{
             $sql = "SELECT img_path FROM imatge WHERE id = $id";
             $d = $app['db']->fetchAssoc($sql);
             $img_antiga = $d['img_path'];
+
+            if($size == 400){
+                list($p1,$p2) = explode("400", $img_antiga);
+
+            }else{
+                list($p1,$p2) = explode("100", $img_antiga);
+            }
+
+            $antiga_original = $p1.'Original'.$p2;
+
             unlink($img_antiga);
+            unlink($antiga_original);
            /* $kk = '';
 
             if ($size==400){
@@ -116,6 +127,8 @@ class BaseController{
         }
 
         $imgAux = new DBController();
+
+
 
         $imgAux->uploadImageResize($img, $title, $size);
         $img_d = './assets/uploads/' . $size . $title . date("m-d-y") . date("h:i:sa") . ".jpg";

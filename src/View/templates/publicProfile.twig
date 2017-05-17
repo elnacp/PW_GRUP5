@@ -2,33 +2,68 @@
 {% block title %} Home {% endblock %}
 {% block head %}
     {{ parent() }}
-    <link rel="stylesheet" href={{ asset('/hello.css', 'css') }}>
+    <link rel="stylesheet" href={{ asset('/userProfile.css', 'css') }}>
 {% endblock %}
 {% block content %}
     <br>
     <br>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> {{ dadesUsuari.username }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center">
+                                <img alt="User Pic" src="{{ dadesUsuari.path }}" class="img-circle img-responsive"> </div>
+                            <div class=" col-md-9 col-lg-9 ">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <tr>
+                                        <td>Nombre usuario:</td>
+                                        <td>{{ dadesUsuari.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Numero de imagenes publicadas:</td>
+                                        <td>{{ dadesUsuari.publicades }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Numero de comentarios:</td>
+                                        <td>{{ dadesUsuari.comentaris }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel panel-info">
-        {{  dadesUsuari| raw }}
 
-    <p>Odernar per:</p>
-        <form method="get" id="sleccio">
-            <input class="radio" type="radio" id="creacio" name="opcio" value="1" >Creacio</input><br>
-            <input class="radio" type="radio" id="likes" name="opcio" value="2" >Likes</input><br>
-            <input class="radio" type="radio" id="comentaris" name="opcio" value="3" >Comentaris</input><br>
-            <input class="radio" type="radio" id="visualitzacions" name="opcio" value="4">Visualitzacions</input><br>
-            <button type="submit" class="button button-block" />Ordenar</button>
-        </form>
+
+        <div class="formulari" id="ordenar">
+            <p>Odernar per:</p>
+            <form method="get" id="sleccio">
+                <input class="radio" type="radio" id="creacio" name="opcio" value="1" ></input>
+                <label for="male">Creacio</label>
+                <input class="radio" type="radio" id="likes" name="opcio" value="2" ></input>
+                <label for="male">Likes</label>
+                <input class="radio" type="radio" id="comentaris" name="opcio" value="3" ></input>
+                <label for="male">Comentaris</label>
+                <input class="radio" type="radio" id="visualitzacions" name="opcio" value="4"></input>
+                <label for="male">Visualitzacions</label><br>
+                <button type="submit" class="button button-block" />Ordenar</button>
+            </form>
             <div class="imatges">
                 {{  imatgesPublic| raw }}
             </div>
 
         </div>
-
     </div>
-
-
-    <script src={{ asset('/usuariPublic.js', 'js') }}></script>
-
+    </div>
 
 {% endblock %}

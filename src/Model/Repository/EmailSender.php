@@ -51,7 +51,12 @@ class EmailSender{
         $mail->Subject = 'Activar cuenta';
         $mail->Body = $msg;
         $mail->addAddress($email);
-        return $mail->send();
+
+        if ($mail->send()){
+            return true;
+        }else{
+            return false;
+        }
 
     }
 }

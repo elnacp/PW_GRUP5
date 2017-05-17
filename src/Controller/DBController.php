@@ -116,16 +116,18 @@ class DBController
                 $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
                 $id = $repo->getUserId($nickname);
                 $sender = new EmailSender();
-                if ($sender->sendEmail($app,$email, $id)){
+                if ($sender->sendEmail($app,$email,$id)){
 
                     $response->setStatusCode(Response::HTTP_OK);
-                    $content = $app['twig']->render('error.twig', [
-                        'message' => 'Email Enviado correctamente',
-                        'logejat' => false,
-                        'username' => '',
-                        'image' => null
 
-                    ]);
+                    $content = $app['twig']->render('newPost.twig', [
+                            'message' => 'Email enviado correctamente. Esperando Activación.',
+                            'logejat' => true,
+                            'username' => '',
+                            'image' => null,
+
+                        ]
+                    );
 
                 }else{
 

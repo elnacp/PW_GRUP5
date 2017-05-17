@@ -78,7 +78,8 @@ class TaskController{
             'logejat' => false,
             'imagen' => null,
             'username' => '',
-            'image' => null
+            'image' => null,
+            'message' => null
         ] );
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);

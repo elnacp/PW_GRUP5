@@ -123,7 +123,7 @@ class TaskController{
 
     public function galeria(Application $app){
         $repo = new UserTasks($app['db']);
-        $dades = $repo->dadesImatges();
+        $dades = $repo->dadesImatges("0");
         $aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));
         list($name, $img) = explode("!=!", $info);
@@ -175,7 +175,7 @@ class TaskController{
         //echo('alert("Desea eliminar la foto?"');
         $repo = new UserTasks($app['db']);
         $repo->deleteImage($id);
-        $dades = $repo->dadesImatges();
+        $dades = $repo->dadesImatges("eliminado");
         $aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));
         list($name, $img) = explode("!=!", $info);

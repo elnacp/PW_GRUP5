@@ -22,7 +22,7 @@ interface UserModel
 
     public function DBnewPost($title, $path_name, $private, $sizeImage);
 
-    public function dadesImatges();
+    public function dadesImatges($string);
 
     public function ActivateUser($nickname);
 

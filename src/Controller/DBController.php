@@ -3,6 +3,7 @@
 namespace SilexApp\Controller;
 
 use Silex\Application;
+use SilexApp\Model\Repository\resampleService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,6 +11,7 @@ use SilexApp\Model\Repository\UserTasks;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use SilexApp\Model\Repository\EmailSender;
 use SilexApp\Model\Repository\UpdateBaseService;
+
 
 
 
@@ -89,6 +91,8 @@ class DBController
         $img = $request->files->get('ProfileImg');
         //var_dump($size);
         $response = new Response();
+        $resize = new resampleService();
+
 
         $repo = new UserTasks($app['db']);
         if ($img == NULL){
@@ -107,20 +111,35 @@ class DBController
             );
             $response->setContent($content);
             return $response;
+
         }else{
-            move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
-            $img = './assets/uploads/' . $title . date("m-d-y") .date("h:i:sa"). ".jpg";
+            $width = 0;
+            $height = 0;
+
+            if($size == "gran"){
+                $size = 400;
+                $width = 400;
+                $height = 300;
+            }
+
+            if($size == "petita"){
+                $size = 100;
+                $width = 100;
+                $height = 100;
+            }
+
+            $path = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa") . ".jpg";
+            $resize ->resizeImage($img->getPathname(), $path, $width, $height);
+
+            move_uploaded_file($img->getPathname(),'./assets/uploads/Original' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa"). ".jpg";
 
             if ($privada === "on") {
                 $private = 1;
             } else {
                 $private = 0;
             }
-            if($size === "gran"){
-                $size = 400;
-            }else{
-                $size = 100;
-            }
+
         $repo = new UserTasks($app['db']);
         $ok = $repo->DBnewPost($title, $img, $private, $size);
 

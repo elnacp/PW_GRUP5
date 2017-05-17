@@ -135,30 +135,35 @@ class UserTasks implements UserModel
 
     }
 
-    public function dadesImatges()
+    public function dadesImatges($string)
     {
         $sql = "SELECT user_id FROM logejat";
         $stm = $this->db->fetchAssoc($sql);
         $id = $stm['user_id'];
         $sql = "SELECT * FROM imatge WHERE user_id = ?";
         $stm = $this->db->fetchAll($sql, array((int)$id));
-
         $dades = "";
 
         foreach ($stm as $s) {
+            $img = $s['img_path'];
+
+            if ($string == "eliminado"){
+                $img = '.'.$s['img_path'];
+            }
+
             $eliminar = "/eliminar/" . $s['id'];
             $editar = "/editar/" . $s['id'];
             if ($s['sizeImage'] == 400) {
                 $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <h1>" . $s['title'] . "</h1>
-                            <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"400\" height=\"300\">
+                            <img src=" . $img . " class=\"img-responsive\" width=\"400\" height=\"300\">
                             <li> <a href=" . $eliminar . " id=\"delete\" onclick= \"return confirm ('Are you sure?')\"> Eliminar </a> </li>
                             <li><a href=" . $editar . "> Editar </a> </li>
                         </div>";
             } else {
                 $dades = $dades . "<div class=\"gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe\">
                             <h1>" . $s['title'] . "</h1>
-                            <img src=" . $s['img_path'] . " class=\"img-responsive\" width=\"100\" height=\"100\">
+                            <img src=" . $img . " class=\"img-responsive\" width=\"100\" height=\"100\">
                             <li> <a href=" . $eliminar . "> Eliminar </a> </li>
                             <li><a href=" . $editar . "> Editar </a> </li>
                         </div>";
@@ -199,8 +204,13 @@ class UserTasks implements UserModel
 
     public function deleteImage($id)
     {
+        $sql2 = "SELECT img_path FROM imatge WHERE id = $id";
+        $aux = $this->db->fetchAssoc($sql2);
+
+        unlink($aux['img_path']);
         $sql = "DELETE  FROM imatge WHERE id = $id";
         $this->db->exec($sql);
+
     }
 
     public function editInformation($title, $path_name, $private, $id, $sizeImage)

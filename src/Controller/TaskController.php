@@ -258,7 +258,7 @@ class TaskController{
                 $birthdate = 'Hace '.$birthdate.' años';
             }
 
-            $image= '.'.$s['img_path'];
+            $image= $s['img_path'];
             $sql1 = "SELECT username FROM usuari WHERE id = ?";
             $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
             $sql3 = "SELECT * FROM usuari WHERE id = ?";

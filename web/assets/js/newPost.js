@@ -7,6 +7,7 @@ $("#files").change(function(){
         reader.readAsDataURL(this.files[0]);
         reader.onload = function(e){
             $("#PostImg").attr('src', e.target.result);
+            $("#PostImg").attr('class', 'image-responsive');
             $("#files").attr('value', e.target.result);
         }
     }

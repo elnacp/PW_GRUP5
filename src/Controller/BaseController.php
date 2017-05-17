@@ -114,7 +114,7 @@ class BaseController{
         }
         $repo->editInformation($title, $img, $private, $id, $size);
         $dades = $repo->dadesImatges("eliminado");
-        $aux = new UpdateBaseService($app['db']);
+        /*$aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));
         list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('galeria.twig', [
@@ -129,7 +129,10 @@ class BaseController{
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
         $response->setContent($content);
-        return $response;
+        return $response;*/
+
+        $url = '/galeria';
+        return new RedirectResponse($url);
 
 
     }

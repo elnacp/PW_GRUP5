@@ -128,8 +128,13 @@ class DBController
                 $height = 100;
             }
 
+            move_uploaded_file($img->getPathname(),'./assets/tmp/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
+            $imgaux = './assets/tmp/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg";
+
             $path = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa") . ".jpg";
-            $resize ->resizeImage($img->getPathname(), $path, $width, $height);
+            $resize ->resizeImage($imgaux, $path, $width, $height);
+
+            unlink($imgaux);
 
             move_uploaded_file($img->getPathname(),'./assets/uploads/Original' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
             $img = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa"). ".jpg";

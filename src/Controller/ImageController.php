@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
 use SilexApp\Model\Repository\UpdateBaseService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class ImageController{
 
@@ -28,7 +30,8 @@ class ImageController{
             'username' =>$name,
             'sizeImage'=>$imatge['sizeImage'],
             'id' => $id,
-            'image' => $img
+            'image' => $img,
+            'actual' => '.'.$imatge['img_path']
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -46,19 +49,8 @@ class ImageController{
         $aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));
         list($name, $img) = explode("!=!", $info);
-        $content = $app['twig']->render('galeria.twig', [
-            'logejat' => true,
-            'dades' => $dades,
-            'message' => 'Se ha eliminado correctamente!',
-            'username' => $name,
-            'image' => $img
-
-        ]);
-        $response = new Response();
-        $response->setStatusCode($response::HTTP_OK);
-        $response->headers->set('Content-Type', 'text/html');
-        $response->setContent($content);
-        return $response;
+        $url = '/galeria';
+        return new RedirectResponse($url);
     }
 
     public function visualitzacioImatge(Application $app, $id)

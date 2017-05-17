@@ -17,7 +17,6 @@ $("#files").change(function(){
 });
 
 function valNickname(nickname){
-    alert("entra");
     return (nickname.length > 20);
 
 }
@@ -70,6 +69,7 @@ function valAge(age){
 function valPassword(password){
     var valid = false;
     var num, min, may = false;
+
     if(password.length >= 6 && password.length< 13){
         var TCode = password.value;
         if (/[a-z]/.test(password)){
@@ -88,15 +88,16 @@ function valPassword(password){
     }
     return valid;
 }
+
 $('#registro').submit(function(event) {
 
-    alert("entra");
 
     var nickname = $('#New_nickname').val();
     var age = $('#New_edad').val();
     var pass = $('#New_pass').val();
     var repeat = $('#sure').val();
-
+    console.log(pass);
+    console.log(repeat);
 
     var isCorrect = true;
 
@@ -116,14 +117,19 @@ $('#registro').submit(function(event) {
         alert("ERROR! Validación de contraseña incorrecta.");
         isCorrect = false;
 
-    } else if (!valPassword(pass)){
-        alert("ERROR! Contraseña no válida!");
-        isCorrect = false;
+
+    } else{
+        if (!valPassword(pass)){
+            alert("ERROR! Contraseña no válida!");
+            isCorrect = false;
+        }
     }
 
 
     if(!isCorrect){
         event.preventDefault();
+    }else{
+
     }
 
 });

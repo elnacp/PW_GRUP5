@@ -55,4 +55,42 @@ class BaseController{
     }
 
 
+    public function DBeditImage(Application $app, Request $request, $id)
+    {
+        $title = htmlspecialchars($request->get('title'));
+        $img = $request->files->get('imagen');
+        $privada = htmlspecialchars($request->get('privada'));
+
+        if ($privada === "on") {
+            $private = 1;
+        } else {
+            $private = 0;
+        }
+
+        //var_dump($path_name);
+        $repo = new UserTasks($app['db']);
+
+        if ($img != NULL){
+            $repo->deleteActualPic($title);
+            move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg";
+        }else{
+            $img = $repo->getActualPostImg($id,$img);
+        }
+        $repo->editInformation($title, $img, $private, $id);
+        $dades = $repo->dadesImatges();
+        $content = $app['twig']->render('galeria.twig', [
+            'logejat' => true,
+            'dades' => $dades,
+            'message' => 'Se ha editado correctamente!'
+        ]);
+        $response = new Response();
+        $response->setStatusCode($response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/html');
+        $response->setContent($content);
+        return $response;
+
+
+    }
+
 }

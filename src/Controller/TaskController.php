@@ -18,7 +18,6 @@ class TaskController{
         if($app['session']->has('name')){
             $log = true;
         }
-
         $usuari =  $app['session']->get('name');
 
         $imgMesVistes = $repo->home1($log,$usuari,"0");
@@ -140,6 +139,7 @@ class TaskController{
         $response->setContent($content);
         return $response;
     }
+
 
     public function editarImatge(Application $app, $id){
         $sql = "SELECT * FROM imatge WHERE id=$id";
@@ -299,6 +299,6 @@ class TaskController{
 
 
     //}
-
+    
 }
 

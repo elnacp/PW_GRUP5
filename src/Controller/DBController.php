@@ -15,6 +15,7 @@ use SilexApp\Model\Repository\UpdateBaseService;
 
 class DBController
 {
+
     public function DBlogin(Application $app, Request $request)
     {
         $response = new Response();
@@ -48,6 +49,7 @@ class DBController
 
     }
 
+
     public function save_image($inPath, $outPath)
     { //Download images from remote server
         $in = fopen($inPath, "rb");
@@ -58,6 +60,7 @@ class DBController
         fclose($in);
         fclose($out);
     }
+
 
 
     public function DBeditProfile(Application $app, Request $request)
@@ -240,48 +243,7 @@ class DBController
         return $response;
     }
 
-    public function DBeditImage(Application $app, Request $request, $id)
-    {
-        $title = htmlspecialchars($request->get('title'));
-        $img = $request->files->get('imagen');
-        $privada = htmlspecialchars($request->get('privada'));
 
-        if ($privada === "on") {
-            $private = 1;
-        } else {
-            $private = 0;
-        }
-
-        $repo = new UserTasks($app['db']);
-
-        if ($img != NULL){
-            $repo->deleteActualPic($title);
-            move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg");
-            $img = './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg";
-        }else{
-            $img = $repo->getActualPostImg($id,$img);
-        }
-        $repo->editInformation($title, $img, $private, $id);
-        $dades = $repo->dadesImatges();
-        $aux = new UpdateBaseService($app['db']);
-        $info = $aux->getUserInfo($app['session']->get('name'));
-        list($name, $img) = explode("!=!", $info);
-        $content = $app['twig']->render('galeria.twig', [
-            'logejat' => true,
-            'dades' => $dades,
-            'message' => 'Se ha editado correctamente!',
-            'username' => $name,
-            'image' => $img
-        ]);
-
-        $response = new Response();
-        $response->setStatusCode($response::HTTP_OK);
-        $response->headers->set('Content-Type', 'text/html');
-        $response->setContent($content);
-        return $response;
-
-
-    }
     public function publicProfile(Application $app, Request $request, $username){
         $opcio = htmlspecialchars($request->get('opcio'));
         //f$response = new Response();
@@ -315,6 +277,7 @@ class DBController
         $response->setContent($content);
         return $response;
     }
+
 
 
 }

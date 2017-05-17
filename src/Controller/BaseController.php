@@ -87,11 +87,22 @@ class BaseController{
             $width = 100;
             $height = 100;
         }
-
+        $aux = '';
         if ($img != NULL){
             $sql = "SELECT img_path FROM imatge WHERE id = $id";
             $d = $app['db']->fetchAssoc($sql);
             $img_antiga = $d['img_path'];
+            $kk = '';
+
+            if ($size==400){
+                list($kk,$aux) = explode("400",$img_antiga);
+            }
+            if ($size==100){
+                list($kk,$aux) = explode("100",$img_antiga);
+            }
+
+            $aux = 'Original'.$aux;
+            unlink($aux);
             unlink($img_antiga);
             $path = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa") . ".jpg";
             $resize ->resizeImage($img->getPathname(), $path, $width, $height);

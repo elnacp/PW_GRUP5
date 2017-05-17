@@ -88,7 +88,7 @@ function valPassword(password){
     }
     return valid;
 }
-$('#cambios').submit(function(event) {
+$('#registro').submit(function(event) {
 
     alert("entra");
 
@@ -124,8 +124,6 @@ $('#cambios').submit(function(event) {
 
     if(!isCorrect){
         event.preventDefault();
-    }else{
-
     }
 
 });

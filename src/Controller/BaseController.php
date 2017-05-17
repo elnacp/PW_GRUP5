@@ -88,11 +88,13 @@ class BaseController{
             $height = 100;
         }
         $aux = '';
+
         if ($img != NULL){
             $sql = "SELECT img_path FROM imatge WHERE id = $id";
             $d = $app['db']->fetchAssoc($sql);
             $img_antiga = $d['img_path'];
-            $kk = '';
+            unlink($img_antiga);
+           /* $kk = '';
 
             if ($size==400){
                 list($kk,$aux) = explode("400",$img_antiga);
@@ -108,11 +110,17 @@ class BaseController{
             $resize ->resizeImage($img->getPathname(), $path, $width, $height);
             move_uploaded_file($img->getPathname(),'./assets/uploads/Original' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
             $img = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa"). ".jpg";
-
+            */
         }else{
             $img = $repo->getActualPostImg($id,$img);
         }
-        $repo->editInformation($title, $img, $private, $id, $size);
+
+        $imgAux = new DBController();
+
+        $imgAux->uploadImageResize($img, $title, $size);
+        $img_d = './assets/uploads/' . $size . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
+
+        $repo->editInformation($title, $img_d, $private, $id, $size);
         $dades = $repo->dadesImatges("eliminado");
         /*$aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));

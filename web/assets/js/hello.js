@@ -130,24 +130,25 @@ window.onload = function() {
                 if (logejat == 1) {
                     var href = "/comentari/" + postVisibles[index]['img_id'] + "/" + postVisibles[index]['autor'];
                     form.setAttribute("action", href);
-                }
-                form.setAttribute("method", "POST");
-                var textarea = document.createElement('textarea');
-                textarea.setAttribute("rows", 4);
-                textarea.setAttribute("name", "comentari");
-                textarea.setAttribute("class", "center-block");
-                textarea.setAttribute("id", "comentariArea");
-                var br = document.createElement('br');
-                var button = document.createElement('button');
-                button.innerHTML = "Comentar";
-                //<button type="submit" class="[ btn btn-success disabled ]" id="ButtonCom">Comentar</button>
-                button.setAttribute("class", "[ btn btn-success disabled ]");
-                button.setAttribute("type", "submit");
-                button.setAttribute("id","ButtonCom");
+                    form.setAttribute("method", "POST");
+                    var textarea = document.createElement('textarea');
+                    textarea.setAttribute("rows", 4);
+                    textarea.setAttribute("name", "comentari");
+                    textarea.setAttribute("class", "center-block");
+                    textarea.setAttribute("id", "comentariArea");
+                    var br = document.createElement('br');
+                    var button = document.createElement('button');
+                    button.innerHTML = "Comentar";
+                    //<button type="submit" class="[ btn btn-success disabled ]" id="ButtonCom">Comentar</button>
+                    button.setAttribute("class", "[ btn btn-success disabled ]");
+                    button.setAttribute("type", "submit");
+                    button.setAttribute("id","ButtonCom");
 
-                form.appendChild(textarea);
-                form.appendChild(br);
-                form.appendChild(button);
+                    form.appendChild(textarea);
+                    form.appendChild(br);
+                    form.appendChild(button);
+                }
+
                 div6.appendChild(form);
                 var div7 = document.createElement('div');
                 div7.setAttribute("class", "clearfix");
@@ -246,23 +247,24 @@ window.onload = function() {
                 if (logejat == 1) {
                     var href = "/comentari/" + postVisibles[index]['img_id'] + "/" + postVisibles[index]['autor'];
                     form.setAttribute("action", href);
-                }
-                form.setAttribute("method", "POST");
-                var textarea = document.createElement('textarea');
-                textarea.setAttribute("rows", 4);
-                textarea.setAttribute("name", "comentari");
-                textarea.setAttribute("class", "center-block");
-                textarea.setAttribute("id", "comentariArea");
-                var br = document.createElement('br');
-                var button = document.createElement('button');
-                button.innerHTML = "Comentar";
-                button.setAttribute("class", "[ btn btn-success disabled ]");
-                button.setAttribute("type", "submit");
-                button.setAttribute("id","ButtonCom");
+                    form.setAttribute("method", "POST");
+                    var textarea = document.createElement('textarea');
+                    textarea.setAttribute("rows", 4);
+                    textarea.setAttribute("name", "comentari");
+                    textarea.setAttribute("class", "center-block");
+                    textarea.setAttribute("id", "comentariArea");
+                    var br = document.createElement('br');
+                    var button = document.createElement('button');
+                    button.innerHTML = "Comentar";
+                    button.setAttribute("class", "[ btn btn-success disabled ]");
+                    button.setAttribute("type", "submit");
+                    button.setAttribute("id","ButtonCom");
 
-                form.appendChild(textarea);
-                form.appendChild(br);
-                form.appendChild(button);
+                    form.appendChild(textarea);
+                    form.appendChild(br);
+                    form.appendChild(button);
+                }
+
                 div6.appendChild(form);
                 var div7 = document.createElement('div');
                 div7.setAttribute("class", "clearfix");

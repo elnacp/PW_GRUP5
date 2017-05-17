@@ -310,8 +310,7 @@ class UserTasks implements UserModel
                                                      Visitas: +" . $visites . "</span>
 
                                                 </button>
-                                                <div class=\"input-placeholder\">Escribe un comentario...</div>
-                                            </div>";
+                                            ";
             if ($log) {
                 $imgMesVistes = $imgMesVistes . "<div class=\"panel-google-plus-comment\">
                                                 <div class=\"panel-google-plus-textarea\">
@@ -323,8 +322,11 @@ class UserTasks implements UserModel
                                                    <button type=\"reset\" class=\"[ btn btn-default ]\">Cancelar</button>
                                                     
                                                 </div>
+                                                </div>
                                                 <div class=\"clearfix\"></div>
                                                 </div>";
+            }else{
+                $imgMesVistes = $imgMesVistes ."</div>";
             }
 
             $imgMesVistes = $imgMesVistes . "</div>";

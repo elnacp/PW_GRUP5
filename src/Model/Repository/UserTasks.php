@@ -632,6 +632,15 @@ class UserTasks implements UserModel
             $s4 = implode('',$s4);
             $dades = "";
 
+            $a = array();
+            $a['username'] = $username;
+            $a['publicades'] = $s2;
+            $a['comentaris'] = $s3;
+            $a['path'] = $s4;
+
+            return $a;
+
+            /*
         $visualitzacioImatge = "/perfil/" . $username;
         $dades = $dades .
             "<div class=\"panel-heading\">
@@ -663,8 +672,6 @@ class UserTasks implements UserModel
                         </tbody>
                     </table>
                 </div>
-            </div>";
-
-        return $dades;
+            </div>";*/
     }
 }

@@ -6,20 +6,21 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use SilexApp\Model\Repository\UserTasks;
+use SilexApp\Model\Repository\EmailSender;
 use SilexApp\Model\Repository\Ajax;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+
 
 class ProfileController{
+
     public function DBeditProfile(Application $app, Request $request)
     {
         $name = htmlspecialchars($_POST['nickname']);
         $birth = htmlspecialchars($_POST['edad']);
         $pass1 = htmlspecialchars($_POST['password1']);
-        //$img1 = $_POST['imgP'];
         /** @var UploadedFile $img */
         $img = $request->files->get('newProfileImg');
-
-        //$pass2 = htmlspecialchars($_POST['password2']);
-        //$path = htmlspecialchars($_POST['files[]']);
 
         $repo = new UserTasks($app['db']);
         if ($img != NULL){
@@ -36,12 +37,13 @@ class ProfileController{
                 'logejat' => true,
                 'username' => $name,
                 'birthdate' =>$birth,
-                'imagen' =>$img
+                'image' =>$img
             ]
         );
         $response->setContent($content);
         return $response;
     }
+
 
     public function DBlogin(Application $app, Request $request)
     {
@@ -58,6 +60,8 @@ class ProfileController{
             $content = $app['twig']->render('LogIn.twig', [
                     'message' => 'User not found',
                     'logejat' => false,
+                    'username' => '',
+                    'image' =>null
                 ]
             );
             $response->setContent($content);
@@ -66,11 +70,14 @@ class ProfileController{
 
             //echo("adios");
             $repo->logejarUsuari($name);
-            $url = '/iniciarSession/' . $name;
+            $id = $repo->getUserId($name);
+            $act_name = $repo->getName($id);
+            $url = '/iniciarSession/' . $act_name;
             return new RedirectResponse($url);
         }
 
     }
+
 
     public function DBRegister(Application $app, Request $request)
     {
@@ -88,28 +95,48 @@ class ProfileController{
         }
 
         $repo = new UserTasks($app['db']);
-        $exists = $repo->checkUser($nickname);
+        $exists = $repo->checkUser($nickname, $email);
         $response = new Response();
 
 
         if (!$exists) {
-            //$sender = new EmailSender();
-            //if ($sender->sendEmail($email)){$repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
             $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
-            $response->setStatusCode(Response::HTTP_OK);
+            $id = $repo->getUserId($nickname);
+            $sender = new EmailSender();
+            if ($sender->sendEmail($app,$email,$id)){
 
-            $content = $app['twig']->render('validate.twig', [
-                'message' => 'Email enviado correctamente:',
-                'logejat' => false,
-                'name' => $nickname,
-            ]);
+                $response->setStatusCode(Response::HTTP_OK);
+
+                $content = $app['twig']->render('registerUser.twig', [
+                        'message' => 'Email enviado correctamente. Esperando Activación.',
+                        'logejat' => true,
+                        'username' => '',
+                        'image' => null,
+
+                    ]
+                );
+
+            }else{
+
+                $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+                $content = $app['twig']->render('error.twig', [
+                    'message' => 'No se ha podido enviar el email',
+                    'logejat' => false,
+                    'username' => '',
+                    'image' => null
+
+                ]);
+            }
+
         }else{
-            $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
+            $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
             $content = $app['twig']->render('error.twig', [
-                    'message' => 'El usuario ya existe',
-                    'logejat' => false
-                ]
-            );
+                'message' => 'Este usuario ya ha sido registrado',
+                'logejat' => false,
+                'username' => '',
+                'image' => null
+
+            ]);
         }
         $response->setContent($content);
 

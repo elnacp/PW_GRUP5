@@ -24,6 +24,7 @@ class BaseController{
         return new Response($content);
     }
 
+
     public function adminAction(Application $app){
         $aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));
@@ -67,7 +68,6 @@ class BaseController{
             $private = 0;
         }
 
-        //var_dump($path_name);
         $repo = new UserTasks($app['db']);
 
         if ($img != NULL){
@@ -79,11 +79,17 @@ class BaseController{
         }
         $repo->editInformation($title, $img, $private, $id);
         $dades = $repo->dadesImatges();
+        $aux = new UpdateBaseService($app['db']);
+        $info = $aux->getUserInfo($app['session']->get('name'));
+        list($name, $img) = explode("!=!", $info);
         $content = $app['twig']->render('galeria.twig', [
             'logejat' => true,
             'dades' => $dades,
-            'message' => 'Se ha editado correctamente!'
+            'message' => 'Se ha editado correctamente!',
+            'username' => $name,
+            'image' => $img
         ]);
+
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');

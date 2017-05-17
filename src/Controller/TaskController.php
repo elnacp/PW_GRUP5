@@ -18,6 +18,7 @@ class TaskController{
         if($app['session']->has('name')){
             $log = true;
         }
+
         $usuari =  $app['session']->get('name');
 
         $imgMesVistes = $repo->home1($log,$usuari,"0");
@@ -119,6 +120,7 @@ class TaskController{
         $response->setContent($content);
         return $response;
     }
+
     public function galeria(Application $app){
         $repo = new UserTasks($app['db']);
         $dades = $repo->dadesImatges();
@@ -295,10 +297,11 @@ class TaskController{
 
 
 
+
     //public function publicProfile(Application $app, Request $request ,$username){
 
 
     //}
-    
+
 }
 

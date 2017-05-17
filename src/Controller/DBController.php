@@ -49,20 +49,6 @@ class DBController
 
     }
 
-
-    public function save_image($inPath, $outPath)
-    { //Download images from remote server
-        $in = fopen($inPath, "rb");
-        $out = fopen($outPath, "wb");
-        while ($chunk = fread($in, 8192)) {
-            fwrite($out, $chunk, 8192);
-        }
-        fclose($in);
-        fclose($out);
-    }
-
-
-
     public function DBeditProfile(Application $app, Request $request)
     {
         $name = htmlspecialchars($_POST['nickname']);
@@ -91,71 +77,6 @@ class DBController
             ]
         );
         $response->setContent($content);
-        return $response;
-    }
-
-
-    public function DBRegister(Application $app, Request $request)
-    {
-        $nickname = $request->get('nickname');
-        $email = $request->get('email');
-        $birthdate = $request->get('edad');
-        $password = $request->get('password');
-        /** @var UploadedFile $img */
-        $img = $request->files->get('ProfileImg');
-        if ($img == NULL){
-            $img = './assets/img/' . "User.jpg";
-        }else{
-            move_uploaded_file($img->getPathname(), './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg");
-            $img = './assets/uploads/' . $nickname . date("m-d-y"). date("h:i:sa") . ".jpg";
-        }
-
-        $repo = new UserTasks($app['db']);
-        $exists = $repo->checkUser($nickname, $email);
-        $response = new Response();
-
-
-        if (!$exists) {
-                $repo->RegisterUser($nickname, $email, $birthdate, $password, $img);
-                $id = $repo->getUserId($nickname);
-                $sender = new EmailSender();
-                if ($sender->sendEmail($app,$email,$id)){
-
-                    $response->setStatusCode(Response::HTTP_OK);
-
-                    $content = $app['twig']->render('newPost.twig', [
-                            'message' => 'Email enviado correctamente. Esperando Activación.',
-                            'logejat' => true,
-                            'username' => '',
-                            'image' => null,
-
-                        ]
-                    );
-
-                }else{
-
-                    $response->setStatusCode(Response::HTTP_BAD_REQUEST);
-                    $content = $app['twig']->render('error.twig', [
-                        'message' => 'No se ha podido enviar el email',
-                        'logejat' => false,
-                        'username' => '',
-                        'image' => null
-
-                    ]);
-                }
-
-        }else{
-            $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
-            $content = $app['twig']->render('error.twig', [
-                'message' => 'Este email ya ha sido registrado',
-                'logejat' => false,
-                'username' => '',
-                'image' => null
-
-            ]);
-        }
-        $response->setContent($content);
-
         return $response;
     }
 

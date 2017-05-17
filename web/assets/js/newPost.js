@@ -39,18 +39,6 @@ function archivo(evt) {
 
 document.getElementById('files').addEventListener('change', archivo, false);
 
-$('#imageGran').oncheck = function(){
-    console.log("click");
-    $('#imageGran').attr("checked","checked");
-    $('#imagePetita').attr("checked"," ");
-
-};
-$('#imagePetita').onclick = function(){
-    console.log("clack");
-    $('#imagePetita').attr("checked","checked");
-    $('#imageGran').attr("checked"," ");
-
-};
 
 $(document).ready(function(){
     $('input[name="size1"]').change(function(){

@@ -3,11 +3,13 @@
 namespace  SilexApp\Controller;
 
 use Silex\Application;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use SilexApp\Model\Repository\resampleService;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\DBAL\Configuration;
 use SilexApp\Model\Repository\UserTasks;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use SilexApp\Model\Repository\EmailSender;
 use SilexApp\Model\Repository\UpdateBaseService;
 
 
@@ -61,6 +63,7 @@ class BaseController{
         $title = htmlspecialchars($request->get('title'));
         $img = $request->files->get('imagen');
         $privada = htmlspecialchars($request->get('privada'));
+        $size = $request->get('size');
 
         if ($privada === "on") {
             $private = 1;
@@ -69,16 +72,37 @@ class BaseController{
         }
 
         $repo = new UserTasks($app['db']);
+        $resize = new resampleService();
+        $width = 0;
+        $height = 0;
+
+        if($size == "gran"){
+            $size = 400;
+            $width = 400;
+            $height = 300;
+        }
+
+        if($size == "petita"){
+            $size = 100;
+            $width = 100;
+            $height = 100;
+        }
 
         if ($img != NULL){
-            $repo->deleteActualPic($title);
-            move_uploaded_file($img->getPathname(), './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg");
-            $img = './assets/uploads/' . $title . date("m-d-y"). date("h:i:sa") . ".jpg";
+            $sql = "SELECT img_path FROM imatge WHERE id = $id";
+            $d = $app['db']->fetchAssoc($sql);
+            $img_antiga = $d['img_path'];
+            unlink($img_antiga);
+            $path = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa") . ".jpg";
+            $resize ->resizeImage($img->getPathname(), $path, $width, $height);
+            move_uploaded_file($img->getPathname(),'./assets/uploads/Original' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa"). ".jpg";
+
         }else{
             $img = $repo->getActualPostImg($id,$img);
         }
-        $repo->editInformation($title, $img, $private, $id);
-        $dades = $repo->dadesImatges();
+        $repo->editInformation($title, $img, $private, $id, $size);
+        $dades = $repo->dadesImatges("eliminado");
         $aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));
         list($name, $img) = explode("!=!", $info);

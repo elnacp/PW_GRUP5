@@ -146,7 +146,14 @@ class UserTasks implements UserModel
 
         foreach ($stm as $s) {
             $img = $s['img_path'];
+            $size = $s['sizeImage'];
 
+            if ($size == 400){
+                list($p1, $p2) = explode("400", "$img ");
+            } else{
+                list($p1, $p2) = explode("100", "$img ");
+            }
+            $img = $p1.'Original'.$p2;
             if ($string == "eliminado"){
                 $img = '.'.$s['img_path'];
             }

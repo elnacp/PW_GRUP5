@@ -18,8 +18,8 @@ class resampleService{
 
         imagecopyresampled($img,$auximg, 0, 0, 0, 0, $width, $height, $w2, $h2);
 
-        imagedestroy($auximg);
+        imagejpeg($img, $Despath);
 
-        imagejpeg($img, $Despath, 100);
+        imagedestroy($auximg);
     }
 }

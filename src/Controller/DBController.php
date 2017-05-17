@@ -13,8 +13,6 @@ use SilexApp\Model\Repository\EmailSender;
 use SilexApp\Model\Repository\UpdateBaseService;
 
 
-
-
 class DBController
 {
 
@@ -34,7 +32,7 @@ class DBController
                     'message' => 'User not found',
                     'logejat' => false,
                     'username' => '',
-                    'image' =>null
+                    'image' => null
                 ]
             );
             $response->setContent($content);
@@ -61,12 +59,13 @@ class DBController
         $img = $request->files->get('newProfileImg');
 
         $repo = new UserTasks($app['db']);
-        if ($img != NULL){
+        if ($img != null) {
             $repo->deleteActualPic($name);
-            move_uploaded_file($img->getPathname(), './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg");
-            $img = './assets/uploads/' . $name . date("m-d-y"). date("h:i:sa") . ".jpg";
-        }else{
-            $img = $repo->getActualProfilePic($name,$img);
+            move_uploaded_file($img->getPathname(),
+                './assets/uploads/' . $name . date("m-d-y") . date("h:i:sa") . ".jpg");
+            $img = './assets/uploads/' . $name . date("m-d-y") . date("h:i:sa") . ".jpg";
+        } else {
+            $img = $repo->getActualProfilePic($name, $img);
         }
 
         $repo->validateEditProfile($name, $birth, $pass1, $img);
@@ -74,8 +73,8 @@ class DBController
         $content = $app['twig']->render('editProfile.twig', [
                 'logejat' => true,
                 'username' => $name,
-                'birthdate' =>$birth,
-                'image' =>$img
+                'birthdate' => $birth,
+                'image' => $img
             ]
         );
         $response->setContent($content);
@@ -91,13 +90,12 @@ class DBController
         $img = $request->files->get('ProfileImg');
         //var_dump($size);
         $response = new Response();
-        $resize = new resampleService();
 
 
         $repo = new UserTasks($app['db']);
-        if ($img == NULL){
-            $usuari =  $app['session']->get('name');
-            $img = $repo ->getActualProfilePic($usuari, null);
+        if ($img == null) {
+            $usuari = $app['session']->get('name');
+            $img = $repo->getActualProfilePic($usuari, null);
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $aux = new UpdateBaseService($app['db']);
             $info = $aux->getUserInfo($app['session']->get('name'));
@@ -112,32 +110,21 @@ class DBController
             $response->setContent($content);
             return $response;
 
-        }else{
-            $width = 0;
-            $height = 0;
+        } else {
 
-            if($size == "gran"){
+            if ($size == "gran") {
                 $size = 400;
                 $width = 400;
                 $height = 300;
             }
 
-            if($size == "petita"){
+            if ($size == "petita") {
                 $size = 100;
                 $width = 100;
                 $height = 100;
             }
 
-            move_uploaded_file($img->getPathname(),'./assets/tmp/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
-            $imgaux = './assets/tmp/' . $title . date("m-d-y") .date("h:i:sa") . ".jpg";
-
-            $path = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa") . ".jpg";
-            $resize ->resizeImage($imgaux, $path, $width, $height);
-
-            unlink($imgaux);
-
-            move_uploaded_file($img->getPathname(),'./assets/uploads/Original' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
-            $img = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa"). ".jpg";
+            $this->uploadImageResize($img, $title, $size);
 
             if ($privada === "on") {
                 $private = 1;
@@ -145,10 +132,12 @@ class DBController
                 $private = 0;
             }
 
-        $repo = new UserTasks($app['db']);
-        $ok = $repo->DBnewPost($title, $img, $private, $size);
+            $img_d = $img_d = './assets/uploads/' . $size . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
 
-        if ($ok) {
+            $repo = new UserTasks($app['db']);
+            $ok = $repo->DBnewPost($title, $img_d, $private, $size);
+
+            if ($ok) {
                 $url = "/";
                 return new RedirectResponse($url);
             }
@@ -192,12 +181,13 @@ class DBController
     }
 
 
-    public function publicProfile(Application $app, Request $request, $username){
+    public function publicProfile(Application $app, Request $request, $username)
+    {
         $opcio = htmlspecialchars($request->get('opcio'));
         //f$response = new Response();
         $repo = new UserTasks($app['db']);
         $log = false;
-        if($app['session']->has('name')){
+        if ($app['session']->has('name')) {
             $log = true;
         }
         //$response->setStatusCode(Response::HTTP_NOT_FOUND);
@@ -207,17 +197,17 @@ class DBController
         $repo->imatgesUsuari($id);
 
         $imatgesPublic = $repo->imatgesPerfil($username, $opcio);
-        $dadesUsuari = $repo->dadesUsuari($username,$id);
-       // $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        $dadesUsuari = $repo->dadesUsuari($username, $id);
+        // $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $aux = new UpdateBaseService($app['db']);
         $info = $aux->getUserInfo($app['session']->get('name'));
         list($name, $img) = explode("!=!", $info);
-        $content = $app['twig']->render('publicProfile.twig',[
+        $content = $app['twig']->render('publicProfile.twig', [
             'logejat' => $log,
-            'imatgesPublic' =>$imatgesPublic,
-            'dadesUsuari' =>$dadesUsuari,
+            'imatgesPublic' => $imatgesPublic,
+            'dadesUsuari' => $dadesUsuari,
             'username' => $username,
-            'image' => '.'.$img
+            'image' => '.' . $img
         ]);
         $response = new Response();
         $response->setStatusCode($response::HTTP_OK);
@@ -226,6 +216,28 @@ class DBController
         return $response;
     }
 
+    /**
+     * @param $img: Imatge de FILE.
+     * @param $title: Nom de la imatge.
+     * @param $size: Mida (400 o 100).
+     */
+    public function uploadImageResize($img, $title, $size){
+        $width = 400;
+        $height = 300;
+        if ($size == 100) {
+            $width = 100;
+            $height = 100;
+        }
+
+        $img_o = 'assets/uploads/Original' . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
+
+        move_uploaded_file($img->getPathname(), $img_o);
+
+        $img_d = './assets/uploads/' . $size . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
+
+        $resize = new resampleService();
+        $resize->resizeImage($img_o, $img_d, $width, $height);
+    }
 
 
 }

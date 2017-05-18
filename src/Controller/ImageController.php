@@ -69,7 +69,7 @@ class ImageController{
         }
 
         if ($privada == 1) {
-            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            $response->setStatusCode(Response::HTTP_FORBIDDEN);
             $content = $app['twig']->render('error.twig', [
                     'message' => ' Imagen privada',
                     'logejat' => $logejat,
@@ -80,7 +80,6 @@ class ImageController{
             $response->setContent($content);
             return $response;
         } else {
-            $response->setStatusCode(Response::HTTP_NOT_FOUND);
             $sql = "SELECT * FROM imatge WHERE id = ?";
             $s = $app['db']->fetchAssoc($sql, array((int)$id));
             $autor = $s['user_id'];

@@ -23,6 +23,7 @@ class FunctionsController{
         $sql = "SELECT * FROM imatge WHERE id = ?";
         $s = $app['db']->fetchAssoc($sql, array((int)$id));
         $autor = $s['user_id'];
+        $private = $s['private'];
         $sql1 = "SELECT username FROM usuari WHERE id = ?";
         $s2 = $app['db']->fetchAssoc($sql1, array((int)$autor));
         $sql3 = "SELECT * FROM usuari WHERE id = ?";
@@ -33,24 +34,35 @@ class FunctionsController{
         $l = $app['db']->fetchAssoc($sql4, array((int)$s['id']));
         $likes = $l['total'];
 
+        if($private == 0){
+            $content = $app['twig']->render('imatgePublica.twig', [
+                    'id' => $id,
+                    'usuari_log' => $usuari,
+                    'username' => $usuari,
+                    'logejat' => true,
+                    'autor' => $s2['username'],
+                    'title' => $s['title'],
+                    'dia' => $birthdate,
+                    'visites' => $s['visits'],
+                    'likes' => $likes,
+                    'message' => $message,
+                    'image' => '/.'.$s3['img_path'],
+                    'Imagen' => $autor = '/.'.$s['img_path'],
+                    'imgPerfil' =>'/.'.$s3['img_path'],
+                    'imgPost' => '/.'.$s['img_path']
+                ]
+            );
+        }else{
+            $content = $app['twig']->render('error.twig', [
+                    'message' => 'Las imágenes privadas no se pueden visualizar',
+                    'logejat' => true,
+                    'username' => $usuari,
+                    'image' => '/.'.$s3['img_path']
 
-        $content = $app['twig']->render('imatgePublica.twig', [
-                'id' => $id,
-                'usuari_log' => $usuari,
-                'username' => $usuari,
-                'logejat' => true,
-                'autor' => $s2['username'],
-                'title' => $s['title'],
-                'dia' => $birthdate,
-                'visites' => $s['visits'],
-                'likes' => $likes,
-                'message' => $message,
-                'image' => '/.'.$s3['img_path'],
-                'Imagen' => $autor = '/.'.$s['img_path'],
-                'imgPerfil' =>'/.'.$s3['img_path'],
-                'imgPost' => '/.'.$s['img_path']
-            ]
-        );
+                ]
+            );
+        }
+
         $response->setContent($content);
         return $response;
     }

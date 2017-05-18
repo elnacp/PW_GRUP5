@@ -212,6 +212,9 @@ class UserTasks implements UserModel
     public function deleteImage($id)
     {
 
+        $sql = "DELETE FROM notificacionsUsuari WHERE image_id = $id";
+        $this->db->exec($sql);
+        
         $sql = "DELETE FROM notificacions WHERE image_id = $id";
         $this->db->exec($sql);
 

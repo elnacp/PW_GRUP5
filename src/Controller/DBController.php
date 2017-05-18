@@ -147,8 +147,10 @@ class DBController
      * @param $size: Mida (400 o 100).
      */
     public function uploadImageResize($img, $title, $size){
+
         $width = 400;
         $height = 300;
+
         if ($size == 100) {
             $width = 100;
             $height = 100;
@@ -156,12 +158,10 @@ class DBController
 
         $img_o = 'assets/uploads/Original' . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
 
-        if (is_string($img)){
+        if(is_string($img)){
             move_uploaded_file($img, $img_o);
-
         }else{
             move_uploaded_file($img->getPathname(), $img_o);
-
         }
 
         $img_d = './assets/uploads/' . $size . $title . date("m-d-y") . date("h:i:sa") . ".jpg";

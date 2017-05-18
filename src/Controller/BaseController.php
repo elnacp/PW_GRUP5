@@ -85,39 +85,46 @@ class BaseController{
 
         }
 
-        $sql = "SELECT img_path FROM imatge WHERE id = $id";
+        $sql = "SELECT * FROM imatge WHERE id = $id";
         $d = $app['db']->fetchAssoc($sql);
+        $img_antiga = $d['img_path'];
+
+        if($size == 400){
+            list($p1,$p2) = explode("400", $img_antiga);
+
+        }
+        if($size == 100){
+            list($p1,$p2) = explode("100", $img_antiga);
+        }
+
+        $antiga_original = $p1.'Original'.$p2;
+
         if ($img != NULL){
-            $img_antiga = $d['img_path'];
 
-            if($size == 400){
-                list($p1,$p2) = explode("400", $img_antiga);
-
-            }
-            if($size == 100){
-                list($p1,$p2) = explode("100", $img_antiga);
-            }
-
-            $antiga_original = $p1.'Original'.$p2;
             unlink($antiga_original);
             unlink($img_antiga);
 
         }else{
-            $img_antiga = $d['img_path'];
-            if($size == 400){
-                list($p1,$p2) = explode("400", $img_antiga);
-            }
+            if ($size != $d['sizeImage']) {
+                $img = $d['img_path'];
+                $img_antiga = $d['img_path'];
+                if ($size == 400) {
+                    list($p1, $p2) = explode("400", $img_antiga);
+                }
 
-            if($size == 100){
-                list($p1,$p2) = explode("100", $img_antiga);
-            }
+                if ($size == 100) {
+                    list($p1, $p2) = explode("100", $img_antiga);
+                }
+                unlink($img_antiga);
 
-            $img = $p1.'Original'.$p2;
-            unlink($img_antiga);
+            }else{
+                $img = $d['img_path'];
+                $repo->editInformation($title, $img, $private, $id, $size);
+                $url = '/galeria';
+                return new RedirectResponse($url);
+            }
 
         }
-
-
         $imgAux = new DBController();
 
         $imgAux->uploadImageResize($img, $title, $size);

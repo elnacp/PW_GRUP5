@@ -78,8 +78,6 @@ $app->post('/DBnewPost','SilexApp\\Controller\\DBController::DBnewPost');
 $app->post('/DBeditImage/{id}', 'SilexApp\\Controller\\BaseController::DBeditImage');
 $app->post('/ValidateUser', 'SilexApp\\Controller\\DBController::validateUser');
 
-
-
 $app->get('/reload', 'SilexApp\\Controller\\TaskController::editProfile')->before($before);
 $app->match('/activateUser/{code}/{id}', 'SilexApp\\Controller\\ActivationUser::validateUser');
 

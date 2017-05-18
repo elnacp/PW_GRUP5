@@ -100,7 +100,6 @@ $('#registro').submit(function(event) {
     var pass = $('#New_pass').val();
     var repeat = $('#sure').val();
 
-
     var isCorrect = true;
 
     if(valNickname(nickname)){

@@ -15,39 +15,6 @@ use SilexApp\Model\Repository\UpdateBaseService;
 
 class DBController
 {
-    
-    public function DBeditProfile(Application $app, Request $request)
-    {
-        $name = htmlspecialchars($_POST['nickname']);
-        $birth = htmlspecialchars($_POST['edad']);
-        $pass1 = htmlspecialchars($_POST['password1']);
-        //$img1 = $_POST['imgP'];
-        /** @var UploadedFile $img */
-        $img = $request->files->get('newProfileImg');
-
-        $repo = new UserTasks($app['db']);
-        if ($img != null) {
-            $repo->deleteActualPic($name);
-            move_uploaded_file($img->getPathname(),
-                './assets/uploads/' . $name . date("m-d-y") . date("h:i:sa") . ".jpg");
-            $img = './assets/uploads/' . $name . date("m-d-y") . date("h:i:sa") . ".jpg";
-        } else {
-            $img = $repo->getActualProfilePic($name, $img);
-        }
-
-        $repo->validateEditProfile($name, $birth, $pass1, $img);
-        $response = new Response();
-        $content = $app['twig']->render('editProfile.twig', [
-                'logejat' => true,
-                'username' => $name,
-                'birthdate' => $birth,
-                'image' => $img
-            ]
-        );
-        $response->setContent($content);
-        return $response;
-    }
-
     public function DBnewPost(Application $app, Request $request)
     {
         $title = htmlspecialchars($request->get('title'));
@@ -56,9 +23,9 @@ class DBController
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
 
-        //var_dump($size);
         $response = new Response();
         $repo = new UserTasks($app['db']);
+
         if ($img == null) {
             $usuari = $app['session']->get('name');
             $img = $repo->getActualProfilePic($usuari, null);
@@ -78,14 +45,11 @@ class DBController
         } else {
             if ($size == "gran") {
                 $size = 400;
-                $width = 400;
-                $height = 300;
             }
             if ($size == "petita") {
                 $size = 100;
-                $width = 100;
-                $height = 100;
             }
+
             $this->uploadImageResize($img, $title, $size);
 
             if ($privada === "on") {
@@ -192,7 +156,13 @@ class DBController
 
         $img_o = 'assets/uploads/Original' . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
 
-        move_uploaded_file($img->getPathname(), $img_o);
+        if (is_string($img)){
+            move_uploaded_file($img, $img_o);
+
+        }else{
+            move_uploaded_file($img->getPathname(), $img_o);
+
+        }
 
         $img_d = './assets/uploads/' . $size . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
 

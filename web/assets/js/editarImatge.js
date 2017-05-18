@@ -1,5 +1,17 @@
 // JavaScript Document
 "use strict";
+
+    console.log("hola");
+    var img = document.getElementById("imageid");
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    var dataURL = canvas.toDataURL("image/jpeg");
+    $("#ImPostAcctual").attr('value', dataURL);
+
+
 $("#files").change(function(){
     if(this.files && this.files[0]) {
         var reader = new FileReader();
@@ -9,6 +21,7 @@ $("#files").change(function(){
             $("#PostImg").attr('src', e.target.result);
             $("#PostImg").attr('class', 'image-responsive');
             $("#files").attr('value', e.target.result);
+            $("#profilePic").attr('src', e.target.result);
         }
     }
 });

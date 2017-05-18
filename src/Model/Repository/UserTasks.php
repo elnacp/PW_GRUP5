@@ -983,9 +983,10 @@ class UserTasks implements UserModel
         return $user['username'];
     }
 
-
-
-
-
+    public function getPath($title){
+        $sql = "SELECT img_path FROM imatge WHERE title = ? ";
+        $path = $this->db->fetchAssoc($sql, array($title));
+        return $path['img_path'];
+    }
 
 }

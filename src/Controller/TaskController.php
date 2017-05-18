@@ -184,7 +184,7 @@ class TaskController{
             'dades' => $dades,
             'message' => 'Se ha eliminado correctamente!',
             'username' => $name,
-            'image' => $img
+            'image' => '.'.$img
 
         ]);
         $response = new Response();

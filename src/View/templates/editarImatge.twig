@@ -22,17 +22,22 @@
                         <input type="text" name="title"  value="{{ titol }}" required autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
+
+                        <br>
+                        <br>
+                        <div class="field-wrap">
+                            <label id="imgActTitle">
+                                Imagen Actual<span class="req" id="img_actual"></span>
+                            </label>
+                            <input type="file hidden" id="ImPostAcctual" name="imagenAct" src="{{ actual }}"/>
+                            <img src="{{ actual }}" name="img_actual" class="img-thumbnail img-responsive" id="imageid">
+                        </div>
+
                         <label>
                             Imagen<span class="req"></span>
                         </label>
                         <br>
                         <br>
-                        <div class="field-wrap">
-                            <label>
-                                Imagen Actual<span class="req" id="img_actual"></span>
-                            </label>
-                            <img src="{{ actual }}" name="img_actual" class="img-thumbnail img-responsive">
-                        </div>
                         <output id="registerImg" name="images"></output>
                         <input type="file" id="files" name="imagen" />
                         <img id="profilePic" name="image" src="" class="img-thumbnail img-responsive">

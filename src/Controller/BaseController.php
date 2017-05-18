@@ -73,84 +73,57 @@ class BaseController{
 
         $repo = new UserTasks($app['db']);
         $resize = new resampleService();
-        $width = 0;
-        $height = 0;
+
 
         if($size == "gran"){
             $size = 400;
-            $width = 400;
-            $height = 300;
+
         }
 
         if($size == "petita"){
             $size = 100;
-            $width = 100;
-            $height = 100;
-        }
-        $aux = '';
 
+        }
+
+        $sql = "SELECT img_path FROM imatge WHERE id = $id";
+        $d = $app['db']->fetchAssoc($sql);
         if ($img != NULL){
-            $sql = "SELECT img_path FROM imatge WHERE id = $id";
-            $d = $app['db']->fetchAssoc($sql);
             $img_antiga = $d['img_path'];
 
             if($size == 400){
                 list($p1,$p2) = explode("400", $img_antiga);
 
-            }else{
+            }
+            if($size == 100){
                 list($p1,$p2) = explode("100", $img_antiga);
             }
 
             $antiga_original = $p1.'Original'.$p2;
-
-            unlink($img_antiga);
             unlink($antiga_original);
-           /* $kk = '';
-
-            if ($size==400){
-                list($kk,$aux) = explode("400",$img_antiga);
-            }
-            if ($size==100){
-                list($kk,$aux) = explode("100",$img_antiga);
-            }
-
-            $aux = 'Original'.$aux;
-            unlink($aux);
             unlink($img_antiga);
-            $path = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa") . ".jpg";
-            $resize ->resizeImage($img->getPathname(), $path, $width, $height);
-            move_uploaded_file($img->getPathname(),'./assets/uploads/Original' . $title . date("m-d-y") .date("h:i:sa") . ".jpg");
-            $img = './assets/uploads/'.$size. $title . date("m-d-y") .date("h:i:sa"). ".jpg";
-            */
+
         }else{
-            $img = $repo->getActualPostImg($id,$img);
+            $img_antiga = $d['img_path'];
+            if($size == 400){
+                list($p1,$p2) = explode("400", $img_antiga);
+            }
+
+            if($size == 100){
+                list($p1,$p2) = explode("100", $img_antiga);
+            }
+
+            $img = $p1.'Original'.$p2;
+            unlink($img_antiga);
+
         }
 
+
         $imgAux = new DBController();
-
-
 
         $imgAux->uploadImageResize($img, $title, $size);
         $img_d = './assets/uploads/' . $size . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
 
         $repo->editInformation($title, $img_d, $private, $id, $size);
-        $dades = $repo->dadesImatges("eliminado");
-        /*$aux = new UpdateBaseService($app['db']);
-        $info = $aux->getUserInfo($app['session']->get('name'));
-        list($name, $img) = explode("!=!", $info);
-        $content = $app['twig']->render('galeria.twig', [
-            'logejat' => true,
-            'dades' => $dades,
-            'message' => 'Se ha editado correctamente!',
-            'username' => $name,
-            'image' => $img
-        ]);
-
-        $response = new Response();
-        $response->setStatusCode($response::HTTP_OK);
-        $response->headers->set('Content-Type', 'text/html');
-        $response->setContent($content);
-        return $response;*/
 
         $url = '/galeria';
         return new RedirectResponse($url);

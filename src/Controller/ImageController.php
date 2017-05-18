@@ -30,7 +30,7 @@ class ImageController{
             'username' =>$name,
             'sizeImage'=>$imatge['sizeImage'],
             'id' => $id,
-            'image' => $img,
+            'image' => '.'.$img,
             'actual' => '.'.$imatge['img_path']
         ]);
         $response = new Response();

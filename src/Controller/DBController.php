@@ -15,40 +15,7 @@ use SilexApp\Model\Repository\UpdateBaseService;
 
 class DBController
 {
-
-    public function DBlogin(Application $app, Request $request)
-    {
-        $response = new Response();
-        $name = htmlspecialchars($_POST['nickname']);
-        $password = htmlspecialchars($_POST['password']);
-        $repo = new UserTasks($app['db']);
-        $exists = $repo->validateUser($name, $password);
-
-        // Si no troba el usuari error en el propi formulari
-        if (!$exists) {
-            //echo("hello");
-            $response->setStatusCode(Response::HTTP_NOT_FOUND);
-            $content = $app['twig']->render('LogIn.twig', [
-                    'message' => 'User not found',
-                    'logejat' => false,
-                    'username' => '',
-                    'image' => null
-                ]
-            );
-            $response->setContent($content);
-            return $response;
-        } else { // si troba usuari el redirigeix cap a home logejat
-
-            //echo("adios");
-            $repo->logejarUsuari($name);
-            $id = $repo->getUserId($name);
-            $act_name = $repo->getName($id);
-            $url = '/iniciarSession/' . $act_name;
-            return new RedirectResponse($url);
-        }
-
-    }
-
+    
     public function DBeditProfile(Application $app, Request $request)
     {
         $name = htmlspecialchars($_POST['nickname']);

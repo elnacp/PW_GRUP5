@@ -2,7 +2,7 @@
 {% block title %} Home {% endblock %}
 {% block head %}
     {{ parent() }}
-    <link rel="stylesheet" href={{ asset('/hello.css', 'css') }}>
+    <link rel="stylesheet" href={{ asset('hello.css', 'css') }}>
 {% endblock %}
 {% block content %}
     <br>
@@ -22,7 +22,7 @@
 
 
     <button id="loadmore">Loadmore</button>
-    <script src={{ asset('/hello.js', 'js') }}></script>
+    <script src={{ asset('hello.js', 'js') }}></script>
 
 
 

@@ -2,8 +2,8 @@
 {% block title %} Visualització Imatge {% endblock %}
 {% block head %}
     {{ parent() }}
-    <link rel="stylesheet" href={{ asset('/hello.css', 'css') }}>
-    <link rel="stylesheet" href={{ asset('/imatgePublica.css', 'css') }}>
+    <link rel="stylesheet" href={{ asset('hello.css', 'css') }}>
+    <link rel="stylesheet" href={{ asset('imatgePublica.css', 'css') }}>
 {% endblock %}
 {% block content %}
     <br>
@@ -83,7 +83,7 @@
     </div>-->
     <button id="loadmore">Loadmore</button>
 
-    <script src={{ asset('/imatgePublica.js', 'js') }}></script>
+    <script src={{ asset('imatgePublica.js', 'js') }}></script>
 
 
 {% endblock %}

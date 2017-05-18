@@ -19,11 +19,11 @@
                                 <!-- Contenedor del Comentario -->
                                 <div class="comment-box">
                                     <div class="comment-head">
-                                        <a> {{ n.usuari }}  </a>
+                                        <a href="/perfil/{{ n.usuari }}"> {{ n.usuari }}  </a>
                                         <a href="/visualitzada/{{  n.id_notificacio }}" ><i class="fa fa-eye" aria-hidden="true"></i></a>
                                     </div>
                                     <div class="comment-content">
-                                        <p> Ha comentado en:  <a href="#">{{ n.titol }}</a>  </p>
+                                        <p> Ha comentado en:  <a href="/visualitzacioImatge/{{ n.image_id }}">{{ n.titol }}</a>  </p>
                                     </div>
                                 </div>
                             </div>

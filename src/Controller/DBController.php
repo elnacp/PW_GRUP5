@@ -88,10 +88,9 @@ class DBController
         $size = htmlspecialchars($request->get('size'));
         /** @var UploadedFile $img */
         $img = $request->files->get('ProfileImg');
+
         //var_dump($size);
         $response = new Response();
-
-
         $repo = new UserTasks($app['db']);
         if ($img == null) {
             $usuari = $app['session']->get('name');
@@ -109,21 +108,17 @@ class DBController
             );
             $response->setContent($content);
             return $response;
-
         } else {
-
             if ($size == "gran") {
                 $size = 400;
                 $width = 400;
                 $height = 300;
             }
-
             if ($size == "petita") {
                 $size = 100;
                 $width = 100;
                 $height = 100;
             }
-
             $this->uploadImageResize($img, $title, $size);
 
             if ($privada === "on") {
@@ -131,7 +126,6 @@ class DBController
             } else {
                 $private = 0;
             }
-
             $img_d = $img_d = './assets/uploads/' . $size . $title . date("m-d-y") . date("h:i:sa") . ".jpg";
 
             $repo = new UserTasks($app['db']);
@@ -142,7 +136,7 @@ class DBController
                 return new RedirectResponse($url);
             }
         }
-        return $response;
+        //return $response;
     }
 
 

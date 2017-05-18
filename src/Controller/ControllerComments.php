@@ -104,26 +104,13 @@ class ControllerComments
     }
 
     public function notificacioVisualitzada(Application $app, $id){
-        $response = new Response();
-        $response->setStatusCode(Response::HTTP_NOT_FOUND);
         $repo = new UserTasks($app['db']);
         $sql = "DELETE  FROM notificacionsUsuari";
         $app['db']->query($sql);
         $repo->visualitzada($id);
         $dades= $repo->notificacionsUser();
-        $aux = new UpdateBaseService($app['db']);
-        $info = $aux->getUserInfo($app['session']->get('name'));
-        list($name, $img) = explode("!=!", $info);
-        $content = $app['twig']->render('notificacionsUser.twig', [
-                'logejat' => true,
-                'notificacions' => $dades,
-                'username' => $name,
-                'image' => $img
-
-            ]
-        );
-        $response->setContent($content);
-        return $response;
+        $url = "/notificacions";
+        return new RedirectResponse($url);
     }
 
     public function afegir(Application $app){

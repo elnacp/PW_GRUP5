@@ -66,8 +66,16 @@ class UserTasks implements UserModel
             $id = $stm['id'];
 
         }
-        $sql = "INSERT INTO logejat (user_id) VALUE ($id)";
-        $this->db->query($sql);
+        $sqlAct = "SELECT active FROM usuari WHERE id = ?";
+        $stmAct = $this->db->fetchAssoc($sqlAct, array((int)$id));
+
+        if ($stmAct['active'] == 1 ){
+            $sql = "INSERT INTO logejat (user_id) VALUE ($id)";
+            $this->db->query($sql);
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

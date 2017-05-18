@@ -69,11 +69,26 @@ class ProfileController{
         } else { // si troba usuari el redirigeix cap a home logejat
 
             //echo("adios");
-            $repo->logejarUsuari($name);
+            $inserit = $repo->logejarUsuari($name);
+
+            if (!$inserit){
+                $response->setStatusCode(Response::HTTP_FORBIDDEN);
+                $content = $app['twig']->render('LogIn.twig', [
+                        'message' => 'Usuario no activado',
+                        'logejat' => false,
+                        'username' => '',
+                        'image' => null
+                    ]
+                );
+                $response->setContent($content);
+                return $response;
+            }
+
             $id = $repo->getUserId($name);
             $act_name = $repo->getName($id);
             $url = '/iniciarSession/' . $act_name;
             return new RedirectResponse($url);
+
         }
 
     }

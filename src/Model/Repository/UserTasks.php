@@ -568,26 +568,26 @@ class UserTasks implements UserModel
         $dades = "";
         switch ($opcio) {
             case 1:
-                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY created_at DESC";
                 $stm = $this->db->fetchAll($sql, array((int)$id));
                 break;
             case 2:
-                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY likes ASC";
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY likes DESC ";
                 $stm = $this->db->fetchAll($sql, array((int)$id));
 
                 break;
             case 3:
-                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY (SELECT SUM(image_id) FROM comentari,imatge WHERE comentari.image_id = imatge.id) ASC";
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY (SELECT SUM(image_id) FROM comentari,imatge WHERE comentari.image_id = imatge.id) DESC";
                 $stm = $this->db->fetchAll($sql, array((int)$id));
                 break;
 
             case 4:
-                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY visits ASC";
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY visits DESC";
                 $stm = $this->db->fetchAll($sql, array((int)$id));
                 break;
 
             default:
-                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY created_at ASC";
+                $sql = "SELECT * FROM imatge WHERE user_id = ? ORDER BY created_at DESC";
                 $stm = $this->db->fetchAll($sql, array((int)$id));
         }
 
@@ -963,7 +963,6 @@ class UserTasks implements UserModel
             $username = $this->db->fetchAssoc($sql, array((string)$id));
             $this->ActivateUser($username['username']);
             $trobat = true;
-
         }else{
             $trobat = false;
         }

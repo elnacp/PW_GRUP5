@@ -29,7 +29,7 @@ class ActivationUser{
         }else{
             $response = new Response();
             $response->setStatusCode(Response::HTTP_BAD_REQUEST);
-            $content = $app['twig']->render('LogIn.twig', [
+            $content = $app['twig']->render('error.twig', [
                     'message' => 'User not found',
                     'logejat' => false,
                     'image' =>null,

@@ -3,7 +3,7 @@
 <head>
     {% block head %}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('/style.css', 'css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('style.css', 'css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css">
 
@@ -110,9 +110,9 @@
 {% endblock %}
 {% block scripts %}
 
-    <script src="{{ asset('/app.js', 'js') }}" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ asset('/jquery.js', 'js') }}"></script>
-    <script src="{{ asset('/bootstrap.min.js', 'js') }}"></script>
+    <script src="{{ asset('app.js', 'js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('jquery.js', 'js') }}"></script>
+    <script src="{{ asset('bootstrap.min.js', 'js') }}"></script>
 {% endblock %}
 </body>
 </html>

@@ -109,7 +109,7 @@ class ProfileController{
 
                 $content = $app['twig']->render('registerUser.twig', [
                         'message' => 'Email enviado correctamente. Esperando Activación.',
-                        'logejat' => true,
+                        'logejat' => false,
                         'username' => '',
                         'image' => null,
 

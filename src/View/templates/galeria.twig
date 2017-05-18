@@ -4,7 +4,7 @@
     {{ parent() }}
     <link rel="stylesheet" href="//frontend.reklamor.com/fancybox/jquery.fancybox.css" media="screen">
     <script src="//frontend.reklamor.com/fancybox/jquery.fancybox.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('/galeria.css', 'css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('galeria.css', 'css') }}">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 {% endblock %}
@@ -26,6 +26,6 @@
         <h2>{{ message }}</h2>
     {% endif %}
 
-    <script src={{ asset('/galeria.js', 'js') }}></script>
+    <script src={{ asset('galeria.js', 'js') }}></script>
 
 {% endblock %}

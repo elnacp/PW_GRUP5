@@ -2,7 +2,7 @@
 <h3>Proyecto para la asignatura de Programación Web.</h3>
 <h4>Miembros del proyecto</h4>
 <ul>
-  <li><b>Elna Cabot</b>: encargada de frontend y backend, base de datos /li>
+  <li><b>Elna Cabot</b>: encargada de frontend y backend, base de datos </li>
   <li><b>Noa Duran</b>: encargada de frontend y backend</li>
   <li><b>Jordi Conesa</b>: encargado de backed y documentación</li>
   
